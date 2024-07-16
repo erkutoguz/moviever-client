@@ -11,7 +11,9 @@ import {
 import twitterIcon from "../../assets/icons/twitter.svg";
 import linkedinIcon from "../../assets/icons/linkedin.svg";
 import instagramIcon from "../../assets/icons/instagram.svg";
+import { useAppContext } from "../../context/appContext";
 function Footer() {
+  const { isAuthenticated } = useAppContext();
   return (
     <div className="container flex flex-col lg:flex-row justify-center items-center lg:justify-around my-8">
       <div className="max-w-80 lg:min-w-60 flex flex-col justify-center gap-2 text-left my-8">
@@ -38,114 +40,119 @@ function Footer() {
           </Button>
         </div>
       </div>
-      <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col gap-2 text-left my-4">
-        <Table removeWrapper className="text-dark">
-          <TableHeader className="bg-none">
-            <TableColumn>Popular Categories</TableColumn>
-            <TableColumn></TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Action
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Romance
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Fantasy
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Horror
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Sci-Fi
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Drama
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Adventure
-                </Link>
-              </TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
-      <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
-        <Table removeWrapper className="text-dark">
-          <TableHeader className="bg-none">
-            <TableColumn>Popular Movies</TableColumn>
-            <TableColumn></TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Transformers
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Harry Potter
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Lord Of The Rings
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Star Wars
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Avengers
-                </Link>
-              </TableCell>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Batman
-                </Link>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
-                <Link href="/" className="text-dark">
-                  Interstellar
-                </Link>
-              </TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+
+      {isAuthenticated && (
+        <>
+          <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col gap-2 text-left my-4">
+            <Table removeWrapper className="text-dark">
+              <TableHeader className="bg-none">
+                <TableColumn>Popular Categories</TableColumn>
+                <TableColumn></TableColumn>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Action
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Romance
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Fantasy
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Horror
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Sci-Fi
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Drama
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Adventure
+                    </Link>
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+          <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
+            <Table removeWrapper className="text-dark">
+              <TableHeader className="bg-none">
+                <TableColumn>Popular Movies</TableColumn>
+                <TableColumn></TableColumn>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Transformers
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Harry Potter
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Lord Of The Rings
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Star Wars
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Avengers
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Batman
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Link href="/" className="text-dark">
+                      Interstellar
+                    </Link>
+                  </TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </>
+      )}
     </div>
   );
 }

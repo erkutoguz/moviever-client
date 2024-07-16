@@ -1,10 +1,10 @@
 import Footer from "../components/layout/Footer";
-import Navbar from "../components/layout/Navbar";
+import Header from "../components/layout/Header";
 
 function Home() {
   return (
-    <div className="container flex flex-col">
-      <Navbar />
+    <div className="flex flex-col">
+      <Header />
       HOME
       <Footer />
     </div>
