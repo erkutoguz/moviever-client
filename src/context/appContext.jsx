@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "./reducer";
 import {
@@ -110,8 +111,11 @@ export const AppProvider = ({ children }) => {
       });
     }
   };
+  const fetchNewMovies = async () => {
+    return axios.get("mock-data.json");
+  };
   return (
-    <AppContext.Provider value={{ ...state, login, register }}>
+    <AppContext.Provider value={{ ...state, login, register, fetchNewMovies }}>
       {children}
     </AppContext.Provider>
   );
