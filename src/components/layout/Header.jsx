@@ -26,18 +26,22 @@ function Header() {
 
       <NavbarContent className="flex gap-0" justify="end">
         <NavbarItem>
-          <Link className="text-white mr-6 md:mr-16">Home</Link>
+          <Link className="text-white mr-6 md:mr-16 hover:cursor-pointer">
+            Home
+          </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white mr-6 md:mr-16">Movies</Link>
+          <Link className="text-white mr-6 md:mr-16 hover:cursor-pointer">
+            Movies
+          </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white hidden lg:flex lg:mr-16">
+          <Link className="text-white hidden lg:flex lg:mr-16 hover:cursor-pointer">
             Recommended
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white">About</Link>
+          <Link className="text-white hover:cursor-pointer">About</Link>
         </NavbarItem>
       </NavbarContent>
 

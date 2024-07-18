@@ -15,8 +15,8 @@ import { useAppContext } from "../../context/appContext";
 function Footer() {
   const { isAuthenticated } = useAppContext();
   return (
-    <div className="container flex flex-col lg:flex-row justify-center items-center lg:justify-around my-8">
-      <div className="max-w-80 lg:min-w-60 flex flex-col justify-center gap-2 text-left my-8">
+    <div className="flex flex-col lg:flex-row justify-center items-center lg:justify-around my-8 gap-8">
+      <div className="max-w-80 lg:min-w-60 flex flex-col justify-center gap-2 text-left my-8 pr-10">
         <p className="text-brandColor font-bold text">Moviever</p>
         <p className="text-dark">© 2024 Moviever. All Rights Reserved.</p>
         <p className="font-light text-dark">

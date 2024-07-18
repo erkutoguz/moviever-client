@@ -61,7 +61,7 @@ function LandingNavbar() {
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
-            <Link className="w-full text-darkBlue" href={item.link} size="lg">
+            <Link className=" text-darkBlue" href={item.link} size="lg">
               {item.tag}
             </Link>
           </NavbarMenuItem>

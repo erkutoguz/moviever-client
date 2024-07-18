@@ -1,218 +1,86 @@
 [
   {
-    "id": 1,
     "title": "The Shawshank Redemption",
     "releaseYear": 1994,
     "rating": 9.3,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/d26b48f88d5398cad86d2fd26d32b258d43e51d4e2f949c3848be69a1e147446.jpg",
-    "likeCount": 1500,
-    "categories": [
-      {
-        "id": 1,
-        "categoryName": "Drama"
-      },
-      {
-        "id": 2,
-        "categoryName": "Crime"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/d26b48f88d5398cad86d2fd26d32b258d43e51d4e2f949c3848be69a1e147446.jpg",
+    "categories": ["DRAMA", "CRIME"]
   },
   {
-    "id": 2,
     "title": "The Godfather",
     "releaseYear": 1972,
     "rating": 9.2,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/e588e370e649d4b0e3db5d1e8b400e148c0a4f1fcdd91b72049669f2dd8bb9ff.jpg",
-    "likeCount": 1400,
-    "categories": [
-      {
-        "id": 1,
-        "categoryName": "Crime"
-      },
-      {
-        "id": 3,
-        "categoryName": "Thriller"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/e588e370e649d4b0e3db5d1e8b400e148c0a4f1fcdd91b72049669f2dd8bb9ff.jpg",
+    "categories": ["THRILLER", "CRIME"]
   },
   {
-    "id": 3,
     "title": "The Dark Knight",
     "releaseYear": 2008,
     "rating": 9.0,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/e9a43e647b2ca70e75a3c0af046c4dfdcd712380889779cbdc2c57d94ab63902.jpg",
-    "likeCount": 1300,
-    "categories": [
-      {
-        "id": 4,
-        "categoryName": "Action"
-      },
-      {
-        "id": 5,
-        "categoryName": "Drama"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/e9a43e647b2ca70e75a3c0af046c4dfdcd712380889779cbdc2c57d94ab63902.jpg",
+    "categories": ["ACTION", "DRAMA"]
   },
   {
-    "id": 4,
     "title": "Pulp Fiction",
     "releaseYear": 1994,
     "rating": 8.9,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/3221d4f853e5c9d580a2a1645bd68dfde23bbd6f2979f65b5af25f2fc00a54e9.jpg",
-    "likeCount": 1200,
-    "categories": [
-      {
-        "id": 3,
-        "categoryName": "Thriller"
-      },
-      {
-        "id": 6,
-        "categoryName": "Comedy"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/3221d4f853e5c9d580a2a1645bd68dfde23bbd6f2979f65b5af25f2fc00a54e9.jpg",
+    "categories": ["THRILLER", "COMEDY"]
   },
   {
-    "id": 5,
     "title": "Schindler's List",
     "releaseYear": 1993,
     "rating": 8.9,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/ec9917345302c8a2be68a5f387bbb778139c1f4946ad24a67d28af9dd7f4de28.jpg",
-    "likeCount": 1100,
-    "categories": [
-      {
-        "id": 1,
-        "categoryName": "Drama"
-      },
-      {
-        "id": 7,
-        "categoryName": "History"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/ec9917345302c8a2be68a5f387bbb778139c1f4946ad24a67d28af9dd7f4de28.jpg",
+    "categories": ["DRAMA", "HISTORY"]
   },
   {
-    "id": 6,
     "title": "Fight Club",
     "releaseYear": 1999,
     "rating": 8.8,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/32bd25053d733f0db5d1224e0cc11ede689e65a1c2f6d42f1ad64e0aaf5379d6.jpg",
-    "likeCount": 1000,
-    "categories": [
-      {
-        "id": 5,
-        "categoryName": "Drama"
-      },
-      {
-        "id": 8,
-        "categoryName": "Mystery"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/32bd25053d733f0db5d1224e0cc11ede689e65a1c2f6d42f1ad64e0aaf5379d6.jpg",
+    "categories": ["DRAMA", "MYSTERY"]
   },
   {
-    "id": 7,
     "title": "Forrest Gump",
     "releaseYear": 1994,
     "rating": 8.8,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/2d0c9e38968936e6711c7fb2bc7895b82d8bb9178b5a854e14dffa4b17b88487.jpg",
-    "likeCount": 900,
-    "categories": [
-      {
-        "id": 6,
-        "categoryName": "Comedy"
-      },
-      {
-        "id": 5,
-        "categoryName": "Drama"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/2d0c9e38968936e6711c7fb2bc7895b82d8bb9178b5a854e14dffa4b17b88487.jpg",
+    "categories": ["DRAMA", "COMEDY"]
   },
   {
-    "id": 8,
     "title": "Inception",
     "releaseYear": 2010,
     "rating": 8.8,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/cc72ff2193c0f7a85322aee988d6fe1ae2cd9f8800b6ff6e8462790fe2aacaf3.jpg",
-    "likeCount": 800,
-    "categories": [
-      {
-        "id": 4,
-        "categoryName": "Action"
-      },
-      {
-        "id": 8,
-        "categoryName": "Mystery"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/cc72ff2193c0f7a85322aee988d6fe1ae2cd9f8800b6ff6e8462790fe2aacaf3.jpg",
+    "categories": ["ACTION", "MYSTERY"]
   },
   {
-    "id": 9,
     "title": "The Matrix",
     "releaseYear": 1999,
     "rating": 8.7,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/06d86913c84a8e3c32f08eaabc56d8fded1c58943f1b4150c9fd0a9d4cea7a70.jpg",
-    "likeCount": 700,
-    "categories": [
-      {
-        "id": 4,
-        "categoryName": "Action"
-      },
-      {
-        "id": 9,
-        "categoryName": "Sci-Fi"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/06d86913c84a8e3c32f08eaabc56d8fded1c58943f1b4150c9fd0a9d4cea7a70.jpg",
+    "categories": ["ACTION", "SCIENCE_FICTON"]
   },
   {
-    "id": 10,
     "title": "The Lord of the Rings: The Return of the King",
     "releaseYear": 2003,
     "rating": 8.9,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/646972789ab1d1fec5fe30cc314a3ac28aee0a3018689f6c65ab0a0e80447a82.jpg",
-    "likeCount": 600,
-    "categories": [
-      {
-        "id": 9,
-        "categoryName": "Sci-Fi"
-      },
-      {
-        "id": 7,
-        "categoryName": "History"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/646972789ab1d1fec5fe30cc314a3ac28aee0a3018689f6c65ab0a0e80447a82.jpg",
+    "categories": ["SCIENCE_FICTON", "HISTORY"]
   },
   {
-    "id": 11,
     "title": "Transformers",
     "releaseYear": 2009,
     "rating": 10.0,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/3bc9eabb0e4fb6d715b1bdc0f1747adaff55ee65b9fe020036a7356183bf964d.jpg",
-    "likeCount": 1000,
-    "categories": [
-      {
-        "id": 9,
-        "categoryName": "Sci-Fi"
-      },
-      {
-        "id": 7,
-        "categoryName": "Action"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/3bc9eabb0e4fb6d715b1bdc0f1747adaff55ee65b9fe020036a7356183bf964d.jpg",
+    "categories": ["SCIENCE_FICTON", "ACTION"]
   },
   {
-    "id": 12,
     "title": "Harry Potter and the Goblet of Fire",
     "releaseYear": 2005,
     "rating": 9.9,
-    "posterUrl": "https://m.media-amazon.com/images/S/pv-target-images/c03c1c9a31e3ad972594c0358e37d40110163872fc6f56be8aaac138d212c8cf.jpg",
-    "likeCount": 900,
-    "categories": [
-      {
-        "id": 9,
-        "categoryName": "Fantasy"
-      },
-      {
-        "id": 7,
-        "categoryName": "Action"
-      }
-    ]
+    "pictureUrl": "https://m.media-amazon.com/images/S/pv-target-images/c03c1c9a31e3ad972594c0358e37d40110163872fc6f56be8aaac138d212c8cf.jpg",
+    "categories": ["FANTASY", "ACTION"]
   }
 ]

@@ -1,24 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import MovieCarousel from "../components/movies/MovieCarousel";
-import { useAppContext } from "../context/appContext";
+import LayoutLink from "../components/common/LayoutLink";
+import Categories from "../components/categories/Categories";
+import { useLoaderData } from "react-router-dom";
 
 function Home() {
-  const { fetchNewMovies } = useAppContext();
-  const [newMovies, setNewMovies] = useState([]);
+  const { newMovies, popularMovies } = useLoaderData();
 
-  useEffect(() => {
-    fetchNewMovies().then((res) => {
-      setNewMovies(res.data);
-    });
-  }, []);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-center items-center">
       <Header />
-      <MovieCarousel slides={newMovies} />
-      HOME
+      <div className="new-movies">
+        <LayoutLink to={"/"} text={"New Movies"} />
+        {newMovies && <MovieCarousel slides={newMovies} />}
+      </div>
+
+      <div className="categories">
+        <Categories />
+      </div>
+
+      <div className="popular-movies">
+        <LayoutLink to={"/"} text={"Popular Movies"} />
+        <MovieCarousel slides={popularMovies} />
+      </div>
+
+      <div className="recommended-movies">
+        <LayoutLink to={"/"} text={"Recomended Movies"} />
+        <MovieCarousel slides={newMovies} />
+      </div>
+
       <Footer />
     </div>
   );

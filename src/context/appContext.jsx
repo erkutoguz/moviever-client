@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "./reducer";
 import {
+  FETCH_CATEGORIES,
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
@@ -16,6 +17,10 @@ const authClient = axios.create({
   baseURL: "http://localhost:9991/",
 });
 
+const appClient = axios.create({
+  baseURL: "http://localhost:9991/",
+});
+
 const initialState = {
   isLoading: false,
   errMessage: "",
@@ -23,6 +28,7 @@ const initialState = {
   refreshToken: localStorage.getItem("refreshToken"),
   accessToken: localStorage.getItem("accessToken"),
   user: localStorage.getItem("user"),
+  categories: JSON.parse(localStorage.getItem("categories")),
 };
 
 // eslint-disable-next-line react/prop-types
@@ -112,10 +118,21 @@ export const AppProvider = ({ children }) => {
     }
   };
   const fetchNewMovies = async () => {
-    return axios.get("mock-data.json");
+    // TODO token ekle
+    return axios.get("/movies/new-movies");
+  };
+  const fetchCategories = async () => {
+    const response = await appClient.get("/categories");
+    await dispatch({
+      type: FETCH_CATEGORIES,
+      payload: { categories: response.data },
+    });
+    localStorage.setItem("categories", JSON.stringify(response.data));
   };
   return (
-    <AppContext.Provider value={{ ...state, login, register, fetchNewMovies }}>
+    <AppContext.Provider
+      value={{ ...state, login, register, fetchNewMovies, fetchCategories }}
+    >
       {children}
     </AppContext.Provider>
   );

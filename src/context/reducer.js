@@ -1,4 +1,5 @@
 import {
+  FETCH_CATEGORIES,
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
@@ -48,6 +49,12 @@ export default (state, action) => {
       ...state,
       isLoading: false,
       errMessage: action.payload.errMessage,
+    };
+  }
+  if (action.type === FETCH_CATEGORIES) {
+    return {
+      ...state,
+      categories: action.payload.categories,
     };
   }
   throw new Error(`No such action: ${action.type}`);
