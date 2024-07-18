@@ -26,17 +26,26 @@ function Header() {
 
       <NavbarContent className="flex gap-0" justify="end">
         <NavbarItem>
-          <Link className="text-white mr-6 md:mr-16 hover:cursor-pointer">
+          <Link
+            href="/home"
+            className="text-white mr-6 md:mr-16 hover:cursor-pointer"
+          >
             Home
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white mr-6 md:mr-16 hover:cursor-pointer">
+          <Link
+            href="/movies"
+            className="text-white mr-6 md:mr-16 hover:cursor-pointer"
+          >
             Movies
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white hidden lg:flex lg:mr-16 hover:cursor-pointer">
+          <Link
+            href="/recommended-movies"
+            className="text-white hidden lg:flex lg:mr-16 hover:cursor-pointer"
+          >
             Recommended
           </Link>
         </NavbarItem>
@@ -48,7 +57,7 @@ function Header() {
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
-            <Avatar
+            {/* <Avatar
               isBordered
               as="button"
               className="transition-transform"
@@ -56,6 +65,14 @@ function Header() {
               name="Jason Hughes"
               size="sm"
               src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            /> */}
+            <Avatar
+              name={user}
+              as="button"
+              className="transition-transform"
+              color="secondary"
+              size="sm"
+              isBordered
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
