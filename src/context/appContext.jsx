@@ -130,9 +130,7 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("categories", JSON.stringify(response.data));
   };
   return (
-    <AppContext.Provider
-      value={{ ...state, login, register, fetchNewMovies, fetchCategories }}
-    >
+    <AppContext.Provider value={{ ...state, login, register, fetchCategories }}>
       {children}
     </AppContext.Provider>
   );

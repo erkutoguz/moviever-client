@@ -41,6 +41,7 @@ function Header() {
             Movies
           </Link>
         </NavbarItem>
+
         <NavbarItem>
           <Link
             href="/recommended-movies"

@@ -13,7 +13,7 @@ function Home() {
     <div className="flex flex-col justify-center items-center">
       <Header />
       <div className="new-movies">
-        <LayoutLink to={"/"} text={"New Movies"} />
+        <LayoutLink to={"/new-movies"} text={"New Movies"} />
         {newMovies && <MovieCarousel slides={newMovies} />}
       </div>
 
@@ -22,7 +22,7 @@ function Home() {
       </div>
 
       <div className="popular-movies">
-        <LayoutLink to={"/"} text={"Popular Movies"} />
+        <LayoutLink to={"/popular-movies"} text={"Popular Movies"} />
         <MovieCarousel slides={popularMovies} />
       </div>
 

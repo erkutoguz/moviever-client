@@ -19,6 +19,8 @@ import {
   fetchPopularMovies,
 } from "./service/appClient.js";
 import MovieDetail from "./pages/MovieDetail.jsx";
+import Movies from "./pages/Movies.jsx";
+import Category from "./pages/Category.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,11 +31,11 @@ const router = createBrowserRouter(
       <Route
         path="/home"
         loader={async () => {
-          const newMovies = await fetchNewMovies();
-          const popularMovies = await fetchPopularMovies();
+          const newMovies = await fetchNewMovies(0, 12);
+          const popularMovies = await fetchPopularMovies(0, 12);
           return {
-            newMovies: newMovies.data,
-            popularMovies: popularMovies.data,
+            newMovies: newMovies.data.movies,
+            popularMovies: popularMovies.data.movies,
           };
         }}
         element={
@@ -42,6 +44,9 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route path="/new-movies" element={<Movies />} />
+      <Route path="/popular-movies" element={<Movies />} />
+      <Route path="/movies/category/:categoryName" element={<Category />} />
       <Route
         path="/movies/:movieId"
         element={<MovieDetail />}
