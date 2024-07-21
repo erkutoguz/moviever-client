@@ -7,7 +7,7 @@ function Categories() {
   const { categories, fetchCategories } = useAppContext();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!categories.length > 0) {
+    if (!categories) {
       fetchCategories();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,7 +18,8 @@ function Categories() {
         Discover Categories
       </p>
       <div className="flex flex-wrap gap-2 justify-center items-center md:max-w-[675px] lg:max-w-[900px] ">
-        {categories.length > 0 &&
+        {categories &&
+          categories.length > 0 &&
           categories.map((c, i) => {
             let text = c.categoryType;
             if (text.includes("_")) {

@@ -13,11 +13,6 @@ import Register from "./pages/Register.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Home from "./pages/Home.jsx";
 import { AppProvider } from "./context/appContext.jsx";
-import {
-  fetchMovieDetailsWithMovieId,
-  fetchNewMovies,
-  fetchPopularMovies,
-} from "./service/appClient.js";
 import MovieDetail from "./pages/MovieDetail.jsx";
 import Movies from "./pages/Movies.jsx";
 import Category from "./pages/Category.jsx";
@@ -30,32 +25,43 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route
         path="/home"
-        loader={async () => {
-          const newMovies = await fetchNewMovies(0, 12);
-          const popularMovies = await fetchPopularMovies(0, 12);
-          return {
-            newMovies: newMovies.data.movies,
-            popularMovies: popularMovies.data.movies,
-          };
-        }}
         element={
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>
         }
       />
-      <Route path="/new-movies" element={<Movies />} />
-      <Route path="/popular-movies" element={<Movies />} />
-      <Route path="/movies/category/:categoryName" element={<Category />} />
+      <Route
+        path="/new-movies"
+        element={
+          <ProtectedRoute>
+            <Movies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/popular-movies"
+        element={
+          <ProtectedRoute>
+            <Movies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/movies/category/:categoryName"
+        element={
+          <ProtectedRoute>
+            <Category />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/movies/:movieId"
-        element={<MovieDetail />}
-        loader={async ({ params }) => {
-          const movieDetails = await fetchMovieDetailsWithMovieId(
-            params.movieId
-          );
-          return movieDetails.data;
-        }}
+        element={
+          <ProtectedRoute>
+            <MovieDetail />
+          </ProtectedRoute>
+        }
       />
     </Route>
   )

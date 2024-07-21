@@ -13,14 +13,6 @@ import {
 import axios from "axios";
 const AppContext = createContext(null);
 
-const authClient = axios.create({
-  baseURL: "http://localhost:9991/",
-});
-
-const appClient = axios.create({
-  baseURL: "http://localhost:9991/",
-});
-
 const initialState = {
   isLoading: false,
   errMessage: "",
@@ -33,6 +25,51 @@ const initialState = {
 
 // eslint-disable-next-line react/prop-types
 export const AppProvider = ({ children }) => {
+  const authClient = axios.create({
+    baseURL: "http://localhost:9991/",
+  });
+
+  const appClient = axios.create({
+    baseURL: "http://localhost:9991/",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  appClient.interceptors.request.use(
+    (config) => {
+      console.log(state.accessToken);
+      if (state.accessToken) {
+        config.headers.Authorization = `Bearer ${state.accessToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  appClient.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      if (error.response && error.response.status === 401) {
+        try {
+          const refreshToken = localStorage.getItem("refreshToken");
+          const response = await axios.post("/auth/refresh-token", {
+            refreshToken: refreshToken,
+          });
+          localStorage.setItem("accessToken", response.data.accessToken);
+
+          error.config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+          return axios(error.config);
+        } catch (refreshError) {
+          console.error("Token yenileme başarısız:", refreshError);
+          // Örneğin, kullanıcıyı giriş sayfasına yönlendirin
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -44,7 +81,6 @@ export const AppProvider = ({ children }) => {
     const refreshToken = localStorage.getItem("refreshToken");
     const user = localStorage.getItem("user");
     const isAuthenticated = localStorage.getItem("isAuthenticated");
-    console.log("user  is =>", user);
     if (accessToken) {
       state.accessToken = accessToken;
     }
@@ -58,7 +94,6 @@ export const AppProvider = ({ children }) => {
       state.isAuthenticated = isAuthenticated;
     }
   };
-
   const login = async (username, password) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
@@ -80,6 +115,7 @@ export const AppProvider = ({ children }) => {
           errMessage: "",
         },
       });
+      console.log("user is ", state.user);
     } catch (err) {
       dispatch({
         type: LOGIN_USER_ERROR,
@@ -118,8 +154,28 @@ export const AppProvider = ({ children }) => {
     }
   };
   const fetchNewMovies = async () => {
-    // TODO token ekle
-    return axios.get("/movies/new-movies");
+    console.log(state.accessToken);
+    const page = 0;
+    const size = 12;
+    return appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
+  };
+  const fetchPopularMovies = async () => {
+    const page = 0;
+    const size = 12;
+    return appClient.get(`/movies/most-liked-movies?page=${page}&size=${size}`);
+  };
+  const fetchMovieDetailsWithMovieId = async (movieId) => {
+    return await appClient.get(`/movies/${movieId}?with-details=true`);
+  };
+
+  const fetchLikedReviews = async () => {
+    return await appClient.get("/users/liked-reviews");
+  };
+  const likeReview = async (reviewId) => {
+    return await appClient.post(`/reviews/${reviewId}/like`);
+  };
+  const unlikeReview = async (reviewId) => {
+    return await appClient.delete(`/reviews/${reviewId}/like`);
   };
   const fetchCategories = async () => {
     const response = await appClient.get("/categories");
@@ -130,7 +186,20 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("categories", JSON.stringify(response.data));
   };
   return (
-    <AppContext.Provider value={{ ...state, login, register, fetchCategories }}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        login,
+        register,
+        fetchCategories,
+        fetchNewMovies,
+        fetchPopularMovies,
+        fetchLikedReviews,
+        likeReview,
+        unlikeReview,
+        fetchMovieDetailsWithMovieId,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

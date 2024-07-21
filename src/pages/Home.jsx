@@ -4,11 +4,21 @@ import Header from "../components/layout/Header";
 import MovieCarousel from "../components/movies/MovieCarousel";
 import LayoutLink from "../components/common/LayoutLink";
 import Categories from "../components/categories/Categories";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAppContext } from "../context/appContext";
 
 function Home() {
-  const { newMovies, popularMovies } = useLoaderData();
-
+  const [newMovies, setNewMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const { fetchNewMovies, fetchPopularMovies } = useAppContext();
+  useEffect(() => {
+    fetchNewMovies().then((res) => {
+      setNewMovies(res.data.movies);
+    });
+    fetchPopularMovies().then((res) => {
+      setPopularMovies(res.data.movies);
+    });
+  }, []);
   return (
     <div className="flex flex-col justify-center items-center">
       <Header />
