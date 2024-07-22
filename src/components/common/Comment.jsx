@@ -4,7 +4,7 @@ import { Avatar } from "@nextui-org/react";
 import { timeAgo } from "../../utils/dataFormatter";
 import heartIcon from "../../assets/icons/heart.svg";
 import likedHeartIcon from "../../assets/icons/liked-heart.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
 function Comment({
   reviewId,
@@ -15,20 +15,20 @@ function Comment({
   likeCount,
   liked,
 }) {
-  useEffect(() => {
-    console.log(liked);
-    console.log(isLiked);
-  }, []);
   const [isLiked, setLiked] = useState(liked);
+  const [likeCountState, setLikedCountState] = useState(likeCount);
   const { likeReview, unlikeReview } = useAppContext();
+
   const toogleLike = () => {
     if (isLiked) {
       unlikeReview(reviewId).then((res) => {
         setLiked(!isLiked);
+        setLikedCountState(likeCountState - 1);
       });
     } else {
       likeReview(reviewId).then((res) => {
         setLiked(!isLiked);
+        setLikedCountState(likeCountState + 1);
       });
     }
   };
@@ -67,18 +67,18 @@ function Comment({
         <div className="flex items-center gap-2 mt-2" onClick={toogleLike}>
           {isLiked ? (
             <img
-              src={heartIcon}
+              src={likedHeartIcon}
               className="w-6 hover:cursor-pointer"
               alt="heart-icon"
             />
           ) : (
             <img
-              src={likedHeartIcon}
+              src={heartIcon}
               className="w-6 hover:cursor-pointer"
               alt="heart-icon"
             />
           )}
-          <p>{likeCount}</p>
+          <p>{likeCountState}</p>
         </div>
       </div>
     </div>

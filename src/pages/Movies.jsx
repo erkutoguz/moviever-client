@@ -5,13 +5,14 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import MovieList from "../components/movies/MovieList";
 import { Pagination } from "@nextui-org/react";
-import { fetchNewMovies, fetchPopularMovies } from "../service/appClient";
+import { useAppContext } from "../context/appContext";
 
 function Movies() {
   const [initialData, setInitialData] = useState([]);
   const url = useResolvedPath();
   const [page, setPage] = useState(0);
   const [pageName, setPageName] = useState("");
+  const { fetchPopularMovies, fetchNewMovies } = useAppContext();
 
   useEffect(() => {
     console.log(url.pathname);
@@ -22,11 +23,14 @@ function Movies() {
       case "/popular-movies":
         setPageName("Popular Movies");
         break;
+      case "/all-movies":
+        setPageName("All Movies");
+        break;
     }
   }, []);
 
   useEffect(() => {
-    if (url.pathname === "/new-movies") {
+    if (url.pathname === "/new-movies" || url.pathname === "/all-movies") {
       fetchNewMovies(page, 6).then((res) => {
         setInitialData(res.data);
       });

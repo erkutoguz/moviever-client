@@ -48,6 +48,14 @@ const router = createBrowserRouter(
         }
       />
       <Route
+        path="/all-movies"
+        element={
+          <ProtectedRoute>
+            <Movies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/movies/category/:categoryName"
         element={
           <ProtectedRoute>

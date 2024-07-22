@@ -35,7 +35,7 @@ function Header() {
         </NavbarItem>
         <NavbarItem>
           <Link
-            href="/movies"
+            href="/all-movies"
             className="text-white mr-6 md:mr-16 hover:cursor-pointer"
           >
             Movies

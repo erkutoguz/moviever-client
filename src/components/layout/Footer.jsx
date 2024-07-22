@@ -25,14 +25,22 @@ function Footer() {
           watch lists, and share your movie experiences with other users.
         </p>
         <div className="social flex gap-5">
-          <Button as={Link} isIconOnly>
+          <Button
+            as={Link}
+            isIconOnly
+            href="https://www.instagram.com/thisiserkut/"
+          >
             <img
               src={instagramIcon}
               alt="instagram-icon"
               className="bg-white"
             />
           </Button>
-          <Button as={Link} isIconOnly>
+          <Button
+            as={Link}
+            isIconOnly
+            href="https://www.linkedin.com/in/erkut-oğuz-82704420b"
+          >
             <img src={linkedinIcon} alt="linkedin-icon" className="bg-white" />
           </Button>
           <Button as={Link} isIconOnly>

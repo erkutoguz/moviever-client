@@ -18,6 +18,14 @@ function Categories() {
         Discover Categories
       </p>
       <div className="flex flex-wrap gap-2 justify-center items-center md:max-w-[675px] lg:max-w-[900px] ">
+        <Button
+          className="bg-primary-200"
+          onPress={() => {
+            return navigate(`/movies/category/${"ALL"}`);
+          }}
+        >
+          ALL
+        </Button>
         {categories &&
           categories.length > 0 &&
           categories.map((c, i) => {

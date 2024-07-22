@@ -37,13 +37,13 @@ export const AppProvider = ({ children }) => {
   });
   appClient.interceptors.request.use(
     (config) => {
-      console.log(state.accessToken);
       if (state.accessToken) {
         config.headers.Authorization = `Bearer ${state.accessToken}`;
       }
       return config;
     },
     (error) => {
+      console.log(state.accessToken);
       return Promise.reject(error);
     }
   );
@@ -52,18 +52,22 @@ export const AppProvider = ({ children }) => {
       return response;
     },
     async (error) => {
-      if (error.response && error.response.status === 401) {
+      if (
+        (error.response && error.response.status === 401) ||
+        error.response.status === 403
+      ) {
         try {
           const refreshToken = localStorage.getItem("refreshToken");
-          const response = await axios.post("/auth/refresh-token", {
-            refreshToken: refreshToken,
+          const response = await appClient.post("/auth/refresh-token", {
+            refreshToken,
           });
+          state.accessToken = response.data.accessToken;
           localStorage.setItem("accessToken", response.data.accessToken);
 
           error.config.headers.Authorization = `Bearer ${response.data.accessToken}`;
           return axios(error.config);
         } catch (refreshError) {
-          console.error("Token yenileme başarısız:", refreshError);
+          console.log("Token yenileme başarısız:", refreshError);
           // Örneğin, kullanıcıyı giriş sayfasına yönlendirin
         }
       }
@@ -154,28 +158,46 @@ export const AppProvider = ({ children }) => {
     }
   };
   const fetchNewMovies = async () => {
-    console.log(state.accessToken);
     const page = 0;
     const size = 12;
-    return appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
+    return await appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
   };
   const fetchPopularMovies = async () => {
     const page = 0;
     const size = 12;
-    return appClient.get(`/movies/most-liked-movies?page=${page}&size=${size}`);
+    return await appClient.get(
+      `/movies/most-liked-movies?page=${page}&size=${size}`
+    );
   };
   const fetchMovieDetailsWithMovieId = async (movieId) => {
     return await appClient.get(`/movies/${movieId}?with-details=true`);
   };
 
-  const fetchLikedReviews = async () => {
-    return await appClient.get("/users/liked-reviews");
+  const fetchLikedReviews = async (movieId) => {
+    return await appClient.get(`/users/liked-reviews/${movieId}`);
   };
+
   const likeReview = async (reviewId) => {
     return await appClient.post(`/reviews/${reviewId}/like`);
   };
   const unlikeReview = async (reviewId) => {
     return await appClient.delete(`/reviews/${reviewId}/like`);
+  };
+
+  const likeMovie = async (movieId) => {
+    return await appClient.post(`/movies/${movieId}/like`);
+  };
+  const unlikeMovie = async (movieId) => {
+    return await appClient.delete(`/movies/${movieId}/like`);
+  };
+  const fetchAllMovies = async (categoryName, page, size) => {
+    if (categoryName !== "ALL") {
+      return await appClient.get(
+        `/movies?category=${categoryName}&page=${page}&size=${size}`
+      );
+    } else {
+      return await appClient.get(`/movies?page=${page}&size=${size}`);
+    }
   };
   const fetchCategories = async () => {
     const response = await appClient.get("/categories");
@@ -198,6 +220,9 @@ export const AppProvider = ({ children }) => {
         likeReview,
         unlikeReview,
         fetchMovieDetailsWithMovieId,
+        likeMovie,
+        unlikeMovie,
+        fetchAllMovies,
       }}
     >
       {children}

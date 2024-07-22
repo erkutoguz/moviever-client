@@ -1,28 +1,54 @@
+/* eslint-disable no-unused-vars */
 import { useParams } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import { Divider, Image } from "@nextui-org/react";
 import heartIcon from "../assets/icons/heart.svg";
+import likedHeartIcon from "../assets/icons/liked-heart.png";
+
 import Comment from "../components/common/Comment";
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
+
 function MovieDetail() {
   const { movieId } = useParams();
   const [likedReviews, setLikedMovies] = useState([]);
   const [movieDetails, setMoviesDetails] = useState({});
-  const { fetchLikedReviews, fetchMovieDetailsWithMovieId } = useAppContext();
+  const {
+    fetchLikedReviews,
+    fetchMovieDetailsWithMovieId,
+    unlikeMovie,
+    likeMovie,
+  } = useAppContext();
+  const [isUserLiked, setIsUserLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
   useEffect(() => {
     fetchMovieDetailsWithMovieId(movieId).then((res) => {
-      console.log(res);
       setMoviesDetails(res.data);
+      setIsUserLiked(res.data.isUserLiked);
+      setLikeCount(res.data.likeCount);
     });
-    fetchLikedReviews().then((res) => {
-      console.log(res.data.reviewIds);
+    fetchLikedReviews(movieId).then((res) => {
       setLikedMovies(res.data.reviewIds);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const toogleLike = () => {
+    if (movieDetails.isUserLiked) {
+      unlikeMovie(movieDetails.id).then((res) => {
+        setIsUserLiked(!isUserLiked);
+        setLikeCount(likeCount - 1);
+      });
+    } else {
+      likeMovie(movieDetails.id).then((res) => {
+        setIsUserLiked(!isUserLiked);
+        setLikeCount(likeCount + 1);
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full ">
@@ -56,13 +82,24 @@ function MovieDetail() {
                       })}
                   </div>
                 </div>
-                <div className="flex gap-0.5 items-center mt-2">
-                  <img
-                    src={heartIcon}
-                    className="w-6 hover:cursor-pointer"
-                    alt="heart-icon"
-                  />
-                  <p>{movieDetails.likeCount}</p>
+                <div
+                  className="flex gap-0.5 items-center mt-2"
+                  onClick={toogleLike}
+                >
+                  {isUserLiked ? (
+                    <img
+                      src={likedHeartIcon}
+                      className="w-6 hover:cursor-pointer"
+                      alt="heart-icon"
+                    />
+                  ) : (
+                    <img
+                      src={heartIcon}
+                      className="w-6 hover:cursor-pointer"
+                      alt="heart-icon"
+                    />
+                  )}
+                  <p>{likeCount}</p>
                 </div>
               </div>
             </div>
