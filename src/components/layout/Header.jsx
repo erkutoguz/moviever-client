@@ -14,7 +14,7 @@ import Brand from "../common/Brand";
 import { useAppContext } from "../../context/appContext";
 
 function Header() {
-  const { user } = useAppContext();
+  const { user, userProfilePicture } = useAppContext();
   return (
     <Navbar style={{ backgroundColor: "#0A2540" }}>
       <NavbarBrand className="hidden lg:flex">
@@ -58,23 +58,26 @@ function Header() {
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
-            {/* <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
-              size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            /> */}
-            <Avatar
-              name={user}
-              as="button"
-              className="transition-transform"
-              color="secondary"
-              size="sm"
-              isBordered
-            />
+            {userProfilePicture !== "null" ? (
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                name={user}
+                size="sm"
+                src={userProfilePicture}
+              />
+            ) : (
+              <Avatar
+                name={user}
+                as="button"
+                className="transition-transform"
+                color="secondary"
+                size="sm"
+                isBordered
+              />
+            )}
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">

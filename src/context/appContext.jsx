@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useReducer } from "react";
 import reducer from "./reducer";
@@ -6,6 +7,7 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
+  LOGOUT,
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
@@ -20,6 +22,7 @@ const initialState = {
   refreshToken: localStorage.getItem("refreshToken"),
   accessToken: localStorage.getItem("accessToken"),
   user: localStorage.getItem("user"),
+  userProfilePicture: localStorage.getItem("userProfilePicture"),
   categories: JSON.parse(localStorage.getItem("categories")),
 };
 
@@ -35,6 +38,7 @@ export const AppProvider = ({ children }) => {
       "Content-Type": "application/json",
     },
   });
+
   appClient.interceptors.request.use(
     (config) => {
       if (state.accessToken) {
@@ -56,30 +60,40 @@ export const AppProvider = ({ children }) => {
         (error.response && error.response.status === 401) ||
         error.response.status === 403
       ) {
-        try {
-          const refreshToken = localStorage.getItem("refreshToken");
-          const response = await appClient.post("/auth/refresh-token", {
+        const refreshToken = localStorage.getItem("refreshToken");
+        appClient
+          .post("/auth/refresh-token", {
             refreshToken,
+          })
+          .then((response) => {
+            state.accessToken = response.data.accessToken;
+            localStorage.setItem("accessToken", response.data.accessToken);
+            error.config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            return appClient(error.config);
+          })
+          .catch((e) => {
+            resetLocalStroage();
+            dispatch({ type: LOGOUT, payload: initialState });
+            window.location = "/sign-in";
           });
-          state.accessToken = response.data.accessToken;
-          localStorage.setItem("accessToken", response.data.accessToken);
-
-          error.config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-          return axios(error.config);
-        } catch (refreshError) {
-          console.log("Token yenileme başarısız:", refreshError);
-          // Örneğin, kullanıcıyı giriş sayfasına yönlendirin
-        }
       }
       return Promise.reject(error);
     }
   );
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     loadLocalStorage();
   }, []);
 
+  const resetLocalStroage = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("categories");
+  };
   const loadLocalStorage = () => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
@@ -109,6 +123,7 @@ export const AppProvider = ({ children }) => {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("user", data.username);
+      localStorage.setItem("userProfilePicture", data.pictureUrl);
       localStorage.setItem("isAuthenticated", true);
       dispatch({
         type: LOGIN_USER_SUCCESS,
@@ -117,6 +132,7 @@ export const AppProvider = ({ children }) => {
           refreshToken: data.refreshToken,
           accessToken: data.accessToken,
           errMessage: "",
+          userProfilePicture: data.pictureUrl,
         },
       });
       console.log("user is ", state.user);
@@ -147,10 +163,15 @@ export const AppProvider = ({ children }) => {
           refreshToken: data.refreshToken,
           accessToken: data.accessToken,
           errMessage: "",
+          userProfilePicture: data.pictureUrl,
         },
       });
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("user", data.username);
+      localStorage.setItem("userProfilePicture", data.pictureUrl);
+      localStorage.setItem("isAuthenticated", true);
     } catch (err) {
-      console.log(err);
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { errMessage: err.response.data.message },
@@ -172,9 +193,17 @@ export const AppProvider = ({ children }) => {
   const fetchMovieDetailsWithMovieId = async (movieId) => {
     return await appClient.get(`/movies/${movieId}?with-details=true`);
   };
+  const fetchMovieReviews = async (movieId) => {
+    return await appClient.get(`/movies/${movieId}/reviews`);
+  };
 
   const fetchLikedReviews = async (movieId) => {
     return await appClient.get(`/users/liked-reviews/${movieId}`);
+  };
+  const makeReview = async (movieId, review) => {
+    await appClient.post(`/movies/${movieId}/reviews`, {
+      comment: review,
+    });
   };
 
   const likeReview = async (reviewId) => {
@@ -223,6 +252,8 @@ export const AppProvider = ({ children }) => {
         likeMovie,
         unlikeMovie,
         fetchAllMovies,
+        makeReview,
+        fetchMovieReviews,
       }}
     >
       {children}

@@ -10,6 +10,7 @@ import Comment from "../components/common/Comment";
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
+import MakeComment from "../components/common/MakeComment";
 
 function MovieDetail() {
   const { movieId } = useParams();
@@ -20,9 +21,11 @@ function MovieDetail() {
     fetchMovieDetailsWithMovieId,
     unlikeMovie,
     likeMovie,
+    fetchMovieReviews,
   } = useAppContext();
-  const [isUserLiked, setIsUserLiked] = useState(false);
+  const [isUserLiked, setIsUserLiked] = useState(movieDetails.isUserLiked);
   const [likeCount, setLikeCount] = useState(0);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     fetchMovieDetailsWithMovieId(movieId).then((res) => {
@@ -33,11 +36,14 @@ function MovieDetail() {
     fetchLikedReviews(movieId).then((res) => {
       setLikedMovies(res.data.reviewIds);
     });
+    fetchMovieReviews(movieId).then((res) => {
+      setReviews(res.data);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toogleLike = () => {
-    if (movieDetails.isUserLiked) {
+    if (isUserLiked) {
       unlikeMovie(movieDetails.id).then((res) => {
         setIsUserLiked(!isUserLiked);
         setLikeCount(likeCount - 1);
@@ -48,6 +54,12 @@ function MovieDetail() {
         setLikeCount(likeCount + 1);
       });
     }
+  };
+
+  const updateReviews = () => {
+    fetchMovieReviews(movieId).then((res) => {
+      setReviews(res.data);
+    });
   };
 
   return (
@@ -144,12 +156,19 @@ function MovieDetail() {
           <Divider className="my-8" />
           <div className="comments w-full lg:w-3/4 lg:items-start flex flex-col justify-center items-center ">
             <p className="font-semibold text-dark text-sm mb-4">Comments</p>
-            {movieDetails.reviews && movieDetails.reviews.length === 0 ? (
+            {movieDetails && (
+              <MakeComment
+                movieId={movieDetails.id}
+                updateReviews={updateReviews}
+              />
+            )}
+            {reviews.length === 0 ? (
               <>
                 <p className="">no comments yet</p>
               </>
             ) : (
-              (movieDetails.reviews || []).map((r, i) => {
+              reviews &&
+              reviews.map((r, i) => {
                 return (
                   <Comment
                     key={i}

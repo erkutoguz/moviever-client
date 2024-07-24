@@ -3,6 +3,7 @@ import {
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
   LOGIN_USER_SUCCESS,
+  LOGOUT,
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
@@ -21,6 +22,7 @@ export default (state, action) => {
       refreshToken: action.payload.refreshToken,
       accessToken: action.payload.accessToken,
       isAuthenticated: true,
+      userProfilePicture: action.payload.userProfilePicture,
     };
   }
   if (action.type === LOGIN_USER_ERROR) {
@@ -42,6 +44,7 @@ export default (state, action) => {
       refreshToken: action.payload.refreshToken,
       accessToken: action.payload.accessToken,
       isAuthenticated: true,
+      userProfilePicture: action.payload.userProfilePicture,
     };
   }
   if (action.type === REGISTER_USER_ERROR) {
@@ -55,6 +58,11 @@ export default (state, action) => {
     return {
       ...state,
       categories: action.payload.categories,
+    };
+  }
+  if (action.type === LOGOUT) {
+    return {
+      ...action.payload,
     };
   }
   throw new Error(`No such action: ${action.type}`);
