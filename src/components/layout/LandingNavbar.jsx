@@ -45,6 +45,7 @@ function LandingNavbar() {
           <Button
             as={Link}
             href="/sign-in"
+            aria-label="get-started-button"
             className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base"
           >
             Get Started

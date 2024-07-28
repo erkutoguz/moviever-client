@@ -14,7 +14,7 @@ import Brand from "../common/Brand";
 import { useAppContext } from "../../context/appContext";
 
 function Header() {
-  const { user, userProfilePicture } = useAppContext();
+  const { user, userProfilePicture, logout } = useAppContext();
   return (
     <Navbar style={{ backgroundColor: "#0A2540" }}>
       <NavbarBrand className="hidden lg:flex">
@@ -51,7 +51,9 @@ function Header() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link className="text-white hover:cursor-pointer">About</Link>
+          <Link href="/about" className="text-white hover:cursor-pointer">
+            About
+          </Link>
         </NavbarItem>
       </NavbarContent>
 
@@ -93,7 +95,14 @@ function Header() {
               Profile
             </DropdownItem>
 
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem
+              key="logout"
+              href="/logout"
+              color="danger"
+              onPress={() => {
+                logout();
+              }}
+            >
               Log Out
             </DropdownItem>
           </DropdownMenu>

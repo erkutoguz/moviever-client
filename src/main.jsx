@@ -16,6 +16,11 @@ import { AppProvider } from "./context/appContext.jsx";
 import MovieDetail from "./pages/MovieDetail.jsx";
 import Movies from "./pages/Movies.jsx";
 import Category from "./pages/Category.jsx";
+import VerificationSuccess from "./pages/VerificationSuccess.jsx";
+import VerificationFailed from "./pages/VerificationFailed.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
+import Logout from "./pages/Logout.jsx";
+import About from "./pages/About.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +28,10 @@ const router = createBrowserRouter(
       <Route path="/" element={<Landing />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/verification-success" element={<VerificationSuccess />} />
+      <Route path="/verification-failed" element={<VerificationFailed />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/about" element={<About />} />
       <Route
         path="/home"
         element={
@@ -71,6 +80,7 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route path="/logout" element={<Logout />} />
     </Route>
   )
 );

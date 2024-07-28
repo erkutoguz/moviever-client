@@ -12,8 +12,17 @@ import twitterIcon from "../../assets/icons/twitter.svg";
 import linkedinIcon from "../../assets/icons/linkedin.svg";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import { useAppContext } from "../../context/appContext";
+import { useEffect, useState } from "react";
 function Footer() {
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated, fetchPopularMovies } = useAppContext();
+  const [popularMovies, setPopularMovies] = useState([]);
+  useEffect(() => {
+    fetchPopularMovies().then((res) => {
+      setPopularMovies(res.data.movies);
+      console.log(res.data.movies);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="flex flex-col lg:flex-row justify-center items-center lg:justify-around my-8 gap-8">
       <div className="max-w-80 lg:min-w-60 flex flex-col justify-center gap-2 text-left my-8 pr-10">
@@ -28,6 +37,7 @@ function Footer() {
           <Button
             as={Link}
             isIconOnly
+            aria-label="instagram-button"
             href="https://www.instagram.com/thisiserkut/"
           >
             <img
@@ -40,10 +50,11 @@ function Footer() {
             as={Link}
             isIconOnly
             href="https://www.linkedin.com/in/erkut-oğuz-82704420b"
+            aria-label="linkedin-button"
           >
             <img src={linkedinIcon} alt="linkedin-icon" className="bg-white" />
           </Button>
-          <Button as={Link} isIconOnly>
+          <Button as={Link} isIconOnly aria-label="twitter-button">
             <img src={twitterIcon} alt="twitter-icon" className="bg-white" />
           </Button>
         </div>
@@ -106,58 +117,81 @@ function Footer() {
             </Table>
           </div>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
-            <Table removeWrapper className="text-dark">
-              <TableHeader className="bg-none">
-                <TableColumn>Popular Movies</TableColumn>
-                <TableColumn></TableColumn>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Transformers
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Harry Potter
-                    </Link>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Lord Of The Rings
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Star Wars
-                    </Link>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Avengers
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Batman
-                    </Link>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <Link href="/" className="text-dark">
-                      Interstellar
-                    </Link>
-                  </TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            {popularMovies.length > 0 && (
+              <Table removeWrapper className="text-dark">
+                <TableHeader className="bg-none">
+                  <TableColumn>Popular Movies</TableColumn>
+                  <TableColumn></TableColumn>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[0].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[0].title}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[1].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[1].title}
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[2].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[2].title}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[3].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[3].title}
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[4].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[4].title}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[5].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[5].title}
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <Link
+                        href={`/movies/${popularMovies[6].id}`}
+                        className="text-dark"
+                      >
+                        {popularMovies[6].title}
+                      </Link>
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            )}
           </div>
         </>
       )}

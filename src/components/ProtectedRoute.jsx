@@ -5,7 +5,6 @@ import { useAppContext } from "../context/appContext";
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAppContext();
   if (!isAuthenticated) {
-    console.log("wut", isAuthenticated);
     return <Navigate to={"/sign-in"} />;
   }
 

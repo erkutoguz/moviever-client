@@ -105,6 +105,7 @@ function SignInForm() {
         onPress={() => {
           validateAndSubmit();
         }}
+        aria-label="sign-in-button"
         isDisabled={isLoading}
       >
         Sign In

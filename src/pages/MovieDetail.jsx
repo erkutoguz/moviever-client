@@ -178,6 +178,8 @@ function MovieDetail() {
                     pictureUrl={r.pictureUrl}
                     comment={r.comment}
                     reviewId={r.id}
+                    movieId={movieId}
+                    updateReviews={updateReviews}
                     liked={likedReviews.includes(r.id)}
                   />
                 );

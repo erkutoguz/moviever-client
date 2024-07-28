@@ -24,6 +24,7 @@ const initialState = {
   user: localStorage.getItem("user"),
   userProfilePicture: localStorage.getItem("userProfilePicture"),
   categories: JSON.parse(localStorage.getItem("categories")),
+  isEnabled: localStorage.getItem("isEnabled"),
 };
 
 // eslint-disable-next-line react/prop-types
@@ -93,7 +94,10 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
     localStorage.removeItem("categories");
+    localStorage.removeItem("isEnabled");
+    localStorage.removeItem("userProfilePicture");
   };
+
   const loadLocalStorage = () => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
@@ -125,6 +129,7 @@ export const AppProvider = ({ children }) => {
       localStorage.setItem("user", data.username);
       localStorage.setItem("userProfilePicture", data.pictureUrl);
       localStorage.setItem("isAuthenticated", true);
+
       dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: {
@@ -143,6 +148,10 @@ export const AppProvider = ({ children }) => {
       });
     }
   };
+  const logout = async () => {
+    await dispatch({ type: LOGOUT, payload: initialState });
+    await resetLocalStroage();
+  };
   const register = async (username, email, password, firstname, lastname) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
@@ -154,23 +163,25 @@ export const AppProvider = ({ children }) => {
         lastname,
       });
 
-      const data = response.data;
-
-      dispatch({
-        type: REGISTER_USER_SUCCESS,
-        payload: {
-          user: data.username,
-          refreshToken: data.refreshToken,
-          accessToken: data.accessToken,
-          errMessage: "",
-          userProfilePicture: data.pictureUrl,
-        },
-      });
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("user", data.username);
-      localStorage.setItem("userProfilePicture", data.pictureUrl);
-      localStorage.setItem("isAuthenticated", true);
+      // const data = response.data;
+      // console.log(data);
+      // dispatch({
+      //   type: REGISTER_USER_SUCCESS,
+      //   payload: {
+      //     user: data.username,
+      //     refreshToken: data.refreshToken,
+      //     accessToken: data.accessToken,
+      //     errMessage: "",
+      //     userProfilePicture: data.pictureUrl,
+      //     isEnabled: data.isEnabled,
+      //   },
+      // });
+      // localStorage.setItem("accessToken", data.accessToken);
+      // localStorage.setItem("refreshToken", data.refreshToken);
+      // localStorage.setItem("user", data.username);
+      // localStorage.setItem("userProfilePicture", data.pictureUrl);
+      // localStorage.setItem("isAuthenticated", true);
+      // localStorage.setItem("isEnabled", data.isEnabled);
     } catch (err) {
       dispatch({
         type: REGISTER_USER_ERROR,
@@ -178,6 +189,7 @@ export const AppProvider = ({ children }) => {
       });
     }
   };
+
   const fetchNewMovies = async () => {
     const page = 0;
     const size = 12;
@@ -204,6 +216,9 @@ export const AppProvider = ({ children }) => {
     await appClient.post(`/movies/${movieId}/reviews`, {
       comment: review,
     });
+  };
+  const deleteReview = async (movieId, reviewId) => {
+    await appClient.delete(`/movies/${movieId}/reviews/${reviewId}`);
   };
 
   const likeReview = async (reviewId) => {
@@ -253,7 +268,9 @@ export const AppProvider = ({ children }) => {
         unlikeMovie,
         fetchAllMovies,
         makeReview,
+        deleteReview,
         fetchMovieReviews,
+        logout,
       }}
     >
       {children}

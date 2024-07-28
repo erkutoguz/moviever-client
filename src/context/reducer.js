@@ -60,6 +60,7 @@ export default (state, action) => {
       categories: action.payload.categories,
     };
   }
+
   if (action.type === LOGOUT) {
     return {
       ...action.payload,

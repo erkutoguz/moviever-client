@@ -169,7 +169,7 @@ function RegisterForm() {
       <fieldset className="w-80 flex flex-col items-center">
         <Input
           type="text"
-          label="First Name"
+          label="Last Name"
           variant="bordered"
           onChange={changeLastName}
         />
@@ -180,9 +180,10 @@ function RegisterForm() {
 
       <Button
         className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base"
-        onPress={() => {
-          validateAndSubmit();
-          console.log("hola");
+        aria-label="register-button"
+        onPress={async () => {
+          await validateAndSubmit();
+          navigate("/verify-email");
         }}
         isDisabled={isLoading}
       >

@@ -20,6 +20,7 @@ function Hero() {
       <div className="heroBtn w-full lg:hidden flex justify-center">
         <Button
           as={Link}
+          aria-label="get-started-button"
           className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base top-0"
         >
           Get Started

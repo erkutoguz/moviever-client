@@ -20,6 +20,7 @@ function Categories() {
       <div className="flex flex-wrap gap-2 justify-center items-center md:max-w-[675px] lg:max-w-[900px] ">
         <Button
           className="bg-primary-200"
+          aria-label="all-movies-button"
           onPress={() => {
             return navigate(`/movies/category/${"ALL"}`);
           }}
@@ -37,6 +38,7 @@ function Categories() {
               <Button
                 key={i}
                 className="bg-primary-200"
+                aria-label="category-movies-button"
                 onPress={() => {
                   return navigate(`/movies/category/${c.categoryType}`);
                 }}

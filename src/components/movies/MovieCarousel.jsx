@@ -58,6 +58,7 @@ const MovieCarousel = ({ slides }) => {
     <div className="flex justify-center self-center relative transition-transform ease-out duration-700 max-w-[1000px]">
       <Button
         onClick={prevSlide}
+        aria-label="prev-button"
         className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-50"
       >
         &#9664;
@@ -150,6 +151,7 @@ const MovieCarousel = ({ slides }) => {
         })}
       <Button
         onClick={nextSlide}
+        aria-label="next-button"
         className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-50"
       >
         &#9654;
