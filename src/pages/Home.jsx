@@ -12,10 +12,10 @@ function Home() {
   const [popularMovies, setPopularMovies] = useState([]);
   const { fetchNewMovies, fetchPopularMovies } = useAppContext();
   useEffect(() => {
-    fetchNewMovies().then((res) => {
+    fetchNewMovies(0, 12).then((res) => {
       setNewMovies(res.data.movies);
     });
-    fetchPopularMovies().then((res) => {
+    fetchPopularMovies(0, 12).then((res) => {
       setPopularMovies(res.data.movies);
     });
   }, []);

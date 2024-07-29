@@ -190,14 +190,10 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const fetchNewMovies = async () => {
-    const page = 0;
-    const size = 12;
+  const fetchNewMovies = async (page, size) => {
     return await appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
   };
-  const fetchPopularMovies = async () => {
-    const page = 0;
-    const size = 12;
+  const fetchPopularMovies = async (page, size) => {
     return await appClient.get(
       `/movies/most-liked-movies?page=${page}&size=${size}`
     );
@@ -227,7 +223,29 @@ export const AppProvider = ({ children }) => {
   const unlikeReview = async (reviewId) => {
     return await appClient.delete(`/reviews/${reviewId}/like`);
   };
-
+  const fetchUserWatchlists = async () => {
+    return await appClient.get("/watchlist");
+  };
+  const fetchWatchlistDetails = async (watchlistId) => {
+    return await appClient.get(`/watchlist/${watchlistId}/movies`);
+  };
+  const fetchUserWatchlistsPreview = async () => {
+    return await appClient.get("/watchlist/preview");
+  };
+  const addMovieToWatchlist = async (watchlistIds, movieId) => {
+    const requests = watchlistIds.map((watchlistId) =>
+      appClient.post(`/watchlist/${watchlistId}`, { movieId })
+    );
+    Promise.all(requests)
+      .then((responses) => {
+        responses.forEach((response, index) => {
+          console.log(`Response from Request ${index + 1}:`, response.data);
+        });
+      })
+      .catch((errors) => {
+        console.error("Error:", errors);
+      });
+  };
   const likeMovie = async (movieId) => {
     return await appClient.post(`/movies/${movieId}/like`);
   };
@@ -260,13 +278,17 @@ export const AppProvider = ({ children }) => {
         fetchCategories,
         fetchNewMovies,
         fetchPopularMovies,
+        fetchWatchlistDetails,
         fetchLikedReviews,
         likeReview,
+        addMovieToWatchlist,
         unlikeReview,
         fetchMovieDetailsWithMovieId,
         likeMovie,
         unlikeMovie,
         fetchAllMovies,
+        fetchUserWatchlists,
+        fetchUserWatchlistsPreview,
         makeReview,
         deleteReview,
         fetchMovieReviews,

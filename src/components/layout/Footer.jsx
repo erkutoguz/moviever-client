@@ -17,9 +17,8 @@ function Footer() {
   const { isAuthenticated, fetchPopularMovies } = useAppContext();
   const [popularMovies, setPopularMovies] = useState([]);
   useEffect(() => {
-    fetchPopularMovies().then((res) => {
+    fetchPopularMovies(0, 12).then((res) => {
       setPopularMovies(res.data.movies);
-      console.log(res.data.movies);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,43 +70,49 @@ function Footer() {
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link href="/movies/category/ACTION" className="text-dark">
                       Action
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link href="/movies/category/ROMANCE" className="text-dark">
                       Romance
                     </Link>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link href="/movies/category/FANTASY" className="text-dark">
                       Fantasy
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link href="/movies/category/HORROR" className="text-dark">
                       Horror
                     </Link>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link
+                      href="/movies/category/SCIENCE_FICTION"
+                      className="text-dark"
+                    >
                       Sci-Fi
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link href="/movies/category/DRAMA" className="text-dark">
                       Drama
                     </Link>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    <Link href="/" className="text-dark">
+                    <Link
+                      href="/movies/category/ADVENTURE"
+                      className="text-dark"
+                    >
                       Adventure
                     </Link>
                   </TableCell>

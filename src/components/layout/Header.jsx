@@ -21,7 +21,9 @@ function Header() {
         <Brand />
       </NavbarBrand>
       <NavbarBrand className="flex lg:hidden">
-        <p className="text-brandColor text-2xl md:text-3xl font-bold">M</p>
+        <Link href="/">
+          <p className="text-brandColor text-2xl md:text-3xl font-bold">M</p>
+        </Link>
       </NavbarBrand>
 
       <NavbarContent className="flex gap-0" justify="end">
@@ -87,11 +89,11 @@ function Header() {
               <p className="font-semibold">{user}</p>
             </DropdownItem>
 
-            <DropdownItem href="/sign-in" key="settings">
+            <DropdownItem href="/watchlists" key="watchlists">
               My Watchlists
             </DropdownItem>
 
-            <DropdownItem href="/sign-in" key="settings">
+            <DropdownItem href="/sign-in" key="user-profile">
               Profile
             </DropdownItem>
 

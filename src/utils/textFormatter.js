@@ -1,5 +1,10 @@
 function capitalizeText(text) {
-  if (!text) return text; // Boş veya null metinler için
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  if (!text) return text;
+
+  const words = text.split("_");
+
+  return words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 }
 export { capitalizeText };

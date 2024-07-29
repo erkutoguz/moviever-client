@@ -21,6 +21,8 @@ import VerificationFailed from "./pages/VerificationFailed.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Logout from "./pages/Logout.jsx";
 import About from "./pages/About.jsx";
+import MyWatchlists from "./pages/MyWatchlists.jsx";
+import WatchlistDetail from "./pages/WatchlistDetail.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +47,22 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <Movies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/watchlists"
+        element={
+          <ProtectedRoute>
+            <MyWatchlists />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/watchlists/:watchlistId"
+        element={
+          <ProtectedRoute>
+            <WatchlistDetail />
           </ProtectedRoute>
         }
       />

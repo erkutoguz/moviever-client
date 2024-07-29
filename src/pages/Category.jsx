@@ -16,8 +16,6 @@ function Category() {
 
   useEffect(() => {
     fetchAllMovies(categoryName, page, 12).then((res) => {
-      console.log(categoryName);
-      console.log(res);
       setMovieData(res.data);
     });
   }, [page]);

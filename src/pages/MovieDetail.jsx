@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import { Divider, Image } from "@nextui-org/react";
+import { Button, Divider, Image } from "@nextui-org/react";
 import heartIcon from "../assets/icons/heart.svg";
 import likedHeartIcon from "../assets/icons/liked-heart.png";
 
@@ -11,6 +11,7 @@ import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import MakeComment from "../components/common/MakeComment";
+import AddWatchlistModal from "../components/common/AddWatchlistModal";
 
 function MovieDetail() {
   const { movieId } = useParams();
@@ -139,6 +140,9 @@ function MovieDetail() {
               <div className="rating flex gap-2">
                 <p className="font-semibold text-dark text-sm">Rating</p>
                 <p className="text-sm">{movieDetails.rating}</p>
+              </div>
+              <div className="add-watchlist my-4 ">
+                <AddWatchlistModal movieId={movieId} />
               </div>
             </div>
           </div>
