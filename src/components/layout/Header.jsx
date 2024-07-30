@@ -43,6 +43,14 @@ function Header() {
             Movies
           </Link>
         </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <Link
+            href="/watchlists"
+            className="text-white mr-6 md:mr-16 hover:cursor-pointer"
+          >
+            My Watchlists
+          </Link>
+        </NavbarItem>
 
         <NavbarItem>
           <Link
@@ -91,6 +99,13 @@ function Header() {
 
             <DropdownItem href="/watchlists" key="watchlists">
               My Watchlists
+            </DropdownItem>
+            <DropdownItem
+              href="/recommended"
+              className="lg:hidden flex"
+              key="recommended"
+            >
+              Recommended
             </DropdownItem>
 
             <DropdownItem href="/sign-in" key="user-profile">

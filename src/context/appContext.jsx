@@ -226,8 +226,10 @@ export const AppProvider = ({ children }) => {
   const fetchUserWatchlists = async () => {
     return await appClient.get("/watchlist");
   };
-  const fetchWatchlistDetails = async (watchlistId) => {
-    return await appClient.get(`/watchlist/${watchlistId}/movies`);
+  const fetchWatchlistDetails = async (watchlistId, page, size) => {
+    return await appClient.get(
+      `/watchlist/${watchlistId}/movies?page=${page}&size=${size}`
+    );
   };
   const fetchUserWatchlistsPreview = async () => {
     return await appClient.get("/watchlist/preview");
@@ -245,6 +247,17 @@ export const AppProvider = ({ children }) => {
       .catch((errors) => {
         console.error("Error:", errors);
       });
+  };
+  const removeMovieFromWatchlist = async (watchlistId, movieId) => {
+    await appClient.delete(`/watchlist/${watchlistId}/movies/${movieId}`);
+  };
+  const renameWatchlist = async (watchlistId, watchlistName) => {
+    await appClient.patch(`/watchlist/${watchlistId}`, {
+      watchlistName: watchlistName,
+    });
+  };
+  const deleteWatchlist = async (watchlistId) => {
+    await appClient.delete(`/watchlist/${watchlistId}`);
   };
   const likeMovie = async (movieId) => {
     return await appClient.post(`/movies/${movieId}/like`);
@@ -282,6 +295,9 @@ export const AppProvider = ({ children }) => {
         fetchLikedReviews,
         likeReview,
         addMovieToWatchlist,
+        deleteWatchlist,
+        renameWatchlist,
+        removeMovieFromWatchlist,
         unlikeReview,
         fetchMovieDetailsWithMovieId,
         likeMovie,

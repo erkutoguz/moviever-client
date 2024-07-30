@@ -4,7 +4,7 @@ import Header from "../components/layout/Header";
 
 function About() {
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center w-full">
       <Header />
       <div className="w-full bg-lightGray flex flex-col items-center">
         <div className="container flex flex-col items-center w-full lg:w-2/3 xl:w-1/2 px-6 py-12 bg-darkBlue text-white rounded-lg shadow-lg mt-12">

@@ -5,6 +5,7 @@ import StarIcon from "../../assets/icons/StarIcon";
 
 function MovieCard({ movie }) {
   const navigate = useNavigate();
+
   return (
     <Card
       isPressable
