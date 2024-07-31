@@ -256,6 +256,9 @@ export const AppProvider = ({ children }) => {
       watchlistName: watchlistName,
     });
   };
+  const createWatchlist = async (watchlistName) => {
+    await appClient.post("/watchlist", { watchlistName: watchlistName });
+  };
   const deleteWatchlist = async (watchlistId) => {
     await appClient.delete(`/watchlist/${watchlistId}`);
   };
@@ -296,6 +299,7 @@ export const AppProvider = ({ children }) => {
         likeReview,
         addMovieToWatchlist,
         deleteWatchlist,
+        createWatchlist,
         renameWatchlist,
         removeMovieFromWatchlist,
         unlikeReview,

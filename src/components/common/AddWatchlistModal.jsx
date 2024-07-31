@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
+import CreateWatchlistModal from "./CreateWatchlistModal";
 
 function AddWatchlistModal({ movieId }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -27,6 +28,12 @@ function AddWatchlistModal({ movieId }) {
       });
     }
   }, [isOpen]);
+
+  const updateWatchlist = () => {
+    fetchUserWatchlists().then((res) => {
+      setWatchlists(res.data);
+    });
+  };
 
   return (
     <div>
@@ -54,6 +61,7 @@ function AddWatchlistModal({ movieId }) {
               </ModalHeader>
               <ModalBody>
                 <p>Select watchlist to add</p>
+                <CreateWatchlistModal updateWatchlists={updateWatchlist} />
                 {watchlists.length > 0 ? (
                   <CheckboxGroup
                     defaultValue={[watchlists[0]]}

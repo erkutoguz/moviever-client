@@ -2,10 +2,11 @@ import { Button, Image, Link, Skeleton } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import smallHeroImage from "../../assets/images/hero-img.jpg";
 import largeHeroImage from "../../assets/images/hero.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
   const [isHeroLoaded, setHeroLoaded] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
       setHeroLoaded(true);
@@ -22,6 +23,9 @@ function Hero() {
           as={Link}
           aria-label="get-started-button"
           className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base top-0"
+          onPress={() => {
+            navigate("/sign-in");
+          }}
         >
           Get Started
         </Button>

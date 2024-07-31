@@ -6,7 +6,7 @@ function Register() {
   return (
     <div className="flex justify-center items-center flex-col">
       <LandingNavbar />
-      <div className="brand w-26 h-26 border-2 border-brandColor px-4 py-2 rounded-xl mt-20">
+      <div className="brand border-2 border-brandColor px-4 py-2 rounded-xl mt-20">
         <p className="text-brandColor text-2xl md:text-3xl font-bold">M</p>
       </div>
       <RegisterForm />

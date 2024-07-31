@@ -7,6 +7,8 @@ import LayoutLink from "../components/common/LayoutLink";
 import WatchlistPrevCarousel from "../components/watchlist/WatchlistPrevCarousel";
 import RenameWatchlistModal from "../components/common/RenameWatchlistModal";
 import DeleteWatchlistModal from "../components/common/DeleteWatchlistModal";
+import CreateWatchlistModal from "../components/common/CreateWatchlistModal";
+import { Link } from "@nextui-org/react";
 
 const MyWatchlists = () => {
   const [watchlists, setWatchlists] = useState([]);
@@ -26,6 +28,9 @@ const MyWatchlists = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <Header />
+      <div className="add-watchlist mt-8">
+        <CreateWatchlistModal updateWatchlists={updateWatchlists} />
+      </div>
       {watchlists.length > 0 && (
         <div className="">
           {watchlists.map((w, i) => {
@@ -52,7 +57,10 @@ const MyWatchlists = () => {
                   {w.movies.length > 0 ? (
                     <WatchlistPrevCarousel slides={w.movies} />
                   ) : (
-                    <p className="px-6">no movies yet</p>
+                    <div className="px-6">
+                      <p className="">no movies yet</p>
+                      <Link href="/all-movies">Add movies</Link>
+                    </div>
                   )}
                 </div>
               </div>
