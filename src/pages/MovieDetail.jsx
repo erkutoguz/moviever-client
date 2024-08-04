@@ -23,6 +23,7 @@ function MovieDetail() {
     unlikeMovie,
     likeMovie,
     fetchMovieReviews,
+    userProfilePicture,
   } = useAppContext();
   const [isUserLiked, setIsUserLiked] = useState(movieDetails.isUserLiked);
   const [likeCount, setLikeCount] = useState(0);

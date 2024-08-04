@@ -21,7 +21,7 @@ function Header() {
         <Brand />
       </NavbarBrand>
       <NavbarBrand className="flex lg:hidden">
-        <Link href="/">
+        <Link href="/" aria-label="home">
           <p className="text-brandColor text-2xl md:text-3xl font-bold">M</p>
         </Link>
       </NavbarBrand>
@@ -30,6 +30,7 @@ function Header() {
         <NavbarItem>
           <Link
             href="/home"
+            aria-label="home-page"
             className="text-white mr-6 md:mr-16 hover:cursor-pointer"
           >
             Home
@@ -38,6 +39,7 @@ function Header() {
         <NavbarItem>
           <Link
             href="/all-movies"
+            aria-label="all-movies"
             className="text-white mr-6 md:mr-16 hover:cursor-pointer"
           >
             Movies
@@ -45,6 +47,7 @@ function Header() {
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           <Link
+            aria-label="my-watchlists"
             href="/watchlists"
             className="text-white mr-6 md:mr-16 hover:cursor-pointer"
           >
@@ -56,12 +59,17 @@ function Header() {
           <Link
             href="/recommended-movies"
             className="text-white hidden lg:flex lg:mr-16 hover:cursor-pointer"
+            aria-label="recommended-movies"
           >
             Recommended
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link href="/about" className="text-white hover:cursor-pointer">
+          <Link
+            href="/about"
+            aria-label="about-me"
+            className="text-white hover:cursor-pointer"
+          >
             About
           </Link>
         </NavbarItem>
@@ -108,7 +116,7 @@ function Header() {
               Recommended
             </DropdownItem>
 
-            <DropdownItem href="/sign-in" key="user-profile">
+            <DropdownItem href="/profile/me" key="user-profile">
               Profile
             </DropdownItem>
 

@@ -13,6 +13,7 @@ import {
   REGISTER_USER_SUCCESS,
 } from "./actions";
 import axios from "axios";
+import { data } from "autoprefixer";
 const AppContext = createContext(null);
 
 const initialState = {
@@ -190,6 +191,29 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const fetchProfile = async () => {
+    const response = await appClient.get("/users/me");
+    localStorage.removeItem("userProfilePicture");
+    localStorage.setItem("userProfilePicture", response.data.pictureUrl);
+    state.userProfilePicture = response.data.pictureUrl;
+    return response;
+  };
+
+  const updateProfile = async (data) => {
+    return await appClient.put("/users/me", data);
+  };
+  const changeProfilePicture = async (image) => {
+    return await appClient.post("/users/profile/avatar", image, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+  };
+
+  const removeProfilePicture = async () => {
+    return await appClient.delete("/users/profile/avatar");
+  };
+
   const fetchNewMovies = async (page, size) => {
     return await appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
   };
@@ -291,6 +315,10 @@ export const AppProvider = ({ children }) => {
         ...state,
         login,
         register,
+        fetchProfile,
+        updateProfile,
+        changeProfilePicture,
+        removeProfilePicture,
         fetchCategories,
         fetchNewMovies,
         fetchPopularMovies,

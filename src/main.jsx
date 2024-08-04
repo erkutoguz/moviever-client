@@ -23,6 +23,7 @@ import Logout from "./pages/Logout.jsx";
 import About from "./pages/About.jsx";
 import MyWatchlists from "./pages/MyWatchlists.jsx";
 import WatchlistDetail from "./pages/WatchlistDetail.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,6 +56,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <MyWatchlists />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/me"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
           </ProtectedRoute>
         }
       />

@@ -73,24 +73,40 @@ function Footer() {
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <Link href="/movies/category/ACTION" className="text-dark">
+                    <Link
+                      href="/movies/category/ACTION"
+                      className="text-dark"
+                      aria-label="action"
+                    >
                       Action
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/movies/category/ROMANCE" className="text-dark">
+                    <Link
+                      href="/movies/category/ROMANCE"
+                      className="text-dark"
+                      aria-label="romance"
+                    >
                       Romance
                     </Link>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>
-                    <Link href="/movies/category/FANTASY" className="text-dark">
+                    <Link
+                      href="/movies/category/FANTASY"
+                      className="text-dark"
+                      aria-label="fantasy"
+                    >
                       Fantasy
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/movies/category/HORROR" className="text-dark">
+                    <Link
+                      href="/movies/category/HORROR"
+                      className="text-dark"
+                      aria-label="horror"
+                    >
                       Horror
                     </Link>
                   </TableCell>
@@ -100,12 +116,17 @@ function Footer() {
                     <Link
                       href="/movies/category/SCIENCE_FICTION"
                       className="text-dark"
+                      aria-label="sci-fi"
                     >
                       Sci-Fi
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Link href="/movies/category/DRAMA" className="text-dark">
+                    <Link
+                      href="/movies/category/DRAMA"
+                      className="text-dark"
+                      aria-label="drama"
+                    >
                       Drama
                     </Link>
                   </TableCell>
@@ -115,6 +136,7 @@ function Footer() {
                     <Link
                       href="/movies/category/ADVENTURE"
                       className="text-dark"
+                      aria-label="adventure"
                     >
                       Adventure
                     </Link>
@@ -137,6 +159,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[0].id}`}
                         className="text-dark"
+                        aria-label={`popular-movies-${popularMovies[0].title}`}
                       >
                         {popularMovies[0].title}
                       </Link>
@@ -145,6 +168,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[1].id}`}
                         className="text-dark"
+                        aria-label={`popular-movies-${popularMovies[1].title}`}
                       >
                         {popularMovies[1].title}
                       </Link>
@@ -155,6 +179,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[2].id}`}
                         className="text-dark"
+                        aria-label={`popular-movies-${popularMovies[2].title}`}
                       >
                         {popularMovies[2].title}
                       </Link>
@@ -163,6 +188,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[3].id}`}
                         className="text-dark"
+                        aria-label={`popular-movies-${popularMovies[3].title}`}
                       >
                         {popularMovies[3].title}
                       </Link>
@@ -172,6 +198,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[4].id}`}
+                        aria-label={`popular-movies-${popularMovies[4].title}`}
                         className="text-dark"
                       >
                         {popularMovies[4].title}
@@ -181,6 +208,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[5].id}`}
                         className="text-dark"
+                        aria-label={`popular-movies-${popularMovies[5].title}`}
                       >
                         {popularMovies[5].title}
                       </Link>
@@ -190,6 +218,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[6].id}`}
+                        aria-label={`popular-movies-${popularMovies[6].title}`}
                         className="text-dark"
                       >
                         {popularMovies[6].title}
