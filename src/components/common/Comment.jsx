@@ -4,7 +4,7 @@ import { Avatar, Button } from "@nextui-org/react";
 import { timeAgo } from "../../utils/dataFormatter";
 import heartIcon from "../../assets/icons/heart.svg";
 import likedHeartIcon from "../../assets/icons/liked-heart.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import DeleteReviewModal from "./DeleteReviewModal";
 function Comment({
@@ -21,6 +21,10 @@ function Comment({
   const [isLiked, setLiked] = useState(liked);
   const [likeCountState, setLikedCountState] = useState(likeCount);
   const { likeReview, unlikeReview, user } = useAppContext();
+
+  useEffect(() => {
+    console.log(createdAt);
+  }, []);
 
   const toogleLike = () => {
     if (isLiked) {

@@ -12,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import Brand from "../common/Brand";
 import { useAppContext } from "../../context/appContext";
+import MovieSearchBar from "../common/MovieSearchBar";
 
 function Header() {
   const { user, userProfilePicture, logout } = useAppContext();
@@ -20,23 +21,14 @@ function Header() {
       <NavbarBrand className="hidden lg:flex">
         <Brand />
       </NavbarBrand>
-      <NavbarBrand className="flex lg:hidden">
+      <NavbarBrand className="flex lg:hidden ">
         <Link href="/" aria-label="home">
           <p className="text-brandColor text-2xl md:text-3xl font-bold">M</p>
         </Link>
       </NavbarBrand>
 
-      <NavbarContent className="flex gap-0" justify="end">
-        <NavbarItem>
-          <Link
-            href="/home"
-            aria-label="home-page"
-            className="text-white mr-6 md:mr-16 hover:cursor-pointer"
-          >
-            Home
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
+      <NavbarContent className="flex gap-0 pl-4" justify="end">
+        <NavbarItem className="hidden md:flex">
           <Link
             href="/all-movies"
             aria-label="all-movies"
@@ -45,7 +37,7 @@ function Header() {
             Movies
           </Link>
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden md:flex">
           <Link
             aria-label="my-watchlists"
             href="/watchlists"
@@ -64,14 +56,9 @@ function Header() {
             Recommended
           </Link>
         </NavbarItem>
+
         <NavbarItem>
-          <Link
-            href="/about"
-            aria-label="about-me"
-            className="text-white hover:cursor-pointer"
-          >
-            About
-          </Link>
+          <MovieSearchBar />
         </NavbarItem>
       </NavbarContent>
 
@@ -105,6 +92,9 @@ function Header() {
               <p className="font-semibold">{user}</p>
             </DropdownItem>
 
+            <DropdownItem href="/home" key="home">
+              Home
+            </DropdownItem>
             <DropdownItem href="/watchlists" key="watchlists">
               My Watchlists
             </DropdownItem>
@@ -118,6 +108,9 @@ function Header() {
 
             <DropdownItem href="/profile/me" key="user-profile">
               Profile
+            </DropdownItem>
+            <DropdownItem href="/about" key="about">
+              About
             </DropdownItem>
 
             <DropdownItem

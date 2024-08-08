@@ -46,6 +46,7 @@ const CreateWatchlistModal = ({ updateWatchlists }) => {
                   placeholder="Watchlist name"
                   value={watchlistName}
                   onChange={(e) => setWatchlistName(e.target.value)}
+                  autoFocus
                 />
               </ModalBody>
               <ModalFooter>
@@ -53,7 +54,10 @@ const CreateWatchlistModal = ({ updateWatchlists }) => {
                   color="danger"
                   aria-label="close-modal-button"
                   variant="light"
-                  onPress={onClose}
+                  onPress={() => {
+                    setWatchlistName("");
+                    onClose();
+                  }}
                 >
                   Close
                 </Button>

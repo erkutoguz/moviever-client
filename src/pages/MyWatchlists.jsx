@@ -31,7 +31,7 @@ const MyWatchlists = () => {
       <div className="add-watchlist mt-8">
         <CreateWatchlistModal updateWatchlists={updateWatchlists} />
       </div>
-      {watchlists.length > 0 && (
+      {watchlists && (
         <div className="">
           {watchlists.map((w, i) => {
             return (

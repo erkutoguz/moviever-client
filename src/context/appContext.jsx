@@ -13,7 +13,6 @@ import {
   REGISTER_USER_SUCCESS,
 } from "./actions";
 import axios from "axios";
-import { data } from "autoprefixer";
 const AppContext = createContext(null);
 
 const initialState = {
@@ -64,7 +63,7 @@ export const AppProvider = ({ children }) => {
       ) {
         const refreshToken = localStorage.getItem("refreshToken");
         appClient
-          .post("/auth/refresh-token", {
+          .post("/api/v1/auth/refresh-token", {
             refreshToken,
           })
           .then((response) => {
@@ -120,7 +119,7 @@ export const AppProvider = ({ children }) => {
   const login = async (username, password) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
-      const response = await authClient.post("/auth/login", {
+      const response = await authClient.post("/api/v1/auth/login", {
         username,
         password,
       });
@@ -156,7 +155,7 @@ export const AppProvider = ({ children }) => {
   const register = async (username, email, password, firstname, lastname) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
-      const response = await authClient.post("/auth/register", {
+      const response = await authClient.post("/api/v1/auth/register", {
         username,
         email,
         password,
@@ -192,7 +191,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const fetchProfile = async () => {
-    const response = await appClient.get("/users/me");
+    const response = await appClient.get("/api/v1/users/me");
     localStorage.removeItem("userProfilePicture");
     localStorage.setItem("userProfilePicture", response.data.pictureUrl);
     state.userProfilePicture = response.data.pictureUrl;
@@ -200,10 +199,10 @@ export const AppProvider = ({ children }) => {
   };
 
   const updateProfile = async (data) => {
-    return await appClient.put("/users/me", data);
+    return await appClient.put("/api/v1/users/me", data);
   };
   const changeProfilePicture = async (image) => {
-    return await appClient.post("/users/profile/avatar", image, {
+    return await appClient.post("/api/v1/users/profile/avatar", image, {
       headers: {
         "content-type": "multipart/form-data",
       },
@@ -211,56 +210,61 @@ export const AppProvider = ({ children }) => {
   };
 
   const removeProfilePicture = async () => {
-    return await appClient.delete("/users/profile/avatar");
+    return await appClient.delete("/api/v1/users/profile/avatar");
   };
 
   const fetchNewMovies = async (page, size) => {
-    return await appClient.get(`/movies/new-movies?page=${page}&size=${size}`);
+    return await appClient.get(
+      `/api/v1/movies/new-movies?page=${page}&size=${size}`
+    );
   };
   const fetchPopularMovies = async (page, size) => {
     return await appClient.get(
-      `/movies/most-liked-movies?page=${page}&size=${size}`
+      `/api/v1/movies/most-liked-movies?page=${page}&size=${size}`
     );
   };
   const fetchMovieDetailsWithMovieId = async (movieId) => {
-    return await appClient.get(`/movies/${movieId}?with-details=true`);
+    return await appClient.get(`/api/v1/movies/${movieId}?with-details=true`);
   };
   const fetchMovieReviews = async (movieId) => {
-    return await appClient.get(`/movies/${movieId}/reviews`);
+    return await appClient.get(`/api/v1/movies/${movieId}/reviews`);
   };
 
   const fetchLikedReviews = async (movieId) => {
-    return await appClient.get(`/users/liked-reviews/${movieId}`);
+    return await appClient.get(`/api/v1/users/liked-reviews/${movieId}`);
   };
   const makeReview = async (movieId, review) => {
-    await appClient.post(`/movies/${movieId}/reviews`, {
+    await appClient.post(`/api/v1/movies/${movieId}/reviews`, {
       comment: review,
     });
   };
   const deleteReview = async (movieId, reviewId) => {
-    await appClient.delete(`/movies/${movieId}/reviews/${reviewId}`);
+    await appClient.delete(`/api/v1/movies/${movieId}/reviews/${reviewId}`);
   };
 
   const likeReview = async (reviewId) => {
-    return await appClient.post(`/reviews/${reviewId}/like`);
+    return await appClient.post(`/api/v1/reviews/${reviewId}/like`);
   };
   const unlikeReview = async (reviewId) => {
-    return await appClient.delete(`/reviews/${reviewId}/like`);
+    return await appClient.delete(`/api/v1/reviews/${reviewId}/like`);
   };
   const fetchUserWatchlists = async () => {
-    return await appClient.get("/watchlist");
+    return await appClient.get("/api/v1/watchlist");
   };
   const fetchWatchlistDetails = async (watchlistId, page, size) => {
     return await appClient.get(
-      `/watchlist/${watchlistId}/movies?page=${page}&size=${size}`
+      `/api/v1/watchlist/${watchlistId}/movies?page=${page}&size=${size}`
     );
   };
+  const searchMovies = async (query) => {
+    return await appClient.get(`/api/v1/movies/search/${query}`);
+  };
   const fetchUserWatchlistsPreview = async () => {
-    return await appClient.get("/watchlist/preview");
+    return await appClient.get("/api/v1/watchlist/preview");
   };
   const addMovieToWatchlist = async (watchlistIds, movieId) => {
     const requests = watchlistIds.map((watchlistId) =>
-      appClient.post(`/watchlist/${watchlistId}`, { movieId })
+      appClient.post(`/api/v1/watchlist/${watchlistId}`, { movieId })
     );
     Promise.all(requests)
       .then((responses) => {
@@ -273,36 +277,38 @@ export const AppProvider = ({ children }) => {
       });
   };
   const removeMovieFromWatchlist = async (watchlistId, movieId) => {
-    await appClient.delete(`/watchlist/${watchlistId}/movies/${movieId}`);
+    await appClient.delete(
+      `/api/v1/watchlist/${watchlistId}/movies/${movieId}`
+    );
   };
   const renameWatchlist = async (watchlistId, watchlistName) => {
-    await appClient.patch(`/watchlist/${watchlistId}`, {
+    await appClient.patch(`/api/v1/watchlist/${watchlistId}`, {
       watchlistName: watchlistName,
     });
   };
   const createWatchlist = async (watchlistName) => {
-    await appClient.post("/watchlist", { watchlistName: watchlistName });
+    await appClient.post("/api/v1/watchlist", { watchlistName: watchlistName });
   };
   const deleteWatchlist = async (watchlistId) => {
-    await appClient.delete(`/watchlist/${watchlistId}`);
+    await appClient.delete(`/api/v1/watchlist/${watchlistId}`);
   };
   const likeMovie = async (movieId) => {
-    return await appClient.post(`/movies/${movieId}/like`);
+    return await appClient.post(`/api/v1/movies/${movieId}/like`);
   };
   const unlikeMovie = async (movieId) => {
-    return await appClient.delete(`/movies/${movieId}/like`);
+    return await appClient.delete(`/api/v1/movies/${movieId}/like`);
   };
   const fetchAllMovies = async (categoryName, page, size) => {
     if (categoryName !== "ALL") {
       return await appClient.get(
-        `/movies?category=${categoryName}&page=${page}&size=${size}`
+        `/api/v1/movies?category=${categoryName}&page=${page}&size=${size}`
       );
     } else {
-      return await appClient.get(`/movies?page=${page}&size=${size}`);
+      return await appClient.get(`/api/v1/movies?page=${page}&size=${size}`);
     }
   };
   const fetchCategories = async () => {
-    const response = await appClient.get("/categories");
+    const response = await appClient.get("/api/v1/categories");
     await dispatch({
       type: FETCH_CATEGORIES,
       payload: { categories: response.data },
@@ -320,6 +326,7 @@ export const AppProvider = ({ children }) => {
         changeProfilePicture,
         removeProfilePicture,
         fetchCategories,
+        searchMovies,
         fetchNewMovies,
         fetchPopularMovies,
         fetchWatchlistDetails,

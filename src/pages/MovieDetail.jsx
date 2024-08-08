@@ -38,9 +38,13 @@ function MovieDetail() {
     fetchLikedReviews(movieId).then((res) => {
       setLikedMovies(res.data.reviewIds);
     });
-    fetchMovieReviews(movieId).then((res) => {
-      setReviews(res.data);
-    });
+    fetchMovieReviews(movieId)
+      .then((res) => {
+        setReviews(res.data);
+      })
+      .catch((er) => {
+        console.log(er);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

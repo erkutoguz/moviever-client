@@ -6,6 +6,10 @@ function timeAgo(dateString) {
   const msInHour = msInMinute * 60;
   const msInDay = msInHour * 24;
 
+  console.log(diff);
+  console.log(now);
+  console.log(date);
+
   if (diff < msInMinute) {
     return "just now";
   } else if (diff < msInHour) {

@@ -18,19 +18,19 @@ import CreateWatchlistModal from "./CreateWatchlistModal";
 function AddWatchlistModal({ movieId }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [watchlists, setWatchlists] = useState([]);
-  const { fetchUserWatchlists, addMovieToWatchlist } = useAppContext();
+  const { fetchUserWatchlistsPreview, addMovieToWatchlist } = useAppContext();
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
-      fetchUserWatchlists().then((res) => {
+      fetchUserWatchlistsPreview().then((res) => {
         setWatchlists(res.data);
       });
     }
   }, [isOpen]);
 
   const updateWatchlist = () => {
-    fetchUserWatchlists().then((res) => {
+    fetchUserWatchlistsPreview().then((res) => {
       setWatchlists(res.data);
     });
   };
