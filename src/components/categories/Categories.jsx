@@ -14,7 +14,7 @@ function Categories() {
   }, []);
   return (
     <div className="mt-8 flex flex-col justify-center items-center gap-2">
-      <p className="font-semibold text-dark text-lg md:text-xl text-center">
+      <p className="font-semibold text-textColor text-lg md:text-xl text-center">
         Discover Categories
       </p>
       <div className="flex flex-wrap gap-2 justify-center items-center md:max-w-[675px] lg:max-w-[900px] ">

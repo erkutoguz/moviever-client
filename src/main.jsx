@@ -24,6 +24,10 @@ import About from "./pages/About.jsx";
 import MyWatchlists from "./pages/MyWatchlists.jsx";
 import WatchlistDetail from "./pages/WatchlistDetail.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
+import AdminLayout from "./admin/AdminLayout.jsx";
+import AdminUsers from "./admin/AdminUsers.jsx";
+import AdminMovies from "./admin/AdminMovies.jsx";
+import AdminPage from "./admin/AdminPage.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,6 +63,18 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AdminPage />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="movies" element={<AdminMovies />} />
+      </Route>
       <Route
         path="/profile/me"
         element={

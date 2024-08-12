@@ -15,7 +15,6 @@ function Movies() {
   const { fetchPopularMovies, fetchNewMovies } = useAppContext();
 
   useEffect(() => {
-    console.log(url.pathname);
     switch (url.pathname) {
       case "/new-movies":
         setPageName("New Movies");
@@ -44,7 +43,7 @@ function Movies() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Header />
-      <p className="font-bold text-xl text-darkBlue my-8">{pageName}</p>
+      <p className={`font-bold text-xl text-textColor my-8`}>{pageName}</p>
       <MovieList movies={initialData.movies} />
 
       <Pagination

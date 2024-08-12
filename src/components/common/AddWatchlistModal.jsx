@@ -53,10 +53,10 @@ function AddWatchlistModal({ movieId }) {
         isKeyboardDismissDisabled={true}
         placement={"center"}
       >
-        <ModalContent>
+        <ModalContent className="text-textColor">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-textColor">
                 Add To Watchlist
               </ModalHeader>
               <ModalBody>

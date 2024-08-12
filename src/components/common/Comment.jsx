@@ -2,11 +2,12 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Button } from "@nextui-org/react";
 import { timeAgo } from "../../utils/dataFormatter";
-import heartIcon from "../../assets/icons/heart.svg";
-import likedHeartIcon from "../../assets/icons/liked-heart.png";
+
 import { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import DeleteReviewModal from "./DeleteReviewModal";
+import HeartIcon from "../../assets/icons/HeartIcon";
+import OutlinedHeartIcon from "../../assets/icons/OutlinedHeartIcon";
 function Comment({
   reviewId,
   author,
@@ -21,10 +22,6 @@ function Comment({
   const [isLiked, setLiked] = useState(liked);
   const [likeCountState, setLikedCountState] = useState(likeCount);
   const { likeReview, unlikeReview, user } = useAppContext();
-
-  useEffect(() => {
-    console.log(createdAt);
-  }, []);
 
   const toogleLike = () => {
     if (isLiked) {
@@ -41,9 +38,11 @@ function Comment({
   };
 
   return (
-    <div className="w-full max-w-[600px] lg:max-w-full border px-8 py-4 bg-slate-200 rounded-sm mb-4">
+    <div
+      className={`w-full max-w-[600px] lg:max-w-full border border-dark p-8 bg-commentBg rounded-sm mb-4`}
+    >
       <div className="profile flex items-center justify-between w-full">
-        <div className="flex ">
+        <div className="flex items-center">
           {pictureUrl === null ? (
             <Avatar
               name={author}
@@ -80,20 +79,19 @@ function Comment({
       </div>
       <div className="comment mt-4">
         <p className="text-sm ">{comment}</p>
-        <div className="flex items-center gap-2 mt-2" onClick={toogleLike}>
+        <div className="flex items-center gap-2 mt-2">
           {isLiked ? (
-            <img
-              src={likedHeartIcon}
-              className="w-6 hover:cursor-pointer"
-              alt="heart-icon"
+            <HeartIcon
+              className={`text-danger w-6 cursor-pointer`}
+              onClick={toogleLike}
             />
           ) : (
-            <img
-              src={heartIcon}
-              className="w-6 hover:cursor-pointer"
-              alt="heart-icon"
+            <OutlinedHeartIcon
+              className="cursor-pointer w-6"
+              onClick={toogleLike}
             />
           )}
+
           <p>{likeCountState}</p>
         </div>
       </div>

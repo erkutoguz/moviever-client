@@ -35,7 +35,7 @@ const CreateWatchlistModal = ({ updateWatchlists }) => {
         isKeyboardDismissDisabled={true}
         placement={"center"}
       >
-        <ModalContent>
+        <ModalContent className="text-textColor">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">

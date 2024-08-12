@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useAppContext } from "../../context/appContext";
-import deleteIcon from "../../assets/icons/delete-icon.png";
+import DeleteIcon from "../../assets/icons/DeleteIcon";
 
 const RemoveMovieFromWatchlistModal = ({
   watchlistId,
@@ -26,7 +26,7 @@ const RemoveMovieFromWatchlistModal = ({
         aria-label="delete-review-button"
         className="bg-transparent"
       >
-        <img src={deleteIcon} alt="delete-icon" />
+        <DeleteIcon className="text-danger-600" />
       </Button>
       <Modal
         isOpen={isOpen}

@@ -5,7 +5,7 @@ import watchlistIcon from "../../assets/icons/watchlist.svg";
 function Features() {
   return (
     <div className="container flex lg:flex-row flex-col py-8 gap-5 lg:gap-10 items-center justify-center md:my-20">
-      <Card className="flex justify-center items-center text-center self-center max-w-80 min-h-56 pt-2">
+      <Card className="flex justify-center items-center text-center self-center max-w-80 min-h-56 pt-2 ">
         <CardHeader className="pb-0 pt-2 px-4 flex-col">
           <Image
             alt="movie-icon"
@@ -18,9 +18,9 @@ function Features() {
           />
         </CardHeader>
         <CardBody className="text-center">
-          <h4 className="font-bold text-dark">Discover New Movies</h4>
+          <h4 className="font-bold text-color">Discover New Movies</h4>
           <br />
-          <p className="text-dark">
+          <p className="text-color">
             Explore a vast collection of movies across all genres. Find detailed
             information, watch trailers, and read reviews.
           </p>
@@ -39,9 +39,9 @@ function Features() {
           />
         </CardHeader>
         <CardBody className="text-center">
-          <h4 className="font-bold text-dark">Share Your Reviews</h4>
+          <h4 className="font-bold text-color">Share Your Reviews</h4>
           <br />
-          <p className="text-dark">
+          <p className="text-color">
             Share your thoughts on movies you have watched. Rate and review to
             help others find great films.
           </p>
@@ -60,9 +60,9 @@ function Features() {
           />
         </CardHeader>
         <CardBody className="text-center">
-          <h4 className="font-bold text-dark">Build Your Watchlist</h4>
+          <h4 className="font-bold text-color">Build Your Watchlist</h4>
           <br />
-          <p className="text-dark">
+          <p className="text-color">
             Create and manage your own watchlist. Keep track of movies you want
             to watch and never miss a great film again.
           </p>

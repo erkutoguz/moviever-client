@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import { Button, Divider, Image } from "@nextui-org/react";
-import heartIcon from "../assets/icons/heart.svg";
-import likedHeartIcon from "../assets/icons/liked-heart.png";
+import { Divider, Image } from "@nextui-org/react";
 
 import Comment from "../components/common/Comment";
 import ReactPlayer from "react-player";
@@ -12,6 +10,9 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import MakeComment from "../components/common/MakeComment";
 import AddWatchlistModal from "../components/common/AddWatchlistModal";
+import HeartIcon from "../assets/icons/HeartIcon";
+import OutlinedHeartIcon from "../assets/icons/OutlinedHeartIcon";
+import { capitalizeText } from "../utils/textFormatter";
 
 function MovieDetail() {
   const { movieId } = useParams();
@@ -23,12 +24,11 @@ function MovieDetail() {
     unlikeMovie,
     likeMovie,
     fetchMovieReviews,
-    userProfilePicture,
   } = useAppContext();
   const [isUserLiked, setIsUserLiked] = useState(movieDetails.isUserLiked);
   const [likeCount, setLikeCount] = useState(0);
   const [reviews, setReviews] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchMovieDetailsWithMovieId(movieId).then((res) => {
       setMoviesDetails(res.data);
@@ -69,7 +69,7 @@ function MovieDetail() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full ">
+    <div className="flex flex-col justify-center items-center w-full text-textColor ">
       <Header />
       {movieDetails && likedReviews && (
         <section className="flex flex-col justify-center items-center lg:max-w-7xl">
@@ -83,7 +83,7 @@ function MovieDetail() {
                 />
               </div>
               <div className="title-categories w-full flex flex-col justify-between ">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-4">
                   <p className="text-base ">{movieDetails.title}</p>
                   <div className="categories flex gap-1">
                     {movieDetails.categories &&
@@ -91,39 +91,37 @@ function MovieDetail() {
                         return (
                           <p
                             key={i}
-                            className="hover:cursor-pointer border-b-1 p-1 text-sm"
-                            onClick={() => console.log("clicked")}
+                            className="hover:cursor-pointer hover:bg-makeCommentBg rounded-sm duration-300 border-b-1 p-2 text-sm"
+                            onClick={() =>
+                              navigate(`/movies/category/${c.categoryType}`)
+                            }
                           >
-                            {c.categoryName}
+                            {capitalizeText(c.categoryType)}
                           </p>
                         );
                       })}
                   </div>
                 </div>
-                <div
-                  className="flex gap-0.5 items-center mt-2"
-                  onClick={toogleLike}
-                >
+                <div className="flex gap-0.5 items-center mt-2">
                   {isUserLiked ? (
-                    <img
-                      src={likedHeartIcon}
-                      className="w-6 hover:cursor-pointer"
-                      alt="heart-icon"
+                    <HeartIcon
+                      className={` w-6 cursor-pointer text-danger`}
+                      onClick={toogleLike}
                     />
                   ) : (
-                    <img
-                      src={heartIcon}
-                      className="w-6 hover:cursor-pointer"
-                      alt="heart-icon"
+                    <OutlinedHeartIcon
+                      className="cursor-pointer w-6"
+                      onClick={toogleLike}
                     />
                   )}
+
                   <p>{likeCount}</p>
                 </div>
               </div>
             </div>
 
             <div className="about w-full lg:mt-8 lg:px-4 mt-4">
-              <p className="font-semibold text-dark text-sm">Description</p>
+              <p className="font-semibold  text-sm">Description</p>
               <p className="w-full text-gray-700 dark:text-gray-300 text-sm leading-relaxed mt-2 lg:mt-0">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Assumenda dignissimos corporis consequatur dolorem iusto ullam
@@ -133,17 +131,17 @@ function MovieDetail() {
               <Divider className="my-4 " />
 
               <div className="director flex gap-2">
-                <p className="font-semibold text-dark text-sm ">Director</p>
+                <p className="font-semibold  text-sm ">Director</p>
                 <p className="text-sm">{movieDetails.director}</p>
               </div>
               <Divider className="my-4" />
               <div className="releaseYear flex gap-2">
-                <p className="font-semibold text-dark text-sm ">Release Year</p>
+                <p className="font-semibold  text-sm ">Release Year</p>
                 <p className="text-sm">{movieDetails.releaseYear}</p>
               </div>
               <Divider className="my-4" />
               <div className="rating flex gap-2">
-                <p className="font-semibold text-dark text-sm">Rating</p>
+                <p className="font-semibold  text-sm">Rating</p>
                 <p className="text-sm">{movieDetails.rating}</p>
               </div>
               <div className="add-watchlist my-4 ">
@@ -153,7 +151,7 @@ function MovieDetail() {
           </div>
           <Divider className="my-8" />
           <div className="trailer-wrapper w-3/4 h-full">
-            <p className="font-semibold text-dark text-sm mb-4">Trailer</p>
+            <p className="font-semibold  text-sm mb-4">Trailer</p>
 
             <ReactPlayer
               className="react-player"
@@ -164,7 +162,7 @@ function MovieDetail() {
           </div>
           <Divider className="my-8" />
           <div className="comments w-full lg:w-3/4 lg:items-start flex flex-col justify-center items-center ">
-            <p className="font-semibold text-dark text-sm mb-4">Comments</p>
+            <p className="font-semibold text-sm mb-4">Comments</p>
             {movieDetails && (
               <MakeComment
                 movieId={movieDetails.id}

@@ -22,9 +22,9 @@ function MovieCard({ movie }) {
         />
       </CardBody>
       <CardFooter className="absolute z-10 bottom-1 flex-col !items-start">
-        <div className="info flex items-center justify-center gap-1">
+        <div className="info flex items-center justify-center gap-1 ">
           <p className="text-sm text-white/90 uppercase ">{movie.rating}</p>
-          <StarIcon />
+          <StarIcon className="" />
         </div>
         <h4 className="text-white font-medium text-large w-full truncate hover:text-clip">
           {movie.title}

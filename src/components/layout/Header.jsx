@@ -9,13 +9,25 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  Switch,
 } from "@nextui-org/react";
 import Brand from "../common/Brand";
 import { useAppContext } from "../../context/appContext";
 import MovieSearchBar from "../common/MovieSearchBar";
+import SunIcon from "../../assets/icons/SunIcon";
+import MoonIcon from "../../assets/icons/MoonIcon";
+import { useState } from "react";
 
 function Header() {
-  const { user, userProfilePicture, logout } = useAppContext();
+  const { user, userProfilePicture, logout, toggleTheme, theme } =
+    useAppContext();
+  const [themeMode, setThemeMode] = useState(theme === "light");
+
+  const toggleThemeMode = () => {
+    setThemeMode(!themeMode);
+    toggleTheme();
+  };
+
   return (
     <Navbar style={{ backgroundColor: "#0A2540" }}>
       <NavbarBrand className="hidden lg:flex">
@@ -61,8 +73,21 @@ function Header() {
           <MovieSearchBar />
         </NavbarItem>
       </NavbarContent>
+      <NavbarContent>
+        <NavbarItem>
+          <Switch
+            defaultSelected
+            isSelected={themeMode}
+            onValueChange={toggleThemeMode}
+            size="lg"
+            color="warning"
+            startContent={<SunIcon />}
+            endContent={<MoonIcon />}
+          ></Switch>
+        </NavbarItem>
+      </NavbarContent>
 
-      <NavbarContent as="div" justify="end">
+      <NavbarContent as="div" justify="end" className="">
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             {userProfilePicture !== "null" ? (
@@ -87,29 +112,37 @@ function Header() {
             )}
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
+            <DropdownItem key="profile" className="h-14 gap-2 text-textColor">
               <p className="font-medium">Signed in as</p>
               <p className="font-semibold">{user}</p>
             </DropdownItem>
 
-            <DropdownItem href="/home" key="home">
+            <DropdownItem href="/home" key="home" className="text-textColor">
               Home
             </DropdownItem>
-            <DropdownItem href="/watchlists" key="watchlists">
+            <DropdownItem
+              href="/watchlists"
+              key="watchlists"
+              className="text-textColor"
+            >
               My Watchlists
             </DropdownItem>
             <DropdownItem
               href="/recommended"
-              className="lg:hidden flex"
+              className="lg:hidden flex text-textColor"
               key="recommended"
             >
               Recommended
             </DropdownItem>
 
-            <DropdownItem href="/profile/me" key="user-profile">
+            <DropdownItem
+              href="/profile/me"
+              key="user-profile"
+              className="text-textColor"
+            >
               Profile
             </DropdownItem>
-            <DropdownItem href="/about" key="about">
+            <DropdownItem href="/about" key="about" className="text-textColor">
               About
             </DropdownItem>
 
@@ -117,6 +150,7 @@ function Header() {
               key="logout"
               href="/logout"
               color="danger"
+              className="text-danger"
               onPress={() => {
                 logout();
               }}

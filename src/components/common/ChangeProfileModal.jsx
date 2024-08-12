@@ -10,8 +10,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useAppContext } from "../../context/appContext";
-import renameIcon from "../../assets/icons/rename-icon.png";
 import { useState } from "react";
+import EditIcon from "../../assets/icons/EditIcon";
 
 const ChangeProfileModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -58,11 +58,7 @@ const ChangeProfileModal = () => {
               isHovered ? "opacity-100" : "lg:opacity-0"
             }`}
           >
-            <img
-              src={renameIcon}
-              alt="change-avatar"
-              className="w-4 h-4 lg:w-6 lg:h-6 cursor-pointer"
-            />
+            <EditIcon className="w-6" />
           </div>
         </div>
       ) : (
@@ -90,11 +86,7 @@ const ChangeProfileModal = () => {
               isHovered ? "opacity-100" : "lg:opacity-0"
             }`}
           >
-            <img
-              src={renameIcon}
-              alt="change-avatar"
-              className="w-4 h-4 lg:w-6 lg:h-6 cursor-pointer"
-            />
+            <EditIcon className="w-6" />
           </div>
         </div>
       )}
@@ -147,7 +139,6 @@ const ChangeProfileModal = () => {
                   color="primary"
                   onPress={() => {
                     changeProfilePictureButton().then((res) => {
-                      console.log(res);
                       onClose();
                     });
                   }}

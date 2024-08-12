@@ -26,7 +26,7 @@ const MyWatchlists = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center text-textColor">
       <Header />
       <div className="add-watchlist mt-8">
         <CreateWatchlistModal updateWatchlists={updateWatchlists} />
@@ -35,8 +35,8 @@ const MyWatchlists = () => {
         <div className="">
           {watchlists.map((w, i) => {
             return (
-              <div key={i} className="!max-w-full lg:min-w-[980px]">
-                <div className="flex items-center justify-between ">
+              <div key={i} className="!max-w-full lg:min-w-[980px] mt-8 ">
+                <div className="flex items-center justify-between border-b-small mb-2">
                   <LayoutLink
                     to={`/watchlists/${w.id}`}
                     text={w.watchlistName}

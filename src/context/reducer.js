@@ -7,6 +7,7 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  TOGGLE_THEME,
 } from "./actions";
 
 export default (state, action) => {
@@ -40,11 +41,6 @@ export default (state, action) => {
     return {
       ...state,
       isLoading: false,
-      user: action.payload.user,
-      refreshToken: action.payload.refreshToken,
-      accessToken: action.payload.accessToken,
-      isAuthenticated: true,
-      userProfilePicture: action.payload.userProfilePicture,
     };
   }
   if (action.type === REGISTER_USER_ERROR) {
@@ -58,6 +54,13 @@ export default (state, action) => {
     return {
       ...state,
       categories: action.payload.categories,
+    };
+  }
+  7;
+  if (action.type === TOGGLE_THEME) {
+    return {
+      ...state,
+      theme: state.theme === "dark" ? "light" : "dark",
     };
   }
 

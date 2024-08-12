@@ -22,7 +22,7 @@ function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <Header />
-      <div className="new-movies">
+      <div className="new-movies mt-8 flex flex-col gap-2">
         <LayoutLink to={"/new-movies"} text={"New Movies"} />
         {newMovies && <MovieCarousel slides={newMovies} />}
       </div>
@@ -31,12 +31,12 @@ function Home() {
         <Categories />
       </div>
 
-      <div className="popular-movies">
+      <div className="popular-movies mt-8 flex flex-col gap-2">
         <LayoutLink to={"/popular-movies"} text={"Popular Movies"} />
         <MovieCarousel slides={popularMovies} />
       </div>
 
-      <div className="recommended-movies">
+      <div className="recommended-movies mt-8 flex flex-col gap-2">
         <LayoutLink to={"/"} text={"Recomended Movies"} />
         <MovieCarousel slides={newMovies} />
       </div>

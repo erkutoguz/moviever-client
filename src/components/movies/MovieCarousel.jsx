@@ -24,7 +24,7 @@ const MovieCarousel = ({ slides }) => {
   }, [currentSlide]);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000); // Auto play every 3 seconds
+    const interval = setInterval(nextSlide, 6000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSlide]);
@@ -59,7 +59,7 @@ const MovieCarousel = ({ slides }) => {
       <Button
         onClick={prevSlide}
         aria-label="prev-button"
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-50"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-10"
       >
         &#9664;
       </Button>
@@ -84,7 +84,7 @@ const MovieCarousel = ({ slides }) => {
               <CardFooter className="absolute z-10 bottom-1 flex-col !items-start">
                 <div className="info flex items-center justify-center gap-1">
                   <p className="text-sm text-white/90 uppercase ">{s.rating}</p>
-                  <StarIcon />
+                  <StarIcon className="text-dark" />
                 </div>
                 <h4 className="text-white font-medium text-large w-full truncate hover:text-clip">
                   {s.title}
@@ -140,7 +140,7 @@ const MovieCarousel = ({ slides }) => {
               <CardFooter className="absolute z-10 bottom-1 flex-col !items-start">
                 <div className="info flex items-center justify-center gap-1">
                   <p className="text-sm text-white/90 uppercase ">{s.rating}</p>
-                  <StarIcon />
+                  <StarIcon className="text-[#eab308] w-5" />
                 </div>
                 <h4 className="text-white font-medium text-large w-full truncate hover:text-clip ">
                   {s.title}
@@ -152,7 +152,7 @@ const MovieCarousel = ({ slides }) => {
       <Button
         onClick={nextSlide}
         aria-label="next-button"
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-50"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white min-w-10 min-h-10 rounded-full z-10"
       >
         &#9654;
       </Button>

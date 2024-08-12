@@ -10,8 +10,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { useAppContext } from "../../context/appContext";
-import { useState } from "react";
-import deleteIcon from "../../assets/icons/delete-icon.png";
+import DeleteIcon from "../../assets/icons/DeleteIcon";
 
 const DeleteWatchlistModal = ({ watchlistId, updateWatchlists }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -22,10 +21,10 @@ const DeleteWatchlistModal = ({ watchlistId, updateWatchlists }) => {
       <Button
         aria-label="rename-watchlist-button"
         color="primary"
-        className="bg-transparent mt-8 px-0 max-w-5 min-w-5"
+        className="bg-transparent px-0 max-w-5 min-w-5"
         onPress={onOpen}
       >
-        <img src={deleteIcon} className="" alt="rename-icon" />
+        <DeleteIcon className="text-red-500 w-5" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -34,7 +33,7 @@ const DeleteWatchlistModal = ({ watchlistId, updateWatchlists }) => {
         isKeyboardDismissDisabled={true}
         placement={"center"}
       >
-        <ModalContent>
+        <ModalContent className="text-textColor">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">

@@ -10,6 +10,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        background: "rgba(var(--background))",
+        textColor: "rgba(var(--text-color))",
+        sidebarBg: "rgba(var(--sidebar-bg))",
+        commentBg: "rgba(var(--comment-bg))",
+        makeCommentBg: "rgba(var(--make-comment-bg))",
+        starColor: "#eab308",
         white: "#fff",
         dark: "#0A0D17",
         darkBlue: "#0A2540",

@@ -54,7 +54,7 @@ const UserProfile = () => {
           </div>
         </div>
         {userDetails && (
-          <div className="right-profile flex flex-col md:w-full lg:max-w-[550px] mt-8 gap-6">
+          <div className="right-profile flex text-textColor flex-col md:w-full lg:max-w-[550px] mt-8 gap-6">
             <div className="field">
               <Input
                 placeholder="Firstname"

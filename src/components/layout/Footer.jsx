@@ -13,8 +13,9 @@ import linkedinIcon from "../../assets/icons/linkedin.svg";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import { useAppContext } from "../../context/appContext";
 import { useEffect, useState } from "react";
+
 function Footer() {
-  const { isAuthenticated, fetchPopularMovies } = useAppContext();
+  const { isAuthenticated, fetchPopularMovies, theme } = useAppContext();
   const [popularMovies, setPopularMovies] = useState([]);
   useEffect(() => {
     {
@@ -26,11 +27,13 @@ function Footer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="flex flex-col lg:flex-row justify-center  lg:justify-around my-8 gap-8">
+    <div
+      className={`flex flex-col lg:flex-row justify-center lg:justify-around my-8 gap-8 text-textColor`}
+    >
       <div className="max-w-80 lg:min-w-60 flex flex-col justify-center gap-2 text-left my-8 pr-10">
-        <p className="text-brandColor font-bold text">Moviever</p>
-        <p className="text-dark">© 2024 Moviever. All Rights Reserved.</p>
-        <p className="font-light text-dark">
+        <p className="text-brandColor font-bold ">Moviever</p>
+        <p>© 2024 Moviever. All Rights Reserved.</p>
+        <p>
           Moviever is a platform specially designed for movie enthusiasts. Our
           goal is to enable you to easily find your favorite movies, create
           watch lists, and share your movie experiences with other users.
@@ -45,7 +48,7 @@ function Footer() {
             <img
               src={instagramIcon}
               alt="instagram-icon"
-              className="bg-white"
+              className={`${theme === "dark" ? "" : "bg-white"}`}
             />
           </Button>
           <Button
@@ -54,10 +57,18 @@ function Footer() {
             href="https://www.linkedin.com/in/erkut-oğuz-82704420b"
             aria-label="linkedin-button"
           >
-            <img src={linkedinIcon} alt="linkedin-icon" className="bg-white" />
+            <img
+              src={linkedinIcon}
+              alt="linkedin-icon"
+              className={`${theme === "dark" ? "" : "bg-white"}`}
+            />
           </Button>
           <Button as={Link} isIconOnly aria-label="twitter-button">
-            <img src={twitterIcon} alt="twitter-icon" className="bg-white" />
+            <img
+              src={twitterIcon}
+              alt="twitter-icon"
+              className={`${theme === "dark" ? "" : "bg-white"}`}
+            />
           </Button>
         </div>
       </div>
@@ -65,7 +76,7 @@ function Footer() {
       {isAuthenticated && (
         <>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col gap-2 text-left my-4">
-            <Table removeWrapper className="text-dark">
+            <Table removeWrapper className="text-color">
               <TableHeader className="bg-none">
                 <TableColumn>Popular Categories</TableColumn>
                 <TableColumn></TableColumn>
@@ -75,7 +86,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/ACTION"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="action"
                     >
                       Action
@@ -84,7 +95,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/ROMANCE"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="romance"
                     >
                       Romance
@@ -95,7 +106,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/FANTASY"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="fantasy"
                     >
                       Fantasy
@@ -104,7 +115,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/HORROR"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="horror"
                     >
                       Horror
@@ -115,7 +126,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/SCIENCE_FICTION"
-                      className="text-dark"
+                      className="text-colork"
                       aria-label="sci-fi"
                     >
                       Sci-Fi
@@ -124,7 +135,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/DRAMA"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="drama"
                     >
                       Drama
@@ -135,7 +146,7 @@ function Footer() {
                   <TableCell>
                     <Link
                       href="/movies/category/ADVENTURE"
-                      className="text-dark"
+                      className="text-color"
                       aria-label="adventure"
                     >
                       Adventure
@@ -148,7 +159,7 @@ function Footer() {
           </div>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
             {popularMovies.length > 0 && (
-              <Table removeWrapper className="text-dark">
+              <Table removeWrapper className="text-color">
                 <TableHeader className="bg-none">
                   <TableColumn>Popular Movies</TableColumn>
                   <TableColumn></TableColumn>
@@ -158,7 +169,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[0].id}`}
-                        className="text-dark"
+                        className="text-color"
                         aria-label={`popular-movies-${popularMovies[0].title}`}
                       >
                         {popularMovies[0].title}
@@ -167,7 +178,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[1].id}`}
-                        className="text-dark"
+                        className="text-color"
                         aria-label={`popular-movies-${popularMovies[1].title}`}
                       >
                         {popularMovies[1].title}
@@ -178,7 +189,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[2].id}`}
-                        className="text-dark"
+                        className="text-color"
                         aria-label={`popular-movies-${popularMovies[2].title}`}
                       >
                         {popularMovies[2].title}
@@ -187,7 +198,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[3].id}`}
-                        className="text-dark"
+                        className="text-color"
                         aria-label={`popular-movies-${popularMovies[3].title}`}
                       >
                         {popularMovies[3].title}
@@ -199,7 +210,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[4].id}`}
                         aria-label={`popular-movies-${popularMovies[4].title}`}
-                        className="text-dark"
+                        className="text-color"
                       >
                         {popularMovies[4].title}
                       </Link>
@@ -207,7 +218,7 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[5].id}`}
-                        className="text-dark"
+                        className="text-color"
                         aria-label={`popular-movies-${popularMovies[5].title}`}
                       >
                         {popularMovies[5].title}
@@ -219,7 +230,7 @@ function Footer() {
                       <Link
                         href={`/movies/${popularMovies[6].id}`}
                         aria-label={`popular-movies-${popularMovies[6].title}`}
-                        className="text-dark"
+                        className="text-color"
                       >
                         {popularMovies[6].title}
                       </Link>

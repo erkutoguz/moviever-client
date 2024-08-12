@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import { useAppContext } from "../../context/appContext";
 import { useState } from "react";
-import renameIcon from "../../assets/icons/rename-icon.png";
+import EditIcon from "../../assets/icons/EditIcon";
 
 const RenameWatchlistModal = ({
   watchlistId,
@@ -27,10 +27,10 @@ const RenameWatchlistModal = ({
       <Button
         aria-label="rename-watchlist-button"
         color="primary"
-        className="bg-transparent mt-8 px-0 max-w-4 min-w-4"
+        className="bg-transparent px-0 max-w-4 min-w-4"
         onPress={onOpen}
       >
-        <img src={renameIcon} className="" alt="rename-icon" />
+        <EditIcon className={`text-textColor w-6`} />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -39,7 +39,7 @@ const RenameWatchlistModal = ({
         isKeyboardDismissDisabled={true}
         placement={"center"}
       >
-        <ModalContent>
+        <ModalContent className="text-textColor">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">

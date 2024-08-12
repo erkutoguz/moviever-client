@@ -2,7 +2,8 @@
 import { Avatar, Button, Textarea } from "@nextui-org/react";
 import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
-import sendButton from "../../assets/icons/send-button.png";
+import SendIcon from "../../assets/icons/SendIcon";
+
 function MakeComment({ movieId, updateReviews }) {
   const [review, setReview] = useState("");
   const { user, makeReview, userProfilePicture } = useAppContext();
@@ -10,7 +11,9 @@ function MakeComment({ movieId, updateReviews }) {
   const [isReviewInvalid, setReviewInvalid] = useState(false);
 
   return (
-    <div className="w-full max-w-[600px] lg:max-w-full border p-8 bg-slate-300 rounded-sm mb-4">
+    <div
+      className={`w-full max-w-[600px] lg:max-w-full border border-dark p-8 bg-makeCommentBg rounded-sm mb-4`}
+    >
       <div className="flex items-center">
         {userProfilePicture === "null" ? (
           <Avatar
@@ -63,7 +66,7 @@ function MakeComment({ movieId, updateReviews }) {
         />
         <div className="make-review h-[76px] flex justify-center items-center ">
           <Button
-            className="min-w-10 max-w-10 p-0 m-0"
+            className={`min-w-10 max-w-10 p-0 m-0 `}
             aria-label="send-button"
             onPress={async () => {
               if (!isReviewInvalid) {
@@ -74,7 +77,7 @@ function MakeComment({ movieId, updateReviews }) {
               }
             }}
           >
-            <img src={sendButton} alt="send-button" />
+            <SendIcon />
           </Button>
         </div>
       </div>

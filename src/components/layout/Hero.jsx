@@ -10,7 +10,7 @@ function Hero() {
   useEffect(() => {
     setTimeout(() => {
       setHeroLoaded(true);
-    }, 2000);
+    }, 1000);
   }, []);
   return (
     <>

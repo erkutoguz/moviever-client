@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import reducer from "./reducer";
 import {
   FETCH_CATEGORIES,
@@ -11,6 +17,7 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  TOGGLE_THEME,
 } from "./actions";
 import axios from "axios";
 const AppContext = createContext(null);
@@ -25,6 +32,7 @@ const initialState = {
   userProfilePicture: localStorage.getItem("userProfilePicture"),
   categories: JSON.parse(localStorage.getItem("categories")),
   isEnabled: localStorage.getItem("isEnabled"),
+  theme: localStorage.getItem("theme") === "dark" ? "dark" : "light",
 };
 
 // eslint-disable-next-line react/prop-types
@@ -85,8 +93,36 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      state.theme = "dark";
+      document.body.classList.remove("light");
+      document.body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      state.theme = "light";
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
+      localStorage.setItem("theme", "light");
+    }
+  }, [state.theme]);
+
+  useEffect(() => {
     loadLocalStorage();
   }, []);
+
+  const toggleTheme = () => {
+    if (state.theme === "light") {
+      localStorage.setItem("theme", "dark");
+      state.theme = "dark";
+      document.body.classList.remove("light");
+      document.body.classList.add("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      state.theme = "light";
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
+    }
+  };
 
   const resetLocalStroage = () => {
     localStorage.removeItem("isAuthenticated");
@@ -140,7 +176,6 @@ export const AppProvider = ({ children }) => {
           userProfilePicture: data.pictureUrl,
         },
       });
-      console.log("user is ", state.user);
     } catch (err) {
       dispatch({
         type: LOGIN_USER_ERROR,
@@ -162,26 +197,7 @@ export const AppProvider = ({ children }) => {
         firstname,
         lastname,
       });
-
-      // const data = response.data;
-      // console.log(data);
-      // dispatch({
-      //   type: REGISTER_USER_SUCCESS,
-      //   payload: {
-      //     user: data.username,
-      //     refreshToken: data.refreshToken,
-      //     accessToken: data.accessToken,
-      //     errMessage: "",
-      //     userProfilePicture: data.pictureUrl,
-      //     isEnabled: data.isEnabled,
-      //   },
-      // });
-      // localStorage.setItem("accessToken", data.accessToken);
-      // localStorage.setItem("refreshToken", data.refreshToken);
-      // localStorage.setItem("user", data.username);
-      // localStorage.setItem("userProfilePicture", data.pictureUrl);
-      // localStorage.setItem("isAuthenticated", true);
-      // localStorage.setItem("isEnabled", data.isEnabled);
+      dispatch({ type: REGISTER_USER_SUCCESS });
     } catch (err) {
       dispatch({
         type: REGISTER_USER_ERROR,
@@ -256,9 +272,7 @@ export const AppProvider = ({ children }) => {
       `/api/v1/watchlist/${watchlistId}/movies?page=${page}&size=${size}`
     );
   };
-  const searchMovies = async (query) => {
-    return await appClient.get(`/api/v1/movies/search/${query}`);
-  };
+
   const fetchUserWatchlistsPreview = async () => {
     return await appClient.get("/api/v1/watchlist/preview");
   };
@@ -315,10 +329,43 @@ export const AppProvider = ({ children }) => {
     });
     localStorage.setItem("categories", JSON.stringify(response.data));
   };
+
+  //admin ops
+  const fetchUserCount = async () => {
+    return await appClient.get("/api/v1/admin/users?page=0&size=1");
+  };
+  const fetchMovieCount = async () => {
+    return await appClient.get("/api/v1/admin/movies?page=0&size=1");
+  };
+  const fetchReviewCount = async () => {
+    return await appClient.get("/api/v1/admin/reviews?page=0&size=1");
+  };
+  const fetchWatchlistCount = async () => {
+    return await appClient.get("/api/v1/admin/watchlists?page=0&size=1");
+  };
+  const fetchUsers = async (page) => {
+    return await appClient.get(`/api/v1/admin/users?page=${page}&size=10`);
+  };
+  const searchUsers = async (query, page) => {
+    return await appClient.get(
+      `/api/v1/users/search/${query}?page=${page}&size=10`
+    );
+  };
+  const deleteUserById = async (userId) => {
+    await appClient.delete(`/api/v1/admin/users/${userId}`);
+  };
   return (
     <AppContext.Provider
       value={{
         ...state,
+        fetchUserCount,
+        fetchMovieCount,
+        fetchReviewCount,
+        fetchWatchlistCount,
+        fetchUsers,
+        searchUsers,
+        deleteUserById,
+        toggleTheme,
         login,
         register,
         fetchProfile,
@@ -326,7 +373,7 @@ export const AppProvider = ({ children }) => {
         changeProfilePicture,
         removeProfilePicture,
         fetchCategories,
-        searchMovies,
+        appClient,
         fetchNewMovies,
         fetchPopularMovies,
         fetchWatchlistDetails,

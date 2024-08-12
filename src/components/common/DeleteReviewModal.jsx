@@ -8,8 +8,8 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import deleteIcon from "../../assets/icons/delete-icon.png";
 import { useAppContext } from "../../context/appContext";
+import DeleteIcon from "../../assets/icons/DeleteIcon";
 
 function DeleteReviewModal({ movieId, reviewId, updateReviews }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -21,7 +21,7 @@ function DeleteReviewModal({ movieId, reviewId, updateReviews }) {
         aria-label="delete-review-button"
         className="bg-transparent"
       >
-        <img src={deleteIcon} alt="delete-icon" />
+        <DeleteIcon className="text-red-500 w-5" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -29,7 +29,7 @@ function DeleteReviewModal({ movieId, reviewId, updateReviews }) {
         isDismissable={false}
         isKeyboardDismissDisabled={true}
       >
-        <ModalContent>
+        <ModalContent className="text-textColor">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
