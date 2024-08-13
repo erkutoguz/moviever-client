@@ -30,7 +30,7 @@ const useSearchMovie = (query) => {
       })
         .then((res) => {
           setMovies((prev) => {
-            return [...new Set([...prev, ...res.data])];
+            return [...new Set([...prev, ...res.data.movies])];
           });
 
           setLoading(false);

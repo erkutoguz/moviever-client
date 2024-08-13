@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import {
   Button,
   Modal,
@@ -9,12 +8,14 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import DeleteUserIcon from "../../assets/icons/DeleteUserIcon";
+import DeleteIcon from "../../assets/icons/DeleteIcon";
 import { useAppContext } from "../../context/appContext";
 
-const DeleteUserModal = ({ updateUsers, userId }) => {
+//UPDATE USERS
+
+const DeleteMovieModal = ({ updateMovies, movieId }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { deleteUserById } = useAppContext();
+  const { deleteMovieById } = useAppContext();
   return (
     <div>
       <Button
@@ -22,7 +23,7 @@ const DeleteUserModal = ({ updateUsers, userId }) => {
         aria-label="delete-review-button"
         className="bg-transparent"
       >
-        <DeleteUserIcon className="text-red-500 w-5" />
+        <DeleteIcon className="text-red-500 w-5" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -34,10 +35,10 @@ const DeleteUserModal = ({ updateUsers, userId }) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Delete User
+                Delete Movie
               </ModalHeader>
               <ModalBody>
-                <p>Do you want to delete user?</p>
+                <p>Do you want to delete movie? with ıd {movieId}</p>
               </ModalBody>
               <ModalFooter>
                 <Button
@@ -51,8 +52,8 @@ const DeleteUserModal = ({ updateUsers, userId }) => {
                 <Button
                   color="primary"
                   onPress={async () => {
-                    await deleteUserById(userId);
-                    await updateUsers();
+                    await deleteMovieById(movieId);
+                    await updateMovies();
                     onClose();
                   }}
                   aria-label="open-modal-button"
@@ -68,4 +69,4 @@ const DeleteUserModal = ({ updateUsers, userId }) => {
   );
 };
 
-export default DeleteUserModal;
+export default DeleteMovieModal;

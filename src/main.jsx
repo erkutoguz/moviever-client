@@ -28,6 +28,7 @@ import AdminLayout from "./admin/AdminLayout.jsx";
 import AdminUsers from "./admin/AdminUsers.jsx";
 import AdminMovies from "./admin/AdminMovies.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
+import AdminAddMovie from "./admin/AdminAddMovie.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,6 +75,7 @@ const router = createBrowserRouter(
         <Route index element={<AdminPage />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="movies" element={<AdminMovies />} />
+        <Route path="add-movies" element={<AdminAddMovie />} />
       </Route>
       <Route
         path="/profile/me"

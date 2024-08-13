@@ -58,14 +58,14 @@ const WatchlistDetail = () => {
   }, [page]);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center ">
       <Header />
       {details && !loading && (
         <>
-          <p className="font-bold text-xl text-darkBlue my-8">
+          <p className="font-bold text-xl text-textColor my-8">
             {details.watchlistName}
           </p>
-          <div className="flex flex-wrap max-w-[1000px] justify-center gap-2">
+          <div className="flex flex-wrap max-w-[1000px] justify-center gap-2 h-[calc(100vh-408px)]">
             {movies.map((m, i) => {
               if (i === movies.length - 1) {
                 return (

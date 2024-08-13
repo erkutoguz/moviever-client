@@ -30,7 +30,7 @@ function Movies() {
 
   useEffect(() => {
     if (url.pathname === "/new-movies" || url.pathname === "/all-movies") {
-      fetchNewMovies(page, 6).then((res) => {
+      fetchNewMovies(page, 3).then((res) => {
         setInitialData(res.data);
       });
     } else if (url.pathname === "/popular-movies") {
@@ -43,18 +43,21 @@ function Movies() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Header />
-      <p className={`font-bold text-xl text-textColor my-8`}>{pageName}</p>
-      <MovieList movies={initialData.movies} />
+      <div className="min-h-[calc(100vh-350px)]">
+        <p className={`font-bold text-xl text-textColor my-8`}>{pageName}</p>
+        <MovieList movies={initialData.movies} />
 
-      <Pagination
-        total={initialData.totalPages}
-        initialPage={1}
-        className="mt-8"
-        onChange={(p) => {
-          setPage(p - 1);
-        }}
-      />
+        <Pagination
+          total={initialData.totalPages}
+          initialPage={1}
+          className="mt-8"
+          onChange={(p) => {
+            console.log(p);
 
+            setPage(p - 1);
+          }}
+        />
+      </div>
       <Footer />
     </div>
   );

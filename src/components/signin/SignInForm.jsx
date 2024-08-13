@@ -58,7 +58,7 @@ function SignInForm() {
 
   return (
     <div className="container flex flex-col justify-center items-center gap-y-4 py-10">
-      <h3 className="text-darkBlue text-2xl font-bold tracking-wide">
+      <h3 className="text-textColor text-2xl font-bold tracking-wide">
         Sign In
       </h3>
       <p className="text-danger-600">{errMessage}</p>

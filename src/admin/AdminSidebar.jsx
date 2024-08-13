@@ -29,8 +29,8 @@ const AdminSidebar = () => {
 
   return (
     <div
-      className={`flex flex-col pb-10 h-[calc(100vh-64px)] bg-sidebarBg text-textColor transition-width duration-300 ${
-        isOpen ? "w-64" : "w-16"
+      className={`flex flex-col pb-10 min-h-[calc(100dvh-64px)]  bg-sidebarBg text-textColor transition-width duration-300 ${
+        isOpen ? "w-48" : "w-16"
       }`}
     >
       <div className={`flex p-2 ${isOpen ? "justify-end" : "justify-center"}`}>
@@ -80,24 +80,7 @@ const AdminSidebar = () => {
               <UsersIcon />
               {isOpen && <span className="ml-4">User List</span>}
             </Link>
-            {/* <Link
-              href="/admin/add-user"
-              className={`flex text-textColor ${
-                isOpen ? "px-4" : "justify-center"
-              } py-2 hover:bg-gray-700 w-full`}
-            >
-              <AddUserIcon />
-              {isOpen && <span className="ml-4">Add User</span>}
-            </Link> */}
-            {/* <Link
-              href="#"
-              className={`flex text-textColor ${
-                isOpen ? "px-4" : "justify-center"
-              } py-2 hover:bg-gray-700 w-full`}
-            >
-              <DeleteUserIcon />
-              {isOpen && <span className="ml-4">Delete User</span>}
-            </Link> */}
+
             <Link
               href="#"
               className={`flex text-textColor ${
@@ -121,7 +104,7 @@ const AdminSidebar = () => {
 
           <div className="w-full">
             <Link
-              href="#"
+              href="/admin/movies"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}
@@ -130,7 +113,7 @@ const AdminSidebar = () => {
               {isOpen && <span className="ml-4">Movie List</span>}
             </Link>
             <Link
-              href="#"
+              href="/admin/add-movies"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}

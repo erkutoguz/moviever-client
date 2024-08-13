@@ -344,16 +344,30 @@ export const AppProvider = ({ children }) => {
     return await appClient.get("/api/v1/admin/watchlists?page=0&size=1");
   };
   const fetchUsers = async (page) => {
-    return await appClient.get(`/api/v1/admin/users?page=${page}&size=10`);
+    return await appClient.get(`/api/v1/admin/users?page=${page}&size=6`);
   };
   const searchUsers = async (query, page) => {
     return await appClient.get(
-      `/api/v1/users/search/${query}?page=${page}&size=10`
+      `/api/v1/users/search/${query}?page=${page}&size=6`
     );
   };
+
+  const searchMovies = async (query, categoryName, page) => {
+    return await appClient.get(
+      `/api/v1/movies/search/${query}?page=${page}&size=6${
+        categoryName !== "ALL" ? "&category=" + categoryName : ""
+      }`
+    );
+  };
+
   const deleteUserById = async (userId) => {
     await appClient.delete(`/api/v1/admin/users/${userId}`);
   };
+
+  const deleteMovieById = async (userId) => {
+    await appClient.delete(`/api/v1/admin/movies/${userId}`);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -364,7 +378,9 @@ export const AppProvider = ({ children }) => {
         fetchWatchlistCount,
         fetchUsers,
         searchUsers,
+        searchMovies,
         deleteUserById,
+        deleteMovieById,
         toggleTheme,
         login,
         register,

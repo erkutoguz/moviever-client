@@ -1,6 +1,7 @@
 import {
   Button,
   Link,
+  Tab,
   Table,
   TableBody,
   TableCell,
@@ -21,6 +22,8 @@ function Footer() {
     {
       isAuthenticated &&
         fetchPopularMovies(0, 12).then((res) => {
+          console.log(res.data.movies);
+
           setPopularMovies(res.data.movies);
         });
     }
@@ -158,9 +161,9 @@ function Footer() {
             </Table>
           </div>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
-            {popularMovies.length > 0 && (
-              <Table removeWrapper className="text-color">
-                <TableHeader className="bg-none">
+            {/* {popularMovies.length > 0 && (
+              <Table removeWrapper className="text-textColor">
+                <TableHeader>
                   <TableColumn>Popular Movies</TableColumn>
                   <TableColumn></TableColumn>
                 </TableHeader>
@@ -209,8 +212,8 @@ function Footer() {
                     <TableCell>
                       <Link
                         href={`/movies/${popularMovies[4].id}`}
-                        aria-label={`popular-movies-${popularMovies[4].title}`}
                         className="text-color"
+                        aria-label={`popular-movies-${popularMovies[4].title}`}
                       >
                         {popularMovies[4].title}
                       </Link>
@@ -225,21 +228,9 @@ function Footer() {
                       </Link>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell>
-                      <Link
-                        href={`/movies/${popularMovies[6].id}`}
-                        aria-label={`popular-movies-${popularMovies[6].title}`}
-                        className="text-color"
-                      >
-                        {popularMovies[6].title}
-                      </Link>
-                    </TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
                 </TableBody>
               </Table>
-            )}
+            )} */}
           </div>
         </>
       )}
