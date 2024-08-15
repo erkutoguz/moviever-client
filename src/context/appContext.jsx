@@ -343,6 +343,12 @@ export const AppProvider = ({ children }) => {
   const fetchWatchlistCount = async () => {
     return await appClient.get("/api/v1/admin/watchlists?page=0&size=1");
   };
+  const fetchMovieCountForEachCategory = async () => {
+    return await appClient.get("/api/v1/admin/category/distribution");
+  };
+  const fetchWatchlists = async (page) => {
+    return await appClient.get(`/api/v1/admin/watchlists?page=${page}&size=6`);
+  };
   const fetchUsers = async (page) => {
     return await appClient.get(`/api/v1/admin/users?page=${page}&size=6`);
   };
@@ -364,6 +370,13 @@ export const AppProvider = ({ children }) => {
     await appClient.delete(`/api/v1/admin/users/${userId}`);
   };
 
+  const createMovie = async (formData) => {
+    await appClient.post("/api/v1/admin/movies", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  };
   const deleteMovieById = async (userId) => {
     await appClient.delete(`/api/v1/admin/movies/${userId}`);
   };
@@ -376,10 +389,13 @@ export const AppProvider = ({ children }) => {
         fetchMovieCount,
         fetchReviewCount,
         fetchWatchlistCount,
+        fetchMovieCountForEachCategory,
+        fetchWatchlists,
         fetchUsers,
         searchUsers,
         searchMovies,
         deleteUserById,
+        createMovie,
         deleteMovieById,
         toggleTheme,
         login,

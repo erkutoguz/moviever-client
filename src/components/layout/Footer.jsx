@@ -1,7 +1,6 @@
 import {
   Button,
   Link,
-  Tab,
   Table,
   TableBody,
   TableCell,
@@ -22,8 +21,6 @@ function Footer() {
     {
       isAuthenticated &&
         fetchPopularMovies(0, 12).then((res) => {
-          console.log(res.data.movies);
-
           setPopularMovies(res.data.movies);
         });
     }

@@ -34,7 +34,7 @@ const ChangeProfileModal = () => {
     <div>
       {userProfilePicture !== "null" ? (
         <div
-          className="relative cursor-pointer"
+          className="relative cursor-pointer text-textColor"
           onClick={onOpen}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
@@ -101,14 +101,14 @@ const ChangeProfileModal = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-textColor">
                 Change Profile Picture
               </ModalHeader>
               <ModalBody>
                 <input
                   type="file"
                   accept="image/*"
-                  className="mb-4 border border-gray-300 rounded-md p-2"
+                  className="mb-4 border border-gray-300 rounded-md p-2 text-textColor"
                   onChange={(e) => {
                     setNewProfile(e.target.files[0]);
                   }}

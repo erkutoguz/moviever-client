@@ -84,7 +84,7 @@ const MovieCarousel = ({ slides }) => {
               <CardFooter className="absolute z-10 bottom-1 flex-col !items-start">
                 <div className="info flex items-center justify-center gap-1">
                   <p className="text-sm text-white/90 uppercase ">{s.rating}</p>
-                  <StarIcon className="text-dark" />
+                  <StarIcon className="text-[#eab308] w-5" />
                 </div>
                 <h4 className="text-white font-medium text-large w-full truncate hover:text-clip">
                   {s.title}
@@ -112,7 +112,7 @@ const MovieCarousel = ({ slides }) => {
               <CardFooter className="absolute z-10 bottom-1 flex-col !items-start">
                 <div className="info flex items-center justify-center gap-1">
                   <p className="text-sm text-white/90 uppercase ">{s.rating}</p>
-                  <StarIcon />
+                  <StarIcon className="text-[#eab308] w-5" />
                 </div>
                 <h4 className="text-white font-medium text-large w-full truncate hover:text-clip ">
                   {s.title}

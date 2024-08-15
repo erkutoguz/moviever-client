@@ -6,6 +6,7 @@ import MovieIcon from "../assets/icons/MovieIcon";
 import ReviewIcon from "../assets/icons/ReviewIcon";
 import WatchlistIcon from "../assets/icons/WatchlistIcon";
 import StatsBox from "./adminComponents/StatsBox";
+import CategoryPieChart from "./adminComponents/CategoryPieChart";
 
 const AdminPage = () => {
   const {
@@ -62,6 +63,9 @@ const AdminPage = () => {
           label={"WATCHLIST"}
           icon={<WatchlistIcon className="w-8" />}
         />
+      </div>
+      <div className="category-movies h-full w-1/2">
+        <CategoryPieChart />
       </div>
     </div>
   );

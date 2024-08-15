@@ -29,8 +29,8 @@ const AdminSidebar = () => {
 
   return (
     <div
-      className={`flex flex-col pb-10 min-h-[calc(100dvh-64px)]  bg-sidebarBg text-textColor transition-width duration-300 ${
-        isOpen ? "w-48" : "w-16"
+      className={`flex flex-col pb-10 min-h-[calc(100dvh-64px)] bg-sidebarBg text-textColor transition-width duration-300 ${
+        isOpen ? "w-48" : "w-[79px]"
       }`}
     >
       <div className={`flex p-2 ${isOpen ? "justify-end" : "justify-center"}`}>
@@ -135,7 +135,7 @@ const AdminSidebar = () => {
 
           <div className="w-full">
             <Link
-              href="#"
+              href="/admin/watchlists"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}

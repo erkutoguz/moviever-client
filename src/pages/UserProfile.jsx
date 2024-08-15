@@ -32,7 +32,7 @@ const UserProfile = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <Header />
-      <div className="profile mt-8 w-3/4 flex flex-col md:flex-row md:gap-10 lg:justify-center">
+      <div className="profile mt-8 w-3/4 flex flex-col min-h-[calc(100vh-450px)] md:flex-row md:gap-10 lg:justify-center">
         <div className="left-profile py-8 border rounded-lg md:px-8 flex flex-col justify-center items-center">
           <ChangeProfileModal />
 

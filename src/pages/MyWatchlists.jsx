@@ -32,7 +32,7 @@ const MyWatchlists = () => {
         <CreateWatchlistModal updateWatchlists={updateWatchlists} />
       </div>
       {watchlists && (
-        <div className="">
+        <div className="min-h-[calc(100vh-300px)]">
           {watchlists.map((w, i) => {
             return (
               <div key={i} className="!max-w-full lg:min-w-[980px] mt-8 ">

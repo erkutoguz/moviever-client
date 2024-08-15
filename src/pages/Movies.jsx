@@ -30,11 +30,11 @@ function Movies() {
 
   useEffect(() => {
     if (url.pathname === "/new-movies" || url.pathname === "/all-movies") {
-      fetchNewMovies(page, 3).then((res) => {
+      fetchNewMovies(page, 12).then((res) => {
         setInitialData(res.data);
       });
     } else if (url.pathname === "/popular-movies") {
-      fetchPopularMovies(page, 6).then((res) => {
+      fetchPopularMovies(page, 12).then((res) => {
         setInitialData(res.data);
       });
     }

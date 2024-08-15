@@ -1,40 +1,48 @@
+/* eslint-disable no-unused-vars */
 import { Select, SelectItem, Slider } from "@nextui-org/react";
 import { useAppContext } from "../context/appContext";
 import { capitalizeText } from "../utils/textFormatter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const AdminAddMovie = () => {
-  const { categories } = useAppContext();
+  const { categories, createMovie } = useAppContext();
   const [title, setTitle] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
   const [director, setDirector] = useState("");
   const [rating, setRating] = useState("");
   const [trailerUrl, setTrailerUrl] = useState("");
-  const [pictureUrl, setPictureUrl] = useState("");
-
-  const [selectedCategories, setSelectedCategories] = useState(new Set([]));
-
-  useEffect(() => {
-    console.log(selectedCategories);
-  }, [selectedCategories]);
+  const [poster, setPoster] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(
-      capitalizeText(title),
-      "=",
-      releaseDate.substring(0, 4),
-      "=",
-      capitalizeText(director),
-      "=",
-      rating,
-      "=",
-      trailerUrl,
-      "=",
-      pictureUrl,
-      "=",
-      [...selectedCategories.values()]
-    );
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("releaseYear", parseInt(releaseDate.substring(0, 4)));
+    formData.append("director", director);
+    formData.append("trailerUrl", trailerUrl);
+    formData.append("rating", parseFloat(rating));
+    formData.append("poster", poster);
+    const cats = [];
+    selectedCategories.forEach((c) => {
+      cats.push(c);
+    });
+    formData.append("categories", JSON.stringify(cats));
+
+    createMovie(formData).then((res) => {
+      setShowPopup(true);
+      setTitle("");
+      setReleaseDate("");
+      setDirector("");
+      setRating("");
+      setTrailerUrl("");
+      setPoster(null);
+      setSelectedCategories([]);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
+    });
   };
 
   return (
@@ -65,6 +73,7 @@ const AdminAddMovie = () => {
             <Select
               placeholder="Select category"
               selectionMode="multiple"
+              aria-label="select-category"
               selectedKeys={selectedCategories}
               onSelectionChange={setSelectedCategories}
               className="mt-1 text-textColor"
@@ -114,6 +123,7 @@ const AdminAddMovie = () => {
               Rating
             </label>
             <Slider
+              aria-label="select-rating"
               showTooltip={true}
               step={0.1}
               formatOptions={{ style: "decimal" }}
@@ -165,14 +175,14 @@ const AdminAddMovie = () => {
           </div>
           <div>
             <label htmlFor="pictureUrl" className="block text-sm font-medium ">
-              Poster Url
+              Poster
             </label>
             <input
-              type="text"
+              type="file"
               id="pictureUrl"
+              accept="image/png, image/gif, image/jpeg"
               name="pictureUrl"
-              value={pictureUrl}
-              onChange={(e) => setPictureUrl(e.target.value)}
+              onChange={(e) => setPoster(e.target.files[0])}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
@@ -181,12 +191,18 @@ const AdminAddMovie = () => {
           <div className="text-center">
             <button
               type="submit"
+              aria-label="add-movie"
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
             >
               Add Movie
             </button>
           </div>
         </form>
+        {showPopup && (
+          <div className="fixed top-24 z-50 right-0 sm:right-2 md:right-4 xl:right-8 bg-green-500 text-white p-4 rounded shadow-lg">
+            <p>Movie successfully added!</p>
+          </div>
+        )}
       </div>
     </div>
   );
