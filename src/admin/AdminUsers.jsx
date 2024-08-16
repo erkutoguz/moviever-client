@@ -55,7 +55,7 @@ const AdminUsers = () => {
       <div className="relative min-h-[500px] w-[200px] sm:w-[400px] md:w-[600px] lg:max-w-[900px] lg:min-w-[800px] xl:w-[900px] overflow-x-scroll">
         <UserList users={users} updateUsers={updateUsers} />
         {users.length === 0 && (
-          <div className="flex justify-center items-center mt-40 ">
+          <div className="flex justify-center items-center mt-40 text-textColor">
             <p>User not found</p>
           </div>
         )}

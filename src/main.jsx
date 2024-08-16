@@ -30,6 +30,7 @@ import AdminMovies from "./admin/AdminMovies.jsx";
 import AdminPage from "./admin/AdminPage.jsx";
 import AdminAddMovie from "./admin/AdminAddMovie.jsx";
 import AdminWatchlist from "./admin/AdminWatchlist.jsx";
+import AdminReviews from "./admin/AdminReviews.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -78,6 +79,7 @@ const router = createBrowserRouter(
         <Route path="movies" element={<AdminMovies />} />
         <Route path="add-movies" element={<AdminAddMovie />} />
         <Route path="watchlists" element={<AdminWatchlist />} />
+        <Route path="reviews" element={<AdminReviews />} />
       </Route>
       <Route
         path="/profile/me"

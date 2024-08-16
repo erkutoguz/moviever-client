@@ -64,6 +64,11 @@ const AdminMovies = () => {
             <p>Movie not found</p>
           </div>
         )} */}
+        {movies.length === 0 && (
+          <div className="flex justify-center items-center mt-40 text-textColor">
+            <p>Movie not found</p>
+          </div>
+        )}
       </div>
 
       <Pagination

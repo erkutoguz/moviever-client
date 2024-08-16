@@ -1,65 +1,60 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+// eslint-disable-next-line no-unused-vars
+import { Chart as ChartJS } from "chart.js/auto";
 import { useAppContext } from "../../context/appContext";
 import { useEffect, useState } from "react";
+import { Pie } from "react-chartjs-2";
 
 const CategoryPieChart = () => {
-  const [categoryMovieCount, setCategoryMovieCount] = useState();
+  const [chartData, setChartData] = useState({});
   const { fetchMovieCountForEachCategory } = useAppContext();
-  const colors = ["#f87171", "#fbbf24", "#34d399", "#60a5fa", "#e78bfa"];
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchMovieCountForEachCategory().then((res) => {
       console.log(res.data);
 
-      setCategoryMovieCount(
-        res.data.map((d) => {
-          return {
-            title: d.categoryName,
-            value: d.movieCount,
-            color: "#E38627",
-            label: d.categoryName,
-          };
-        })
-      );
+      setChartData({
+        labels: res.data.map((d) => d.categoryName),
+        datasets: [
+          {
+            data: res.data.map((d) => d.movieCount),
+            backgroundColor: [
+              "#FF4136", // ACTION
+              "#FFDC00", // COMEDY
+              "#FF851B", // DRAMA
+              "#85144b", // HORROR
+              "#B10DC9", // HISTORY
+              "#111111", // MYSTERY
+              "#FF69B4", // ROMANCE
+              "#0074D9", // SCIENCE_FICTION
+              "#3D9970", // THRILLER
+              "#FF851B", // ANIMATION
+              "#39CCCC", // FANTASY
+              "#AAAAAA", // DOCUMENTARY
+              "#2ECC40", // ADVENTURE
+              "#2E2D88", // CRIME
+              "#FF77C3", // MUSIC
+              "#DDDDDD", // OTHER
+              "#FFDD00", // FAMILY
+            ],
+            borderWidth: 1,
+          },
+        ],
+      });
+      setLoading(true);
     });
   }, []);
-  const labels = ["action", "fantasy", "horror", "thriller", "comedy"];
-  const values = [10, 6, 2, 9, 5];
-  const data = labels.map((label, index) => ({
-    label,
-    value: values[index],
-  }));
-  const total = data.reduce((acc, curr) => acc + curr.value, 0);
-
-  let cumulativeValue = 0;
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+  };
   return (
-    <div className="w-full h-1/2 text-textColor">
-      {categoryMovieCount && (
-        <svg viewBox="0 0 32 32" className="w-64 h-64">
-          {categoryMovieCount.map((slice, index) => {
-            const startAngle = (cumulativeValue / total) * 360;
-            const sliceAngle = (slice.value / total) * 360;
-            cumulativeValue += slice.value;
-
-            const x1 = 16 + 16 * Math.cos((Math.PI * startAngle) / 180);
-            const y1 = 16 + 16 * Math.sin((Math.PI * startAngle) / 180);
-            const x2 =
-              16 + 16 * Math.cos((Math.PI * (startAngle + sliceAngle)) / 180);
-            const y2 =
-              16 + 16 * Math.sin((Math.PI * (startAngle + sliceAngle)) / 180);
-
-            const largeArcFlag = sliceAngle > 180 ? 1 : 0;
-
-            return (
-              <path
-                key={index}
-                d={`M16,16 L${x1},${y1} A16,16 0 ${largeArcFlag},1 ${x2},${y2} z`}
-                fill={colors[index]}
-              />
-            );
-          })}
-        </svg>
-      )}
+    <div className=" text-textColor">
+      {isLoading && <Pie data={chartData} options={options} />}
     </div>
   );
 };

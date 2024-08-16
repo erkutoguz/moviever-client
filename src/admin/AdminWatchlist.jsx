@@ -19,8 +19,6 @@ const AdminWatchlist = () => {
   useEffect(() => {
     fetchWatchlists(page).then((res) => {
       setInitialData(res.data);
-      console.log(res.data);
-
       setWatchlist(res.data.watchlists);
     });
   }, [page]);

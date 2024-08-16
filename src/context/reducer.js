@@ -1,4 +1,5 @@
 import {
+  CLEAR_ERROR,
   FETCH_CATEGORIES,
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
@@ -7,6 +8,7 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  REQUEST_ERROR,
   TOGGLE_THEME,
 } from "./actions";
 
@@ -49,6 +51,13 @@ export default (state, action) => {
       isLoading: false,
       errMessage: action.payload.errMessage,
     };
+  }
+
+  if (action.type === REQUEST_ERROR) {
+    return { ...state, errMessage: action.payload.errMessage };
+  }
+  if (action.type === CLEAR_ERROR) {
+    return { ...state, errMessage: "" };
   }
   if (action.type === FETCH_CATEGORIES) {
     return {

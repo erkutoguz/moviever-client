@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-import DeleteUserModal from "./DeleteUserModal";
-import UserPermissionsModal from "./UserPermissionsModal";
+import DeleteReviewModal from "../../components/common/DeleteReviewModal";
 
-const UserList = ({ users, updateUsers }) => {
+const ReviewList = ({ reviewList, updateReviews }) => {
   return (
     <table className="table-auto absolute overflow-scroll">
       <thead>
@@ -11,19 +10,19 @@ const UserList = ({ users, updateUsers }) => {
             Id
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Username
+            Owner
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Email
+            Movie
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Roles
+            Review
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Full Name
+            Like Count
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Status
+            Created At
           </th>
           <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
             Actions
@@ -31,48 +30,37 @@ const UserList = ({ users, updateUsers }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user, index) => {
+        {reviewList.map((r, index) => {
           return (
             <tr
               key={index}
               className="border-t hover:bg-commentBg duration-200"
             >
               <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.id}
+                {r.id}
               </td>
               <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.username}
+                {r.username}
               </td>
               <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.email}
+                {r.movieName}
+              </td>
+              <td className="px-6 py-4  whitespace-wrap text-sm font-medium text-textColor text-wrap">
+                {r.review}
               </td>
               <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.roles.map((r, i) => {
-                  return <p key={i}>{r}</p>;
-                })}
-                {user.roles.length === 0 && <p>-</p>}
+                {r.likeCount}
               </td>
               <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.firstName + " " + user.lastName}
+                {r.createdAt}
               </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                <p
-                  className={`${
-                    user.enabled
-                      ? "bg-green-400 shadow-lime-500"
-                      : "bg-red-500 shadow-pink-700"
-                  } px-1 py-1 w-[64px] text-center rounded-lg shadow `}
-                >
-                  {user.enabled ? "Active" : "Passive"}
-                </p>
-              </td>
-              <td className=" px-4 py-4 gap-1 whitespace-wrap text-sm font-medium text-textColor flex items-center">
-                <UserPermissionsModal
-                  userId={user.id}
-                  status={user.enabled}
-                  updateUsers={updateUsers}
+
+              <td className=" px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
+                <DeleteReviewModal
+                  updateReviews={updateReviews}
+                  movieId={r.movieId}
+                  reviewId={r.id}
                 />
-                <DeleteUserModal updateUsers={updateUsers} userId={user.id} />
               </td>
             </tr>
           );
@@ -82,4 +70,4 @@ const UserList = ({ users, updateUsers }) => {
   );
 };
 
-export default UserList;
+export default ReviewList;

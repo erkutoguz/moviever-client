@@ -42,30 +42,32 @@ const AdminPage = () => {
         <p className="text-textColor">Welcome to your dashboard</p>
       </div>
 
-      <div className="counts flex flex-col lg:flex-row justify-center items-center gap-4">
-        <StatsBox
-          count={userCount}
-          label={"USERS"}
-          icon={<UsersIcon className="w-8" />}
-        />
-        <StatsBox
-          count={movieCount}
-          label={"MOVIES"}
-          icon={<MovieIcon className="w-8" />}
-        />
-        <StatsBox
-          count={reviewCount}
-          label={"REVIEWS"}
-          icon={<ReviewIcon className="w-8" />}
-        />
-        <StatsBox
-          count={watchlistCount}
-          label={"WATCHLIST"}
-          icon={<WatchlistIcon className="w-8" />}
-        />
-      </div>
-      <div className="category-movies h-full w-1/2">
-        <CategoryPieChart />
+      <div className=" flex flex-col  gap-10">
+        <div className="counts flex flex-col lg:flex-row justify-center items-center gap-4">
+          <StatsBox
+            count={userCount}
+            label={"USERS"}
+            icon={<UsersIcon className="w-8" />}
+          />
+          <StatsBox
+            count={movieCount}
+            label={"MOVIES"}
+            icon={<MovieIcon className="w-8" />}
+          />
+          <StatsBox
+            count={reviewCount}
+            label={"REVIEWS"}
+            icon={<ReviewIcon className="w-8" />}
+          />
+          <StatsBox
+            count={watchlistCount}
+            label={"WATCHLIST"}
+            icon={<WatchlistIcon className="w-8" />}
+          />
+        </div>
+        <div className="category-movies lg:w-[550px] w-[200px] sm:w-[250px] md:w-[350px]">
+          <CategoryPieChart />
+        </div>
       </div>
     </div>
   );

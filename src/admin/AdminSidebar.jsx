@@ -17,6 +17,7 @@ import DeleteUserIcon from "../assets/icons/DeleteUserIcon";
 import HomeIcon from "../assets/icons/HomeIcon";
 import MenuIcon from "../assets/icons/MenuIcon";
 import WatchlistIcon from "../assets/icons/WatchlistIcon";
+import ReviewIcon from "../assets/icons/ReviewIcon";
 
 const AdminSidebar = () => {
   const { user } = useAppContext();
@@ -81,15 +82,15 @@ const AdminSidebar = () => {
               {isOpen && <span className="ml-4">User List</span>}
             </Link>
 
-            <Link
-              href="#"
+            {/* <Link
+              href="/admin/user-permissions"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}
             >
               <AuthIcon />
               {isOpen && <span className="ml-4">User Permissions</span>}
-            </Link>
+            </Link> */}
           </div>
         </div>
 
@@ -142,6 +143,28 @@ const AdminSidebar = () => {
             >
               <WatchlistIcon />
               {isOpen && <span className="ml-4">Watchlist List</span>}
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex flex-col mt-4 space-y-4 w-full">
+          <div
+            className={`menu-label flex gap-4 ${
+              isOpen ? "px-4" : "justify-center"
+            } items-center`}
+          >
+            <p className="">Reviews</p>
+          </div>
+
+          <div className="w-full">
+            <Link
+              href="/admin/reviews"
+              className={`flex text-textColor ${
+                isOpen ? "px-4" : "justify-center"
+              } py-2 hover:bg-gray-700 w-full`}
+            >
+              <ReviewIcon />
+              {isOpen && <span className="ml-4">Review List</span>}
             </Link>
           </div>
         </div>

@@ -6,9 +6,10 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import MovieCard from "../components/movies/MovieCard";
 import RemoveMovieFromWatchlistModal from "../components/common/RemoveMovieFromWatchlistModal";
+import { Link } from "@nextui-org/react";
 
 const WatchlistDetail = () => {
-  const { fetchWatchlistDetails } = useAppContext();
+  const { fetchWatchlistDetails, errMessage } = useAppContext();
   const [details, setDetails] = useState(null);
   const { watchlistId } = useParams();
   const [page, setPage] = useState(0);
@@ -34,6 +35,8 @@ const WatchlistDetail = () => {
   const updateMovies = (movieId) => {
     setLoading(true);
     fetchWatchlistDetails(watchlistId, page, 12).then((res) => {
+      console.log(res);
+
       const prevList = movies.filter((m) => m.id !== movieId);
       // eslint-disable-next-line no-unused-vars
       setMovies((prev) => {
@@ -91,9 +94,22 @@ const WatchlistDetail = () => {
                 );
               }
             })}
+            {movies.length < 1 && (
+              <div className="px-6">
+                <p className="">no movies yet</p>
+                <Link href="/all-movies">Add movies</Link>
+              </div>
+            )}
           </div>
         </>
       )}
+
+      {errMessage && (
+        <p className="mt-16 text-center text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+          {errMessage}
+        </p>
+      )}
+
       <Footer />
     </div>
   );

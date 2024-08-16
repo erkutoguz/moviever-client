@@ -9,6 +9,7 @@ import {
 } from "react";
 import reducer from "./reducer";
 import {
+  CLEAR_ERROR,
   FETCH_CATEGORIES,
   LOGIN_USER_BEGIN,
   LOGIN_USER_ERROR,
@@ -17,6 +18,7 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
+  REQUEST_ERROR,
   TOGGLE_THEME,
 } from "./actions";
 import axios from "axios";
@@ -56,19 +58,16 @@ export const AppProvider = ({ children }) => {
       return config;
     },
     (error) => {
-      console.log(state.accessToken);
       return Promise.reject(error);
     }
   );
   appClient.interceptors.response.use(
     (response) => {
+      dispatch({ type: CLEAR_ERROR });
       return response;
     },
     async (error) => {
-      if (
-        (error.response && error.response.status === 401) ||
-        error.response.status === 403
-      ) {
+      if (error.response && error.response.status === 403) {
         const refreshToken = localStorage.getItem("refreshToken");
         appClient
           .post("/api/v1/auth/refresh-token", {
@@ -86,6 +85,15 @@ export const AppProvider = ({ children }) => {
             window.location = "/sign-in";
           });
       }
+      if (error.response.status === 401) {
+        dispatch({
+          type: REQUEST_ERROR,
+          payload: {
+            errMessage: error.response.data.message,
+          },
+        });
+      }
+
       return Promise.reject(error);
     }
   );
@@ -179,7 +187,7 @@ export const AppProvider = ({ children }) => {
     } catch (err) {
       dispatch({
         type: LOGIN_USER_ERROR,
-        payload: { errMessage: "Invalid Credentials." },
+        payload: { errMessage: err.response.data.message },
       });
     }
   };
@@ -349,6 +357,9 @@ export const AppProvider = ({ children }) => {
   const fetchWatchlists = async (page) => {
     return await appClient.get(`/api/v1/admin/watchlists?page=${page}&size=6`);
   };
+  const fetchReviews = async (page) => {
+    return await appClient.get(`/api/v1/admin/reviews?page=${page}&size=6`);
+  };
   const fetchUsers = async (page) => {
     return await appClient.get(`/api/v1/admin/users?page=${page}&size=6`);
   };
@@ -365,9 +376,20 @@ export const AppProvider = ({ children }) => {
       }`
     );
   };
+  const searchReviews = async (query, page) => {
+    return await appClient.get(
+      `/api/v1/reviews/search/${query}?page=${page}&size=6`
+    );
+  };
 
   const deleteUserById = async (userId) => {
     await appClient.delete(`/api/v1/admin/users/${userId}`);
+  };
+  const updateUserStatus = async (userId, newStatus) => {
+    await appClient.patch(`/api/v1/admin/users/${userId}`, {
+      newStatus,
+      userId,
+    });
   };
 
   const createMovie = async (formData) => {
@@ -391,10 +413,13 @@ export const AppProvider = ({ children }) => {
         fetchWatchlistCount,
         fetchMovieCountForEachCategory,
         fetchWatchlists,
+        fetchReviews,
         fetchUsers,
         searchUsers,
         searchMovies,
+        searchReviews,
         deleteUserById,
+        updateUserStatus,
         createMovie,
         deleteMovieById,
         toggleTheme,
