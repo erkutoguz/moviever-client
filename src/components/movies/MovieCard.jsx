@@ -11,7 +11,7 @@ function MovieCard({ movie }) {
       isPressable
       onPress={() => navigate(`/movies/${movie.id}`)}
       radius="none"
-      className="w-[200px] rounded"
+      className="w-[200px] h-[300px] rounded"
     >
       <CardBody className="overflow-visible p-0">
         <Image

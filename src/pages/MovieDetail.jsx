@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/layout/Footer";
@@ -16,7 +17,7 @@ import { capitalizeText } from "../utils/textFormatter";
 
 function MovieDetail() {
   const { movieId } = useParams();
-  const [likedReviews, setLikedMovies] = useState([]);
+  const [likedReviews, setLikedMovies] = useState();
   const [movieDetails, setMoviesDetails] = useState({});
   const {
     fetchLikedReviews,
@@ -24,27 +25,49 @@ function MovieDetail() {
     unlikeMovie,
     likeMovie,
     fetchMovieReviews,
+    errMessage,
   } = useAppContext();
+
   const [isUserLiked, setIsUserLiked] = useState(movieDetails.isUserLiked);
   const [likeCount, setLikeCount] = useState(0);
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
+
+  const fetchMovieData = async (movieId) => {
+    try {
+      const movieDetailsResponse = await fetchMovieDetailsWithMovieId(movieId);
+      const movieDetails = movieDetailsResponse.data;
+
+      setMoviesDetails(movieDetails);
+      setIsUserLiked(movieDetails.isUserLiked);
+      setLikeCount(movieDetails.likeCount);
+
+      const reviewsResponse = await fetchMovieReviews(movieId);
+      setReviews(reviewsResponse.data);
+
+      const likedReviewsResponse = await fetchLikedReviews(movieId);
+      setLikedMovies(likedReviewsResponse.data.reviewIds);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    fetchMovieDetailsWithMovieId(movieId).then((res) => {
-      setMoviesDetails(res.data);
-      setIsUserLiked(res.data.isUserLiked);
-      setLikeCount(res.data.likeCount);
-    });
-    fetchLikedReviews(movieId).then((res) => {
-      setLikedMovies(res.data.reviewIds);
-    });
-    fetchMovieReviews(movieId)
-      .then((res) => {
-        setReviews(res.data);
-      })
-      .catch((er) => {
-        console.log(er);
-      });
+    // fetchMovieDetailsWithMovieId(movieId)
+    //   .then((res) => {
+    //     setMoviesDetails(res.data);
+    //     setIsUserLiked(res.data.isUserLiked);
+    //     setLikeCount(res.data.likeCount);
+    //   })
+    //   .then((res) => {
+    //     fetchMovieReviews(movieId).then((res) => {
+    //       setReviews(res.data);
+    //     });
+    //   })
+    //   .then((res) => {
+    //     fetchLikedReviews(movieId).then((res) => {
+    //       setLikedMovies(res.data.reviewIds);
+    //     });
+    //   });
+    fetchMovieData(movieId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -71,7 +94,13 @@ function MovieDetail() {
   return (
     <div className="flex flex-col justify-center items-center w-full text-textColor ">
       <Header />
-      {movieDetails && likedReviews && (
+      {errMessage && (
+        <p className="mt-16 text-center  text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+          {errMessage}
+        </p>
+      )}
+
+      {!errMessage && movieDetails && likedReviews && (
         <section className="flex flex-col justify-center items-center lg:max-w-7xl">
           <div className="w-3/4 flex flex-col justify-center items-center lg:flex-row lg:items-start lg:max-w-1/2">
             <div className="description flex lg:max-w-[330px] flex-col gap-6 justify-center items-center w-full mt-8">

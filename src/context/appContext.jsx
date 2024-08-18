@@ -19,6 +19,7 @@ import {
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
   REQUEST_ERROR,
+  RESOURCE_NOT_FOUND_ERROR,
   TOGGLE_THEME,
 } from "./actions";
 import axios from "axios";
@@ -81,6 +82,7 @@ export const AppProvider = ({ children }) => {
           })
           .catch((e) => {
             resetLocalStroage();
+            logout();
             dispatch({ type: LOGOUT, payload: initialState });
             window.location = "/sign-in";
           });
@@ -88,6 +90,14 @@ export const AppProvider = ({ children }) => {
       if (error.response.status === 401) {
         dispatch({
           type: REQUEST_ERROR,
+          payload: {
+            errMessage: error.response.data.message,
+          },
+        });
+      }
+      if (error.response.status === 404) {
+        dispatch({
+          type: RESOURCE_NOT_FOUND_ERROR,
           payload: {
             errMessage: error.response.data.message,
           },
@@ -191,9 +201,10 @@ export const AppProvider = ({ children }) => {
       });
     }
   };
-  const logout = async () => {
-    await dispatch({ type: LOGOUT, payload: initialState });
-    await resetLocalStroage();
+  const logout = () => {
+    appClient.get("/api/v1/auth/logout").then((res) => {});
+    dispatch({ type: LOGOUT, payload: initialState });
+    resetLocalStroage();
   };
   const register = async (username, email, password, firstname, lastname) => {
     dispatch({ type: REGISTER_USER_BEGIN });
@@ -363,6 +374,24 @@ export const AppProvider = ({ children }) => {
   const fetchUsers = async (page) => {
     return await appClient.get(`/api/v1/admin/users?page=${page}&size=6`);
   };
+  const fetchUserLogs = async (page, type) => {
+    return await appClient.get(
+      `/api/v1/logs/show-logs?page=${page}&size=6&type=${type}`
+    );
+  };
+  const downloadLog = async (logName) => {
+    return await appClient
+      .get(`/api/v1/logs/download/${logName}`)
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", logName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+  };
   const searchUsers = async (query, page) => {
     return await appClient.get(
       `/api/v1/users/search/${query}?page=${page}&size=6`
@@ -415,6 +444,8 @@ export const AppProvider = ({ children }) => {
         fetchWatchlists,
         fetchReviews,
         fetchUsers,
+        fetchUserLogs,
+        downloadLog,
         searchUsers,
         searchMovies,
         searchReviews,

@@ -21,33 +21,32 @@ function Category() {
   }, [page]);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
+    <div className="flex flex-col justify-center items-center w-full ">
       <Header />
-      <p
-        className={`font-bold text-xl ${
-          theme === "dark" ? "text-white" : "text-darkBlue"
-        } my-8`}
-      >
-        {capitalizeText(categoryName)} Movies
-      </p>
-      {movieData.totalItems !== 0 ? (
-        <>
-          <MovieList movies={movieData.movies} />
-          <Pagination
-            total={movieData.totalPages}
-            initialPage={1}
-            className="mt-8"
-            onChange={(p) => {
-              setPage(p - 1);
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <p>no {capitalizeText(categoryName)} movies yet</p>
-        </>
-      )}
-
+      <div className="min-h-[calc(90vh-300px)]">
+        <p className={`font-bold text-xl text-textColor my-8`}>
+          {capitalizeText(categoryName)} Movies
+        </p>
+        {movieData.totalItems !== 0 ? (
+          <>
+            <MovieList movies={movieData.movies} />
+            <Pagination
+              total={movieData.totalPages}
+              initialPage={1}
+              className="mt-8"
+              onChange={(p) => {
+                setPage(p - 1);
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <p className="text-textColor">
+              no {capitalizeText(categoryName)} movies yet
+            </p>
+          </>
+        )}
+      </div>
       <Footer />
     </div>
   );

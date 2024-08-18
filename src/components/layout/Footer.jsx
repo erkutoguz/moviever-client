@@ -18,12 +18,11 @@ function Footer() {
   const { isAuthenticated, fetchPopularMovies, theme } = useAppContext();
   const [popularMovies, setPopularMovies] = useState([]);
   useEffect(() => {
-    {
-      isAuthenticated &&
-        fetchPopularMovies(0, 12).then((res) => {
-          setPopularMovies(res.data.movies);
-        });
-    }
+    // if (isAuthenticated) {
+    //   fetchPopularMovies(0, 12).then((res) => {
+    //     setPopularMovies(res.data.movies);
+    //   });
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

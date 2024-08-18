@@ -31,6 +31,9 @@ import AdminPage from "./admin/AdminPage.jsx";
 import AdminAddMovie from "./admin/AdminAddMovie.jsx";
 import AdminWatchlist from "./admin/AdminWatchlist.jsx";
 import AdminReviews from "./admin/AdminReviews.jsx";
+import AdminUserLogs from "./admin/AdminUserLogs.jsx";
+import AdminErrorLogs from "./admin/AdminErrorLogs.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -80,6 +83,8 @@ const router = createBrowserRouter(
         <Route path="add-movies" element={<AdminAddMovie />} />
         <Route path="watchlists" element={<AdminWatchlist />} />
         <Route path="reviews" element={<AdminReviews />} />
+        <Route path="user-logs" element={<AdminUserLogs />} />
+        <Route path="error-logs" element={<AdminErrorLogs />} />
       </Route>
       <Route
         path="/profile/me"
@@ -130,6 +135,7 @@ const router = createBrowserRouter(
         }
       />
       <Route path="/logout" element={<Logout />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );

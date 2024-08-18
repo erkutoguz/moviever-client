@@ -35,8 +35,6 @@ const WatchlistDetail = () => {
   const updateMovies = (movieId) => {
     setLoading(true);
     fetchWatchlistDetails(watchlistId, page, 12).then((res) => {
-      console.log(res);
-
       const prevList = movies.filter((m) => m.id !== movieId);
       // eslint-disable-next-line no-unused-vars
       setMovies((prev) => {
@@ -63,53 +61,54 @@ const WatchlistDetail = () => {
   return (
     <div className="flex flex-col justify-center items-center ">
       <Header />
-      {details && !loading && (
-        <>
-          <p className="font-bold text-xl text-textColor my-8">
-            {details.watchlistName}
-          </p>
-          <div className="flex flex-wrap max-w-[1000px] justify-center gap-2 h-[calc(100vh-408px)]">
-            {movies.map((m, i) => {
-              if (i === movies.length - 1) {
-                return (
-                  <div key={i} ref={lastElementRef} className="relative">
-                    <MovieCard movie={m} />
-                    <RemoveMovieFromWatchlistModal
-                      movieId={m.id}
-                      watchlistId={details.id}
-                      updateMovies={updateMovies}
-                    />
-                  </div>
-                );
-              } else {
-                return (
-                  <div key={i} className="relative">
-                    <MovieCard movie={m} />
-                    <RemoveMovieFromWatchlistModal
-                      movieId={m.id}
-                      updateMovies={updateMovies}
-                      watchlistId={details.id}
-                    />
-                  </div>
-                );
-              }
-            })}
-            {movies.length < 1 && (
-              <div className="px-6">
-                <p className="">no movies yet</p>
-                <Link href="/all-movies">Add movies</Link>
-              </div>
-            )}
+      <div className="h-[calc(100vh-400px)]">
+        {details && !loading && (
+          <div className="">
+            <p className="font-bold text-xl text-textColor my-8">
+              {details.watchlistName}
+            </p>
+            <div className="flex flex-wrap max-w-[1000px] justify-center gap-2 h-[calc(100vh-408px)]">
+              {movies.map((m, i) => {
+                if (i === movies.length - 1) {
+                  return (
+                    <div key={i} ref={lastElementRef} className="relative">
+                      <MovieCard movie={m} />
+                      <RemoveMovieFromWatchlistModal
+                        movieId={m.id}
+                        watchlistId={details.id}
+                        updateMovies={updateMovies}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={i} className="relative">
+                      <MovieCard movie={m} />
+                      <RemoveMovieFromWatchlistModal
+                        movieId={m.id}
+                        updateMovies={updateMovies}
+                        watchlistId={details.id}
+                      />
+                    </div>
+                  );
+                }
+              })}
+              {movies.length < 1 && (
+                <div className="px-6">
+                  <p className="">no movies yet</p>
+                  <Link href="/all-movies">Add movies</Link>
+                </div>
+              )}
+            </div>
           </div>
-        </>
-      )}
+        )}
 
-      {errMessage && (
-        <p className="mt-16 text-center text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
-          {errMessage}
-        </p>
-      )}
-
+        {errMessage && (
+          <p className="mt-16 text-center  text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+            {errMessage}
+          </p>
+        )}
+      </div>
       <Footer />
     </div>
   );

@@ -9,6 +9,7 @@ import {
   REGISTER_USER_ERROR,
   REGISTER_USER_SUCCESS,
   REQUEST_ERROR,
+  RESOURCE_NOT_FOUND_ERROR,
   TOGGLE_THEME,
 } from "./actions";
 
@@ -53,6 +54,9 @@ export default (state, action) => {
     };
   }
 
+  if (action.type === RESOURCE_NOT_FOUND_ERROR) {
+    return { ...state, errMessage: action.payload.errMessage };
+  }
   if (action.type === REQUEST_ERROR) {
     return { ...state, errMessage: action.payload.errMessage };
   }

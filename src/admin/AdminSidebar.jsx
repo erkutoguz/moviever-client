@@ -18,6 +18,9 @@ import HomeIcon from "../assets/icons/HomeIcon";
 import MenuIcon from "../assets/icons/MenuIcon";
 import WatchlistIcon from "../assets/icons/WatchlistIcon";
 import ReviewIcon from "../assets/icons/ReviewIcon";
+import UserActivityLog from "../assets/icons/UserActivityLogIcon";
+import UserActivityLogIcon from "../assets/icons/UserActivityLogIcon";
+import ErrorLogIcon from "../assets/icons/ErroLogIcon";
 
 const AdminSidebar = () => {
   const { user } = useAppContext();
@@ -81,16 +84,6 @@ const AdminSidebar = () => {
               <UsersIcon />
               {isOpen && <span className="ml-4">User List</span>}
             </Link>
-
-            {/* <Link
-              href="/admin/user-permissions"
-              className={`flex text-textColor ${
-                isOpen ? "px-4" : "justify-center"
-              } py-2 hover:bg-gray-700 w-full`}
-            >
-              <AuthIcon />
-              {isOpen && <span className="ml-4">User Permissions</span>}
-            </Link> */}
           </div>
         </div>
 
@@ -175,27 +168,27 @@ const AdminSidebar = () => {
               isOpen ? "px-4" : "justify-center"
             } py-2 hover:bg-gray-700 w-full`}
           >
-            <p className="">Stats</p>
+            <p className="">Logs</p>
           </div>
 
           <div className="w-full">
             <Link
-              href="#"
+              href="/admin/user-logs"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}
             >
-              <PieChartIcon />
-              {isOpen && <span className="ml-4">Pie Chart</span>}
+              <UserActivityLogIcon />
+              {isOpen && <span className="ml-4"> User Activity Logs</span>}
             </Link>
             <Link
-              href="#"
+              href="/admin/error-logs"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"
               } py-2 hover:bg-gray-700 w-full`}
             >
-              <BarChartIcon />
-              {isOpen && <span className="ml-4">Bar Chart</span>}
+              <ErrorLogIcon />
+              {isOpen && <span className="ml-4">Error Logs</span>}
             </Link>
           </div>
         </div>
