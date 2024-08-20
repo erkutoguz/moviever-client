@@ -12,17 +12,18 @@ import twitterIcon from "../../assets/icons/twitter.svg";
 import linkedinIcon from "../../assets/icons/linkedin.svg";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import { useAppContext } from "../../context/appContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Footer() {
-  const { isAuthenticated, theme } = useAppContext();
+  const { isAuthenticated, fetchPopularMovies } = useAppContext();
+  const [popularMovies, setPopularMovies] = useState([]);
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   fetchPopularMovies(0, 12).then((res) => {
-    //     setPopularMovies(res.data.movies);
-    //   });
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (isAuthenticated) {
+      fetchPopularMovies(0, 7).then((res) => {
+        setPopularMovies(res.data.movies);
+      });
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div
@@ -46,7 +47,7 @@ function Footer() {
             <img
               src={instagramIcon}
               alt="instagram-icon"
-              className={`${theme === "dark" ? "" : "bg-white"}`}
+              className="bg-background"
             />
           </Button>
           <Button
@@ -58,14 +59,14 @@ function Footer() {
             <img
               src={linkedinIcon}
               alt="linkedin-icon"
-              className={`${theme === "dark" ? "" : "bg-white"}`}
+              className="bg-background"
             />
           </Button>
           <Button as={Link} isIconOnly aria-label="twitter-button">
             <img
               src={twitterIcon}
               alt="twitter-icon"
-              className={`${theme === "dark" ? "" : "bg-white"}`}
+              className="bg-background"
             />
           </Button>
         </div>
@@ -156,7 +157,7 @@ function Footer() {
             </Table>
           </div>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
-            {/* {popularMovies.length > 0 && (
+            {popularMovies.length > 0 && (
               <Table removeWrapper className="text-textColor">
                 <TableHeader>
                   <TableColumn>Popular Movies</TableColumn>
@@ -225,7 +226,7 @@ function Footer() {
                   </TableRow>
                 </TableBody>
               </Table>
-            )} */}
+            )}
           </div>
         </>
       )}

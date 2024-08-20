@@ -405,6 +405,9 @@ export const AppProvider = ({ children }) => {
       },
     });
   };
+  const fetchIpAddresses = async () => {
+    return await appClient.get("/api/v1/admin/users/ip-addresses");
+  };
   const searchUsers = async (query, page) => {
     return await appClient.get(
       `/api/v1/users/search/${query}?page=${page}&size=6`
@@ -456,6 +459,7 @@ export const AppProvider = ({ children }) => {
         fetchMovieCountForEachCategory,
         fetchWatchlists,
         fetchAppHealth,
+        fetchIpAddresses,
         fetchReviews,
         fetchUsers,
         fetchUserLogs,

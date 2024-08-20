@@ -1,7 +1,18 @@
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useAppContext } from "../../context/appContext";
+import { useEffect, useState } from "react";
 
 const WorldMap = () => {
+  const { fetchIpAddresses } = useAppContext();
+  const [ipAddresses, setIpAddresses] = useState([]);
+  useEffect(() => {
+    fetchIpAddresses().then((res) => {
+      console.log(res.data);
+      setIpAddresses(res.data);
+    });
+  }, []);
+
   const coordinates = [
     { lat: 40.7128, lng: -74.006, name: "New York", numberOfIP: 123 },
     { lat: 36.884804, lng: 30.704044, name: "Antalya", numberOfIP: 1234 },
@@ -77,13 +88,14 @@ const WorldMap = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {coordinates.map((coord, index) => (
-        <Marker key={index} position={[coord.lat, coord.lng]}>
-          <Popup>
-            {"#" + coord.numberOfIP} {coord.name}
-          </Popup>
-        </Marker>
-      ))}
+      {ipAddresses.length > 0 &&
+        ipAddresses.map((ip, index) => (
+          <Marker key={index} position={[ip.loc[0], ip.loc[1]]}>
+            <Popup>
+              {ip.userCount + "#Users"} {ip.city}
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 };
