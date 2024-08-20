@@ -1,84 +1,130 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import DeleteUserModal from "./DeleteUserModal";
+import {
+  Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tooltip,
+  User,
+} from "@nextui-org/react";
+import { useCallback } from "react";
 import UserPermissionsModal from "./UserPermissionsModal";
+import DeleteUserModal from "./DeleteUserModal";
 
 const UserList = ({ users, updateUsers }) => {
-  return (
-    <table className="table-auto absolute overflow-scroll">
-      <thead>
-        <tr>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Id
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Username
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Email
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Roles
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Full Name
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Status
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user, index) => {
-          return (
-            <tr
-              key={index}
-              className="border-t hover:bg-commentBg duration-200"
-            >
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.id}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.username}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.email}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.roles.map((r, i) => {
-                  return <p key={i}>{r}</p>;
-                })}
-                {user.roles.length === 0 && <p>-</p>}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {user.firstName + " " + user.lastName}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
+  const columns = [
+    { name: "Id", uid: "id" },
+    { name: "Username", uid: "username" },
+    { name: "Email", uid: "email" },
+    { name: "Roles", uid: "roles" },
+    { name: "Status", uid: "enabled" },
+    { name: "Full Name", uid: "fullName" },
+    { name: "Actions", uid: "actions" },
+  ];
+  const statusColorMap = {
+    true: "success",
+    false: "danger",
+  };
+  const renderCell = useCallback((user, columnKey) => {
+    const cellValue = user[columnKey];
+
+    switch (columnKey) {
+      case "id":
+        return <p className=" text-textColor">{cellValue}</p>;
+      case "username":
+        return (
+          <User
+            avatarProps={{ radius: "lg", src: user.pictureUrl }}
+            name={cellValue}
+            className=" text-textColor"
+          >
+            {user.username}
+          </User>
+        );
+      case "email":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm  text-textColor">{cellValue}</p>
+          </div>
+        );
+      case "fullName":
+        return (
+          <div className="flex flex-col capitalize">
+            <p className="text-bold text-sm text-textColor">{user.firstName}</p>
+            <p className="text-bold text-sm  text-textColor">{user.lastName}</p>
+          </div>
+        );
+      case "roles":
+        return (
+          <div className="flex flex-col">
+            {cellValue.map((r, i) => {
+              return (
                 <p
-                  className={`${
-                    user.enabled
-                      ? "bg-green-400 shadow-lime-500"
-                      : "bg-red-500 shadow-pink-700"
-                  } px-1 py-1 w-[64px] text-center rounded-lg shadow `}
+                  key={i}
+                  className="text-bold text-sm capitalize text-textColor"
                 >
-                  {user.enabled ? "Active" : "Passive"}
+                  {r}
                 </p>
-              </td>
-              <td className=" px-4 py-4 gap-1 whitespace-wrap text-sm font-medium text-textColor flex items-center">
-                <UserPermissionsModal
-                  userId={user.id}
-                  status={user.enabled}
-                  updateUsers={updateUsers}
-                />
-                <DeleteUserModal updateUsers={updateUsers} userId={user.id} />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+              );
+            })}
+          </div>
+        );
+      case "enabled":
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColorMap[user.enabled]}
+            size="sm"
+            variant="flat"
+          >
+            {cellValue ? "Active" : "Passive"}
+          </Chip>
+        );
+      case "actions":
+        return (
+          <div className="relative flex justify-center   items-center gap-2">
+            <Tooltip content="Permissions">
+              <UserPermissionsModal
+                userId={user.id}
+                status={user.enabled}
+                updateUsers={updateUsers}
+              />
+            </Tooltip>
+            <Tooltip content="Delete User">
+              <DeleteUserModal updateUsers={updateUsers} userId={user.id} />
+            </Tooltip>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
+  return (
+    <Table aria-label="user-list">
+      <TableHeader columns={columns}>
+        {(column) => (
+          <TableColumn
+            key={column.uid}
+            align={column.uid === "actions" ? "center" : "start"}
+          >
+            {column.name}
+          </TableColumn>
+        )}
+      </TableHeader>
+      <TableBody items={users}>
+        {(item) => (
+          <TableRow key={item.id}>
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
   );
 };
 

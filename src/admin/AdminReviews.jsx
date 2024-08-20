@@ -14,6 +14,7 @@ const AdminReviews = () => {
   const updateReviews = () => {
     fetchReviews(page).then((res) => {
       setReviewList(res.data.reviews);
+      setPage(0);
     });
   };
 

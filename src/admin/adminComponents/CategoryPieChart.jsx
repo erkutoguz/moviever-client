@@ -12,8 +12,6 @@ const CategoryPieChart = () => {
 
   useEffect(() => {
     fetchMovieCountForEachCategory().then((res) => {
-      console.log(res.data);
-
       setChartData({
         labels: res.data.map((d) => d.categoryName),
         datasets: [
@@ -53,7 +51,7 @@ const CategoryPieChart = () => {
     },
   };
   return (
-    <div className=" text-textColor">
+    <div className=" flex justify-center w-full text-textColor bg-sidebarBg p-3">
       {isLoading && <Pie data={chartData} options={options} />}
     </div>
   );

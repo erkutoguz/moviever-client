@@ -12,12 +12,16 @@ function Movies() {
   const url = useResolvedPath();
   const [page, setPage] = useState(0);
   const [pageName, setPageName] = useState("");
-  const { fetchPopularMovies, fetchNewMovies } = useAppContext();
+  const { fetchPopularMovies, fetchMostLikedMovies, fetchNewMovies } =
+    useAppContext();
 
   useEffect(() => {
     switch (url.pathname) {
       case "/new-movies":
         setPageName("New Movies");
+        break;
+      case "/most-liked-movies":
+        setPageName("Most Liked Movies");
         break;
       case "/popular-movies":
         setPageName("Popular Movies");
@@ -31,6 +35,10 @@ function Movies() {
   useEffect(() => {
     if (url.pathname === "/new-movies" || url.pathname === "/all-movies") {
       fetchNewMovies(page, 12).then((res) => {
+        setInitialData(res.data);
+      });
+    } else if (url.pathname === "/most-liked-movies") {
+      fetchMostLikedMovies(page, 12).then((res) => {
         setInitialData(res.data);
       });
     } else if (url.pathname === "/popular-movies") {

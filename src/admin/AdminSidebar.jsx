@@ -182,6 +182,15 @@ const AdminSidebar = () => {
               {isOpen && <span className="ml-4"> User Activity Logs</span>}
             </Link>
             <Link
+              href="/admin/auth-logs"
+              className={`flex text-textColor ${
+                isOpen ? "px-4" : "justify-center"
+              } py-2 hover:bg-gray-700 w-full`}
+            >
+              <AuthIcon />
+              {isOpen && <span className="ml-4">Auth Logs</span>}
+            </Link>
+            <Link
               href="/admin/error-logs"
               className={`flex text-textColor ${
                 isOpen ? "px-4" : "justify-center"

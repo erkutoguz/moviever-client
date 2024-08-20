@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/appContext";
 import { Pagination } from "@nextui-org/react";
-import MovieList from "./adminComponents/MovieList";
 import SelectCategory from "./adminComponents/SelectCategory";
+import MovieList from "./adminComponents/MovieList";
 
 const AdminMovies = () => {
   const [initialData, setInitialData] = useState([]);
@@ -14,7 +14,7 @@ const AdminMovies = () => {
   const { searchMovies, fetchAllMovies } = useAppContext();
 
   const updateMovies = () => {
-    fetchAllMovies(category, page, 6).then((res) => {
+    fetchAllMovies(category, page, 7).then((res) => {
       setMovies(res.data.movies);
     });
   };
@@ -34,7 +34,7 @@ const AdminMovies = () => {
         });
       });
     } else {
-      fetchAllMovies(category, page, 6).then((res) => {
+      fetchAllMovies(category, page, 7).then((res) => {
         setInitialData(res.data);
         setMovies(res.data.movies);
       });
@@ -57,13 +57,8 @@ const AdminMovies = () => {
         />
         <SelectCategory setCategory={setCategory} />
       </div>
-      <div className="relative min-h-[500px] w-[200px] sm:w-[400px] md:w-[400px] lg:max-w-[700px] lg:min-w-[600px] xl:min-w-[700px] overflow-x-scroll xl:overflow-x-hidden">
+      <div className="relative min-h-[500px] w-[200px] sm:w-[400px] md:w-[400px] lg:max-w-[700px] lg:min-w-[600px] xl:min-w-[700px] ">
         <MovieList movies={movies} updateMovies={updateMovies} />
-        {/* {movies.length === 0 && (
-          <div className="flex justify-center items-center mt-40 ">
-            <p>Movie not found</p>
-          </div>
-        )} */}
         {movies.length === 0 && (
           <div className="flex justify-center items-center mt-40 text-textColor">
             <p>Movie not found</p>

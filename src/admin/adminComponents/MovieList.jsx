@@ -1,64 +1,95 @@
-/* eslint-disable no-unused-vars */
-import { capitalizeText } from "../../utils/textFormatter";
-import DeleteMovieModal from "./DeleteMovieModal";
-
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-const MovieList = ({ movies, updateMovies }) => {
-  return (
-    <table className="table-auto absolute overflow-scroll">
-      <thead>
-        <tr>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Id
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Title
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Release Year
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Category
-          </th>
-          <th className="px-4 py-2 text-left text-xs font-medium text-textColor tracking-wider">
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {movies.map((movie, index) => {
-          return (
-            <tr
-              key={index}
-              className="border-t hover:bg-commentBg duration-200"
-            >
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {movie.movieId || movie.id}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {movie.title}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                {movie.releaseYear}
-              </td>
-              <td className="px-6 py-4 whitespace-wrap text-sm font-medium flex flex-col text-textColor">
-                {movie.categories.map((c, i) => {
-                  return <span key={i}>{capitalizeText(c.categoryType)}</span>;
-                })}
-                {movie.categories.length === 0 && <p>-</p>}
-              </td>
+import { useCallback } from "react";
+import DeleteMovieModal from "./DeleteMovieModal";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
+import { capitalizeText } from "../../utils/textFormatter";
 
-              <td className=" px-6 py-4 whitespace-wrap text-sm font-medium text-textColor">
-                <DeleteMovieModal
-                  updateMovies={updateMovies}
-                  movieId={movie.id || movie.movieId}
-                />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+const MovieList = ({ movies, updateMovies }) => {
+  const columns = [
+    { name: "Id", uid: "id" },
+    { name: "Title", uid: "title" },
+    { name: "Release Year", uid: "releaseYear" },
+    { name: "Categories", uid: "categories" },
+    { name: "Actions", uid: "actions" },
+  ];
+  const renderCell = useCallback((movie, columnKey) => {
+    const cellValue = movie[columnKey];
+
+    switch (columnKey) {
+      case "id":
+        return <p className=" text-textColor">{cellValue}</p>;
+      case "title":
+        return (
+          <div className="flex flex-col capitalize">
+            <p className="text-bold text-sm  text-textColor">{cellValue}</p>
+          </div>
+        );
+      case "releaseYear":
+        return (
+          <div className="flex flex-col ">
+            <p className="text-bold text-sm text-textColor">{cellValue}</p>
+          </div>
+        );
+      case "categories":
+        return (
+          <div className="flex flex-col">
+            {cellValue.map((c, i) => {
+              console.log(c);
+
+              return (
+                <p
+                  key={i}
+                  className="text-bold text-sm capitalize text-textColor"
+                >
+                  {capitalizeText(c.categoryType)}
+                </p>
+              );
+            })}
+          </div>
+        );
+
+      case "actions":
+        return (
+          <div className="relative flex justify-center  items-center gap-2">
+            <DeleteMovieModal movieId={movie.id} updateMovies={updateMovies} />
+          </div>
+        );
+      default:
+        return <p>-</p>;
+    }
+  }, []);
+
+  return (
+    <Table aria-label="movie-list">
+      <TableHeader columns={columns}>
+        {(column) => (
+          <TableColumn
+            key={column.uid}
+            align={column.uid === "actions" ? "center" : "start"}
+          >
+            {column.name}
+          </TableColumn>
+        )}
+      </TableHeader>
+      <TableBody items={movies}>
+        {(item) => (
+          <TableRow key={item.id}>
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+    // <p>a</p>
   );
 };
 

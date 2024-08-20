@@ -253,9 +253,14 @@ export const AppProvider = ({ children }) => {
       `/api/v1/movies/new-movies?page=${page}&size=${size}`
     );
   };
-  const fetchPopularMovies = async (page, size) => {
+  const fetchMostLikedMovies = async (page, size) => {
     return await appClient.get(
       `/api/v1/movies/most-liked-movies?page=${page}&size=${size}`
+    );
+  };
+  const fetchPopularMovies = async (page, size) => {
+    return await appClient.get(
+      `/api/v1/movies/most-viewed-movies?page=${page}&size=${size}`
     );
   };
   const fetchMovieDetailsWithMovieId = async (movieId) => {
@@ -379,6 +384,7 @@ export const AppProvider = ({ children }) => {
       `/api/v1/logs/show-logs?page=${page}&size=6&type=${type}`
     );
   };
+
   const downloadLog = async (logName) => {
     return await appClient
       .get(`/api/v1/logs/download/${logName}`)
@@ -392,6 +398,13 @@ export const AppProvider = ({ children }) => {
         link.remove();
       });
   };
+  const fetchAppHealth = async () => {
+    return await axios.get("http://localhost:9991/actuator/health", {
+      headers: {
+        Authorization: `Bearer ${state.accessToken}`,
+      },
+    });
+  };
   const searchUsers = async (query, page) => {
     return await appClient.get(
       `/api/v1/users/search/${query}?page=${page}&size=6`
@@ -400,7 +413,7 @@ export const AppProvider = ({ children }) => {
 
   const searchMovies = async (query, categoryName, page) => {
     return await appClient.get(
-      `/api/v1/movies/search/${query}?page=${page}&size=6${
+      `/api/v1/movies/search/${query}?page=${page}&size=7${
         categoryName !== "ALL" ? "&category=" + categoryName : ""
       }`
     );
@@ -442,6 +455,7 @@ export const AppProvider = ({ children }) => {
         fetchWatchlistCount,
         fetchMovieCountForEachCategory,
         fetchWatchlists,
+        fetchAppHealth,
         fetchReviews,
         fetchUsers,
         fetchUserLogs,
@@ -464,6 +478,7 @@ export const AppProvider = ({ children }) => {
         appClient,
         fetchNewMovies,
         fetchPopularMovies,
+        fetchMostLikedMovies,
         fetchWatchlistDetails,
         fetchLikedReviews,
         likeReview,

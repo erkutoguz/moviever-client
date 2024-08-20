@@ -7,6 +7,8 @@ import ReviewIcon from "../assets/icons/ReviewIcon";
 import WatchlistIcon from "../assets/icons/WatchlistIcon";
 import StatsBox from "./adminComponents/StatsBox";
 import CategoryPieChart from "./adminComponents/CategoryPieChart";
+import AdminPopularMoviesList from "./adminComponents/AdminPopularMoviesList";
+import WorldMap from "./adminComponents/WorldMap";
 
 const AdminPage = () => {
   const {
@@ -14,13 +16,21 @@ const AdminPage = () => {
     fetchMovieCount,
     fetchReviewCount,
     fetchWatchlistCount,
+    fetchAppHealth,
+    fetchPopularMovies,
   } = useAppContext();
   const [userCount, setUserCount] = useState(0);
   const [movieCount, setMovieCount] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
   const [watchlistCount, setWatchlistCount] = useState(0);
+  const [appHealth, setAppHealth] = useState({});
+  const [popularMovies, setPopularMovies] = useState([]);
 
   useEffect(() => {
+    fetchAppHealth().then((res) => {
+      console.log(res.data);
+      setAppHealth(res.data);
+    });
     fetchUserCount().then((res) => {
       setUserCount(res.data.totalItems);
     });
@@ -33,6 +43,9 @@ const AdminPage = () => {
     fetchWatchlistCount().then((res) => {
       setWatchlistCount(res.data.totalItems);
     });
+    fetchPopularMovies(0, 3).then((res) => {
+      setPopularMovies(res.data.movies);
+    });
   }, []);
 
   return (
@@ -42,8 +55,8 @@ const AdminPage = () => {
         <p className="text-textColor">Welcome to your dashboard</p>
       </div>
 
-      <div className=" flex flex-col  gap-10">
-        <div className="counts flex flex-col lg:flex-row justify-center items-center gap-4">
+      <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-6 lg:grid-rows-4">
+        {/* <div className="gap-4 col-span-2 row-span-1 flex flex-wrap justify-center items-center">
           <StatsBox
             count={userCount}
             label={"USERS"}
@@ -64,9 +77,46 @@ const AdminPage = () => {
             label={"WATCHLIST"}
             icon={<WatchlistIcon className="w-8" />}
           />
+        </div> */}
+        <div className="p-4 lg:col-span-1 lg:row-span-1">
+          <StatsBox
+            count={userCount}
+            label={"USERS"}
+            icon={<UsersIcon className="w-8" />}
+          />
         </div>
-        <div className="category-movies lg:w-[550px] w-[200px] sm:w-[250px] md:w-[350px]">
+        <div className="p-4 lg:col-span-1 lg:row-span-1 lg:col-start-2 lg:row-start-1">
+          <StatsBox
+            count={movieCount}
+            label={"MOVIES"}
+            icon={<MovieIcon className="w-8" />}
+          />
+        </div>
+        <div className="p-4 lg:col-span-1 lg:row-span-1 lg:col-start-1  lg:row-start-2">
+          <StatsBox
+            count={reviewCount}
+            label={"REVIEWS"}
+            icon={<ReviewIcon className="w-8" />}
+          />
+        </div>
+        <div className="p-4 lg:col-span-1 lg:row-span-1 lg:col-start-2  lg:row-start-2 ">
+          <StatsBox
+            count={watchlistCount}
+            label={"WATCHLIST"}
+            icon={<WatchlistIcon className="w-8" />}
+          />
+        </div>
+
+        <div className=" p-4 lg:col-span-4 lg:row-span-1 lg:col-start-3 lg:row-start-1">
+          {popularMovies.length > 0 && (
+            <AdminPopularMoviesList movies={popularMovies} />
+          )}
+        </div>
+        <div className="p-4 lg:col-span-2 lg:row-span-2 lg:col-start-1 lg:row-start-3 ">
           <CategoryPieChart />
+        </div>
+        <div className="p-4 lg:col-span-4 lg:row-span-2 lg:col-start-3 lg:row-start-2 ">
+          <WorldMap />
         </div>
       </div>
     </div>

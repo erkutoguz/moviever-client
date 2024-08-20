@@ -34,6 +34,7 @@ import AdminReviews from "./admin/AdminReviews.jsx";
 import AdminUserLogs from "./admin/AdminUserLogs.jsx";
 import AdminErrorLogs from "./admin/AdminErrorLogs.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import AdminAuthLogs from "./admin/AdminAuthLogs.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -84,6 +85,7 @@ const router = createBrowserRouter(
         <Route path="watchlists" element={<AdminWatchlist />} />
         <Route path="reviews" element={<AdminReviews />} />
         <Route path="user-logs" element={<AdminUserLogs />} />
+        <Route path="auth-logs" element={<AdminAuthLogs />} />
         <Route path="error-logs" element={<AdminErrorLogs />} />
       </Route>
       <Route
@@ -99,6 +101,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <WatchlistDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/most-liked-movies"
+        element={
+          <ProtectedRoute>
+            <Movies />
           </ProtectedRoute>
         }
       />

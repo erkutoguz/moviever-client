@@ -11,7 +11,7 @@ import { useAppContext } from "../context/appContext";
 function Category() {
   const { categoryName } = useParams();
   const [movieData, setMovieData] = useState([]);
-  const { fetchAllMovies, theme } = useAppContext();
+  const { fetchAllMovies } = useAppContext();
   const [page, setPage] = useState(0);
 
   useEffect(() => {

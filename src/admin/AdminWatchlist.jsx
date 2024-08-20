@@ -31,7 +31,7 @@ const AdminWatchlist = () => {
 
       <div className="relative min-h-[500px] w-[200px] sm:w-[400px] md:w-[400px] lg:max-w-[700px] lg:min-w-[600px] overflow-x-scroll xl:overflow-x-hidden ">
         <WatchlistList
-          watchlist={watchlist}
+          watchlists={watchlist}
           updateWatchlists={updateWatchlists}
         />
       </div>

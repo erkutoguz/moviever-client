@@ -9,13 +9,22 @@ import { useAppContext } from "../context/appContext";
 
 function Home() {
   const [newMovies, setNewMovies] = useState([]);
+  const [mostLikedMovies, setMostLikedMovies] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
-  const { fetchNewMovies, fetchPopularMovies } = useAppContext();
+  const { fetchNewMovies, fetchPopularMovies, fetchMostLikedMovies } =
+    useAppContext();
   useEffect(() => {
     fetchNewMovies(0, 12).then((res) => {
       setNewMovies(res.data.movies);
     });
+    fetchMostLikedMovies(0, 12).then((res) => {
+      console.log(res.data);
+
+      setMostLikedMovies(res.data.movies);
+    });
     fetchPopularMovies(0, 12).then((res) => {
+      console.log(res.data);
+
       setPopularMovies(res.data.movies);
     });
   }, []);
@@ -34,6 +43,11 @@ function Home() {
       <div className="popular-movies mt-8 flex flex-col gap-2">
         <LayoutLink to={"/popular-movies"} text={"Popular Movies"} />
         <MovieCarousel slides={popularMovies} />
+      </div>
+
+      <div className="popular-movies mt-8 flex flex-col gap-2">
+        <LayoutLink to={"/most-liked-movies"} text={"Most Liked Movies"} />
+        <MovieCarousel slides={mostLikedMovies} />
       </div>
 
       <div className="recommended-movies mt-8 flex flex-col gap-2">

@@ -12,11 +12,10 @@ import twitterIcon from "../../assets/icons/twitter.svg";
 import linkedinIcon from "../../assets/icons/linkedin.svg";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import { useAppContext } from "../../context/appContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 function Footer() {
-  const { isAuthenticated, fetchPopularMovies, theme } = useAppContext();
-  const [popularMovies, setPopularMovies] = useState([]);
+  const { isAuthenticated, theme } = useAppContext();
   useEffect(() => {
     // if (isAuthenticated) {
     //   fetchPopularMovies(0, 12).then((res) => {
