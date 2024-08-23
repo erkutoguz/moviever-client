@@ -215,22 +215,13 @@ export const AppProvider = ({ children }) => {
     resetLocalStroage();
   };
   const register = async (username, email, password, firstname, lastname) => {
-    dispatch({ type: REGISTER_USER_BEGIN });
-    try {
-      const response = await authClient.post("/api/v1/auth/register", {
-        username,
-        email,
-        password,
-        firstname,
-        lastname,
-      });
-      dispatch({ type: REGISTER_USER_SUCCESS });
-    } catch (err) {
-      dispatch({
-        type: REGISTER_USER_ERROR,
-        payload: { errMessage: err.response.data.message },
-      });
-    }
+    return await authClient.post("/api/v1/auth/register", {
+      username,
+      email,
+      password,
+      firstname,
+      lastname,
+    });
   };
 
   const fetchProfile = async () => {

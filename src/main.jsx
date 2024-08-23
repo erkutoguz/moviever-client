@@ -36,6 +36,7 @@ import AdminErrorLogs from "./admin/AdminErrorLogs.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AdminAuthLogs from "./admin/AdminAuthLogs.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
+import RecommendedMovies from "./pages/RecommendedMovies.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -76,6 +77,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <MyWatchlists />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/recommended-movies"
+        element={
+          <ProtectedRoute>
+            <RecommendedMovies />
           </ProtectedRoute>
         }
       />

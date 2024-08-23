@@ -13,6 +13,7 @@ const AdminAddMovie = () => {
   const [trailerUrl, setTrailerUrl] = useState("");
   const [poster, setPoster] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const submitForm = (e) => {
@@ -30,19 +31,26 @@ const AdminAddMovie = () => {
     });
     formData.append("categories", JSON.stringify(cats));
 
-    createMovie(formData).then((res) => {
-      setShowPopup(true);
-      setTitle("");
-      setReleaseDate("");
-      setDirector("");
-      setRating("");
-      setTrailerUrl("");
-      setPoster(null);
-      setSelectedCategories([]);
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 2000);
-    });
+    createMovie(formData)
+      .then((res) => {
+        console.log(title);
+
+        setShowPopup(true);
+        setTitle("");
+        setReleaseDate("");
+        setDirector("");
+        setRating("");
+        setTrailerUrl("");
+        setPoster(null);
+        setSelectedCategories([]);
+        setErrorMessage("");
+        setTimeout(() => {
+          setShowPopup(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data.message);
+      });
   };
 
   return (
@@ -180,7 +188,7 @@ const AdminAddMovie = () => {
             <input
               type="file"
               id="pictureUrl"
-              accept="image/png, image/gif, image/jpeg"
+              accept="image/png, image/gif, image/jpeg, image/webp"
               name="pictureUrl"
               onChange={(e) => setPoster(e.target.files[0])}
               required
@@ -201,6 +209,11 @@ const AdminAddMovie = () => {
         {showPopup && (
           <div className="fixed top-24 z-50 right-0 sm:right-2 md:right-4 xl:right-8 bg-green-500 text-white p-4 rounded shadow-lg">
             <p>Movie successfully added!</p>
+          </div>
+        )}
+        {errorMessage && (
+          <div className="fixed top-24 z-50 right-0 sm:right-2 md:right-4 xl:right-8 bg-red-500 text-white p-4 rounded shadow-lg">
+            <p>{errorMessage}</p>
           </div>
         )}
       </div>

@@ -51,8 +51,8 @@ function Movies() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <Header />
-      <div className="min-h-[calc(100vh-350px)] flex flex-col">
-        <p className={`font-bold text-xl text-textColor my-8`}>{pageName}</p>
+      <div className="min-h-[calc(100vh-350px)] flex flex-col ">
+        <p className={`font-bold text-xl text-textColor my-8 `}>{pageName}</p>
         <MovieList movies={initialData.movies} />
 
         <Pagination

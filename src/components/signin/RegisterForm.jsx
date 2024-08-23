@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { OpenEye } from "../../assets/icons/OpenEye";
 import { CloseEye } from "../../assets/icons/CloseEye";
@@ -48,17 +49,17 @@ function RegisterForm() {
     setPassword(e.target.value);
   };
 
-  const validateAndSubmit = () => {
+  const validate = () => {
     const errors = {};
 
-    if (!username) {
+    if (!username || username.trim() === "") {
       errors.username = "Username cannot be empty";
     } else if (username.length < 3) {
       errors.username = "Username cannot be shorter than 3 chars";
     } else if (username.length > 25) {
       errors.username = "Username cannot be longer than 25 chars";
     }
-    if (!email) {
+    if (!email || email.trim() === "") {
       errors.email = "Email cannot be empty";
     } else if (
       !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
@@ -66,14 +67,14 @@ function RegisterForm() {
       errors.email = "Invalid email";
     }
 
-    if (!firstName) {
+    if (!firstName || firstName.trim() === "") {
       errors.firstName = "First name cannot be empty";
     } else if (firstName.length < 3) {
       errors.firstName = "First name cannot be shorter than 3 chars";
     } else if (firstName.length > 25) {
       errors.firstName = "First name cannot be longer than 25 chars";
     }
-    if (!lastName) {
+    if (!lastName || lastName.trim() === "") {
       errors.lastName = "Last name cannot be empty";
     } else if (lastName.length < 3) {
       errors.lastName = "Last name cannot be shorter than 3 chars";
@@ -81,7 +82,7 @@ function RegisterForm() {
       errors.lastName = "Last name cannot be longer than 25 chars";
     }
 
-    if (!password) {
+    if (!password || password.trim() === "") {
       errors.password = "Password cannot be empty";
     } else if (password.length < 3) {
       errors.password = "Password cannot be shorter than 3 chars";
@@ -95,13 +96,11 @@ function RegisterForm() {
     setFirstNameErr(errors.firstName || "");
     setLastNameErr(errors.lastName || "");
 
-    if (Object.keys(errors).length === 0) {
-      register(username, email, password, firstName, lastName);
-    }
+    return Object.keys(errors).length === 0;
   };
   return (
     <div className="container flex flex-col justify-center items-center gap-y-4 py-10">
-      <h3 className="text-darkBlue text-2xl font-bold tracking-wide">
+      <h3 className="text-textColor text-2xl font-bold tracking-wide">
         Register
       </h3>
 
@@ -182,8 +181,29 @@ function RegisterForm() {
         className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base"
         aria-label="register-button"
         onPress={async () => {
-          await validateAndSubmit();
-          navigate("/verify-email");
+          if (validate()) {
+            register(username, email, password, firstName, lastName)
+              .then((res) => {
+                navigate("/verify-email");
+              })
+              .catch((err) => {
+                const errData = err.response.data;
+
+                Object.keys(errData).forEach((e) => {
+                  if (e === "username") {
+                    setUsernameErr(errData[e]);
+                  } else if (e === "email") {
+                    setEmailErr(errData[e]);
+                  } else if (e === "firstname") {
+                    setFirstNameErr(errData[e]);
+                  } else if (e === "lastname") {
+                    setLastName(errData[e]);
+                  } else if (e === "password") {
+                    setPasswordErr(errData[e]);
+                  }
+                });
+              });
+          }
         }}
         isDisabled={isLoading}
       >
