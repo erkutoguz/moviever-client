@@ -38,7 +38,7 @@ const DeleteMovieModal = ({ updateMovies, movieId }) => {
                 Delete Movie
               </ModalHeader>
               <ModalBody>
-                <p>Do you want to delete movie? with ıd {movieId}</p>
+                <p>Do you want to delete movie with id {movieId} ?</p>
               </ModalBody>
               <ModalFooter>
                 <Button

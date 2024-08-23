@@ -6,19 +6,63 @@ import { useAppContext } from "../context/appContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangeProfileModal from "../components/common/ChangeProfileModal";
+import { OpenEye } from "../assets/icons/OpenEye";
+import { CloseEye } from "../assets/icons/CloseEye";
 
 const UserProfile = () => {
   const { fetchProfile, updateProfile } = useAppContext();
   const [userDetails, setUserDetails] = useState(null);
   const [firstname, setFirstname] = useState("");
+  const [firstnameError, setFirstnameError] = useState("");
   const [lastname, setLastname] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [about, setAbout] = useState("");
+  const [isVisible, setVisible] = useState(false);
+
+  const toggleVisibility = () => {
+    setVisible(!isVisible);
+  };
 
   const navigate = useNavigate();
   const updateUserProfile = () => {
-    const data = { firstname, lastname, about };
+    const data = { firstname, lastname, password, about };
+    if (!firstname) {
+      setFirstnameError("First name can not be empty");
+      setSuccessMessage("");
+    }
+    if (!lastname) {
+      setLastnameError("Last name can not be empty");
+      setSuccessMessage("");
+    }
+    if (!password) {
+      setPasswordError("Password can not be empty");
+      setSuccessMessage("");
+    }
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords does not match");
+      setSuccessMessage("");
+    }
 
-    updateProfile(data);
+    if (firstname && lastname && password && password === confirmPassword) {
+      updateProfile(data)
+        .then((res) => {
+          setSuccessMessage(res.data);
+          setErrorMessage("");
+          setFirstnameError("");
+          setLastnameError("");
+          setPasswordError("");
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data.message);
+
+          console.log(err);
+        });
+    }
   };
   useEffect(() => {
     fetchProfile().then((res) => {
@@ -63,6 +107,11 @@ const UserProfile = () => {
                 variant="bordered"
                 onChange={(e) => setFirstname(e.target.value)}
               />
+              {firstnameError && (
+                <p className=" text-center mt-2 text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+                  {firstnameError}
+                </p>
+              )}
             </div>
             <div className="field">
               <Input
@@ -71,6 +120,52 @@ const UserProfile = () => {
                 value={lastname}
                 variant="bordered"
                 onChange={(e) => setLastname(e.target.value)}
+              />
+              {lastnameError && (
+                <p className=" text-center mt-2 text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+                  {lastnameError}
+                </p>
+              )}
+            </div>
+            <div className="field">
+              <Input
+                label="Password"
+                variant="bordered"
+                placeholder="Password"
+                classNames={{ input: "text-textColor" }}
+                value={password}
+                onValueChange={setPassword}
+                endContent={
+                  <button
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                    aria-label="toggle password visibility"
+                  >
+                    {isVisible ? (
+                      <OpenEye className="text-2xl text-default-400 pointer-events-none" />
+                    ) : (
+                      <CloseEye className="text-2xl text-default-400 pointer-events-none" />
+                    )}
+                  </button>
+                }
+                type={isVisible ? "text" : "password"}
+              />
+              {passwordError && (
+                <p className=" text-center mt-2 text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+                  {passwordError}
+                </p>
+              )}
+            </div>
+            <div className="field">
+              <Input
+                label="Confirm Password"
+                variant="bordered"
+                placeholder="Confirm Password"
+                classNames={{ input: "text-textColor" }}
+                value={confirmPassword}
+                onValueChange={setConfirmPassword}
+                type={isVisible ? "text" : "password"}
               />
             </div>
             <div className="field">
@@ -90,6 +185,16 @@ const UserProfile = () => {
             >
               Save Profile
             </Button>
+            {errorMessage && (
+              <p className=" text-center mt-2 text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+                {errorMessage}
+              </p>
+            )}
+            {successMessage && (
+              <p className=" text-center mt-2 text-green-600 bg-green-100 p-4 border border-green-300 rounded-md shadow-sm">
+                {successMessage}
+              </p>
+            )}
           </div>
         )}
       </div>

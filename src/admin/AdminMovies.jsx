@@ -24,6 +24,8 @@ const AdminMovies = () => {
 
     if (trimmedQuery.length !== 0) {
       searchMovies(query, category, page).then((res) => {
+        console.log(res.data);
+
         setInitialData(res.data);
         setMovies((prev) => {
           if (page === 0) {

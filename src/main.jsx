@@ -35,6 +35,7 @@ import AdminUserLogs from "./admin/AdminUserLogs.jsx";
 import AdminErrorLogs from "./admin/AdminErrorLogs.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AdminAuthLogs from "./admin/AdminAuthLogs.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,8 +45,16 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/verification-success" element={<VerificationSuccess />} />
       <Route path="/verification-failed" element={<VerificationFailed />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
-      <Route path="/about" element={<About />} />
+      <Route
+        path="/about"
+        element={
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/home"
         element={

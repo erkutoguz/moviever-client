@@ -17,6 +17,12 @@ function SignIn() {
           Sign Up
         </Link>
       </div>
+      <div className="text-sm mt-2">
+        {"Forgot your password?"}{" "}
+        <Link to="/reset-password" className="text-brandColor">
+          Click here{" "}
+        </Link>
+      </div>
       <p className="absolute bottom-10 ">
         © 2024 Moviever. All Rights Reserved.
       </p>

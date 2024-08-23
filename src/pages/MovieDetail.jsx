@@ -3,7 +3,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import { Divider, Image } from "@nextui-org/react";
+import { Divider, Image, Pagination } from "@nextui-org/react";
 
 import Comment from "../components/common/Comment";
 import ReactPlayer from "react-player";
@@ -30,7 +30,9 @@ function MovieDetail() {
 
   const [isUserLiked, setIsUserLiked] = useState(movieDetails.isUserLiked);
   const [likeCount, setLikeCount] = useState(0);
+  const [reviewPage, setReviewPage] = useState(0);
   const [reviews, setReviews] = useState([]);
+  const [initialData, setInitialData] = useState([]);
   const navigate = useNavigate();
 
   const fetchMovieData = async (movieId) => {
@@ -42,8 +44,9 @@ function MovieDetail() {
       setIsUserLiked(movieDetails.isUserLiked);
       setLikeCount(movieDetails.likeCount);
 
-      const reviewsResponse = await fetchMovieReviews(movieId);
-      setReviews(reviewsResponse.data);
+      const reviewsResponse = await fetchMovieReviews(movieId, reviewPage);
+      setReviews(reviewsResponse.data.reviews);
+      setInitialData(reviewsResponse.data);
 
       const likedReviewsResponse = await fetchLikedReviews(movieId);
       setLikedMovies(likedReviewsResponse.data.reviewIds);
@@ -86,7 +89,7 @@ function MovieDetail() {
   };
 
   const updateReviews = () => {
-    fetchMovieReviews(movieId).then((res) => {
+    fetchMovieReviews(movieId, reviewPage).then((res) => {
       setReviews(res.data);
     });
   };
@@ -220,6 +223,16 @@ function MovieDetail() {
                   />
                 );
               })
+            )}
+            {reviews.length > 0 && (
+              <Pagination
+                total={initialData.totalPages}
+                initialPage={1}
+                className="mt-8"
+                onChange={(p) => {
+                  setReviewPage(p - 1);
+                }}
+              />
             )}
           </div>
         </section>

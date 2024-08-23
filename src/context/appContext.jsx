@@ -87,6 +87,14 @@ export const AppProvider = ({ children }) => {
             window.location = "/sign-in";
           });
       }
+      if (error.response.status === 400) {
+        dispatch({
+          type: REQUEST_ERROR,
+          payload: {
+            errMessage: error.response.data.message,
+          },
+        });
+      }
       if (error.response.status === 401) {
         dispatch({
           type: REQUEST_ERROR,
@@ -243,7 +251,17 @@ export const AppProvider = ({ children }) => {
       },
     });
   };
-
+  const sendResetPassEmail = async (email) => {
+    return await authClient.post("/api/v1/auth/reset-password-email", {
+      email: email,
+    });
+  };
+  const resetUserPassword = async (password, resetToken) => {
+    return await authClient.post(`/api/v1/auth/reset-password`, {
+      token: resetToken,
+      newPassword: password,
+    });
+  };
   const removeProfilePicture = async () => {
     return await appClient.delete("/api/v1/users/profile/avatar");
   };
@@ -266,8 +284,10 @@ export const AppProvider = ({ children }) => {
   const fetchMovieDetailsWithMovieId = async (movieId) => {
     return await appClient.get(`/api/v1/movies/${movieId}?with-details=true`);
   };
-  const fetchMovieReviews = async (movieId) => {
-    return await appClient.get(`/api/v1/movies/${movieId}/reviews`);
+  const fetchMovieReviews = async (movieId, page) => {
+    return await appClient.get(
+      `/api/v1/movies/${movieId}/reviews?page=${page}`
+    );
   };
 
   const fetchLikedReviews = async (movieId) => {
@@ -469,6 +489,8 @@ export const AppProvider = ({ children }) => {
         searchReviews,
         deleteUserById,
         updateUserStatus,
+        sendResetPassEmail,
+        resetUserPassword,
         createMovie,
         deleteMovieById,
         toggleTheme,

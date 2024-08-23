@@ -14,7 +14,7 @@ import { capitalizeText } from "../../utils/textFormatter";
 
 const MovieList = ({ movies, updateMovies }) => {
   const columns = [
-    { name: "Id", uid: "id" },
+    { name: "Id", uid: movies[0] && movies[0].movieId ? "movieId" : "id" },
     { name: "Title", uid: "title" },
     { name: "Release Year", uid: "releaseYear" },
     { name: "Categories", uid: "categories" },
@@ -22,9 +22,12 @@ const MovieList = ({ movies, updateMovies }) => {
   ];
   const renderCell = useCallback((movie, columnKey) => {
     const cellValue = movie[columnKey];
+    console.log(columnKey);
 
     switch (columnKey) {
       case "id":
+        return <p className=" text-textColor">{cellValue}</p>;
+      case "movieId":
         return <p className=" text-textColor">{cellValue}</p>;
       case "title":
         return (
@@ -42,8 +45,6 @@ const MovieList = ({ movies, updateMovies }) => {
         return (
           <div className="flex flex-col">
             {cellValue.map((c, i) => {
-              console.log(c);
-
               return (
                 <p
                   key={i}
@@ -81,7 +82,7 @@ const MovieList = ({ movies, updateMovies }) => {
       </TableHeader>
       <TableBody items={movies}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.id || item.movieId}>
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
