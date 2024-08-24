@@ -231,6 +231,9 @@ export const AppProvider = ({ children }) => {
     state.userProfilePicture = response.data.pictureUrl;
     return response;
   };
+  const fetchAnotherUserProfile = async (username) => {
+    return await appClient.get(`/api/v1/users/profile/${username}`);
+  };
 
   const updateProfile = async (data) => {
     return await appClient.put("/api/v1/users/me", data);
@@ -288,7 +291,7 @@ export const AppProvider = ({ children }) => {
     return await appClient.get(`/api/v1/users/liked-reviews/${movieId}`);
   };
   const makeReview = async (movieId, review) => {
-    await appClient.post(`/api/v1/movies/${movieId}/reviews`, {
+    return await appClient.post(`/api/v1/movies/${movieId}/reviews`, {
       comment: review,
     });
   };
@@ -311,8 +314,8 @@ export const AppProvider = ({ children }) => {
     );
   };
 
-  const fetchUserWatchlistsPreview = async () => {
-    return await appClient.get("/api/v1/watchlist/preview");
+  const fetchUserWatchlistsPreview = async (page) => {
+    return await appClient.get(`/api/v1/watchlist/preview?page=${page}`);
   };
   const addMovieToWatchlist = async (watchlistIds, movieId) => {
     const requests = watchlistIds.map((watchlistId) =>
@@ -491,6 +494,7 @@ export const AppProvider = ({ children }) => {
         login,
         register,
         fetchProfile,
+        fetchAnotherUserProfile,
         updateProfile,
         changeProfilePicture,
         removeProfilePicture,

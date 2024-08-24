@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Button,
@@ -49,9 +50,10 @@ function DeleteReviewModal({ movieId, reviewId, updateReviews }) {
                 </Button>
                 <Button
                   color="primary"
-                  onPress={async () => {
-                    await deleteReview(movieId, reviewId);
-                    await updateReviews();
+                  onPress={() => {
+                    deleteReview(movieId, reviewId).then((res) => {
+                      updateReviews();
+                    });
                     onClose();
                   }}
                   aria-label="open-modal-button"

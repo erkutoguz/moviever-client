@@ -37,6 +37,7 @@ import NotFound from "./pages/NotFound.jsx";
 import AdminAuthLogs from "./admin/AdminAuthLogs.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import RecommendedMovies from "./pages/RecommendedMovies.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -111,6 +112,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile/:profileUsername"
+        element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         }
       />

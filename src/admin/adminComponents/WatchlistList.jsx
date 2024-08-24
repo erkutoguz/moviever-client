@@ -19,7 +19,6 @@ const WatchlistList = ({ watchlists, updateWatchlists }) => {
     { name: "Watchlist Name", uid: "watchlistName" },
     { name: "Actions", uid: "actions" },
   ];
-  console.log(watchlists);
 
   const renderCell = useCallback((watchlist, columnKey) => {
     const cellValue = watchlist[columnKey];

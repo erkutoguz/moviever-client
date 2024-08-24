@@ -59,8 +59,6 @@ const UserProfile = () => {
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);
-
-          console.log(err);
         });
     }
   };

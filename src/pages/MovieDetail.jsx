@@ -47,7 +47,6 @@ function MovieDetail() {
       const reviewsResponse = await fetchMovieReviews(movieId, reviewPage);
       setReviews(reviewsResponse.data.reviews);
       setInitialData(reviewsResponse.data);
-      console.log(reviewsResponse.data);
 
       const likedReviewsResponse = await fetchLikedReviews(movieId);
       setLikedMovies(likedReviewsResponse.data.reviewIds);
@@ -55,24 +54,7 @@ function MovieDetail() {
   };
 
   useEffect(() => {
-    // fetchMovieDetailsWithMovieId(movieId)
-    //   .then((res) => {
-    //     setMoviesDetails(res.data);
-    //     setIsUserLiked(res.data.isUserLiked);
-    //     setLikeCount(res.data.likeCount);
-    //   })
-    //   .then((res) => {
-    //     fetchMovieReviews(movieId).then((res) => {
-    //       setReviews(res.data);
-    //     });
-    //   })
-    //   .then((res) => {
-    //     fetchLikedReviews(movieId).then((res) => {
-    //       setLikedMovies(res.data.reviewIds);
-    //     });
-    //   });
     fetchMovieData(movieId);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reviewPage]);
 
@@ -92,7 +74,8 @@ function MovieDetail() {
 
   const updateReviews = () => {
     fetchMovieReviews(movieId, reviewPage).then((res) => {
-      setReviews(res.data);
+      setReviews(res.data.reviews);
+      setInitialData(res.data);
     });
   };
 
@@ -203,12 +186,10 @@ function MovieDetail() {
                 updateReviews={updateReviews}
               />
             )}
-            {reviews.length === 0 ? (
-              <>
-                <p className="">no comments yet</p>
-              </>
-            ) : (
-              reviews &&
+
+            {reviews.length === 0 && <p className="">no comments yet</p>}
+            {reviews.length !== 0 &&
+              Array.isArray(reviews) &&
               reviews.map((r, i) => {
                 return (
                   <Comment
@@ -224,12 +205,13 @@ function MovieDetail() {
                     liked={likedReviews.includes(r.id)}
                   />
                 );
-              })
-            )}
+              })}
+
             {reviews.length > 0 && (
               <Pagination
                 total={initialData.totalPages}
                 initialPage={1}
+                size="sm"
                 className="mt-8"
                 onChange={(p) => {
                   setReviewPage(p - 1);

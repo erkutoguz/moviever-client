@@ -35,6 +35,7 @@ const AdminErrorLogs = () => {
         total={initialData.totalPages}
         initialPage={1}
         className="mt-8"
+        size="sm"
         onChange={(p) => {
           setPage(p - 1);
         }}

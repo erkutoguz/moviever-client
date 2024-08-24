@@ -9,6 +9,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Pagination,
   useDisclosure,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
@@ -18,20 +19,24 @@ import CreateWatchlistModal from "./CreateWatchlistModal";
 function AddWatchlistModal({ movieId }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [watchlists, setWatchlists] = useState([]);
+  const [page, setPage] = useState(0);
+  const [initialData, setInitialData] = useState([]);
   const { fetchUserWatchlistsPreview, addMovieToWatchlist } = useAppContext();
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
-      fetchUserWatchlistsPreview().then((res) => {
-        setWatchlists(res.data);
+      fetchUserWatchlistsPreview(page).then((res) => {
+        setWatchlists(res.data.watchlistPreviews);
+        setInitialData(res.data);
       });
     }
   }, [isOpen]);
 
   const updateWatchlist = () => {
-    fetchUserWatchlistsPreview().then((res) => {
-      setWatchlists(res.data);
+    fetchUserWatchlistsPreview(page).then((res) => {
+      setWatchlists(res.data.watchlistPreviews);
+      setInitialData(res.data);
     });
   };
 
@@ -75,6 +80,15 @@ function AddWatchlistModal({ movieId }) {
                         </Checkbox>
                       );
                     })}
+                    <Pagination
+                      total={initialData.totalPages}
+                      initialPage={1}
+                      className="mt-8"
+                      size="sm"
+                      onChange={(p) => {
+                        setPage(p - 1);
+                      }}
+                    />
                   </CheckboxGroup>
                 ) : (
                   <p>create watchlist</p>

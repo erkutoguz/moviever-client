@@ -59,9 +59,8 @@ function Movies() {
           total={initialData.totalPages}
           initialPage={1}
           className="mt-8 self-center"
+          size="sm"
           onChange={(p) => {
-            console.log(p);
-
             setPage(p - 1);
           }}
         />

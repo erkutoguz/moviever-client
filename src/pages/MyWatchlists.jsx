@@ -8,20 +8,25 @@ import WatchlistPrevCarousel from "../components/watchlist/WatchlistPrevCarousel
 import RenameWatchlistModal from "../components/common/RenameWatchlistModal";
 import DeleteWatchlistModal from "../components/common/DeleteWatchlistModal";
 import CreateWatchlistModal from "../components/common/CreateWatchlistModal";
-import { Link } from "@nextui-org/react";
+import { Link, Pagination } from "@nextui-org/react";
 
 const MyWatchlists = () => {
   const [watchlists, setWatchlists] = useState([]);
+  const [initialData, setInitialData] = useState([]);
+  const [page, setPage] = useState(0);
+
   const { fetchUserWatchlistsPreview } = useAppContext();
   useEffect(() => {
-    fetchUserWatchlistsPreview().then((res) => {
-      setWatchlists(res.data);
+    fetchUserWatchlistsPreview(page).then((res) => {
+      setWatchlists(res.data.watchlistPreviews);
+      setInitialData(res.data);
     });
   }, []);
 
   const updateWatchlists = () => {
-    fetchUserWatchlistsPreview().then((res) => {
-      setWatchlists(res.data);
+    fetchUserWatchlistsPreview(page).then((res) => {
+      setWatchlists(res.data.watchlistPreviews);
+      setInitialData(res.data);
     });
   };
 
@@ -66,6 +71,15 @@ const MyWatchlists = () => {
               </div>
             );
           })}
+          <Pagination
+            total={initialData.totalPages}
+            initialPage={1}
+            className="mt-8"
+            size="sm"
+            onChange={(p) => {
+              setPage(p - 1);
+            }}
+          />
         </div>
       )}
 

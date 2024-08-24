@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Avatar, Button, Textarea } from "@nextui-org/react";
 import { useState } from "react";
@@ -68,12 +69,16 @@ function MakeComment({ movieId, updateReviews }) {
           <Button
             className={`min-w-10 max-w-10 p-0 m-0 `}
             aria-label="send-button"
-            onPress={async () => {
+            onPress={() => {
               if (!isReviewInvalid) {
-                await makeReview(movieId, review);
-                await updateReviews();
-                await setReview("");
-                await setReviewChanged(false);
+                makeReview(movieId, review).then((res) => {
+                  console.log(res);
+                  console.log("yorum yapıldı");
+
+                  updateReviews();
+                });
+                setReview("");
+                setReviewChanged(false);
               }
             }}
           >

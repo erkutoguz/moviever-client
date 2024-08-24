@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
 import { timeAgo } from "../../utils/dataFormatter";
 
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { useAppContext } from "../../context/appContext";
 import DeleteReviewModal from "./DeleteReviewModal";
 import HeartIcon from "../../assets/icons/HeartIcon";
 import OutlinedHeartIcon from "../../assets/icons/OutlinedHeartIcon";
+import { useNavigate } from "react-router-dom";
 function Comment({
   reviewId,
   author,
@@ -22,6 +23,14 @@ function Comment({
   const [isLiked, setLiked] = useState(liked);
   const [likeCountState, setLikedCountState] = useState(likeCount);
   const { likeReview, unlikeReview, user } = useAppContext();
+  const navigate = useNavigate();
+
+  const getUserProfile = () => {
+    if (user === author) return navigate("/profile/me");
+    else {
+      return navigate(`/profile/${author}`);
+    }
+  };
 
   const toogleLike = () => {
     if (isLiked) {
@@ -42,7 +51,10 @@ function Comment({
       className={`w-full max-w-[600px] lg:max-w-full border border-dark p-8 bg-commentBg rounded-sm mb-4`}
     >
       <div className="profile flex items-center justify-between w-full">
-        <div className="flex items-center">
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={getUserProfile}
+        >
           {pictureUrl === null ? (
             <Avatar
               name={author}
@@ -91,7 +103,6 @@ function Comment({
               onClick={toogleLike}
             />
           )}
-
           <p>{likeCountState}</p>
         </div>
       </div>

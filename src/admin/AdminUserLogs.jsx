@@ -34,6 +34,7 @@ const AdminUserLogs = () => {
       <Pagination
         total={initialData.totalPages}
         initialPage={1}
+        size="sm"
         className="mt-8"
         onChange={(p) => {
           setPage(p - 1);

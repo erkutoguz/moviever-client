@@ -32,6 +32,7 @@ function Category() {
             <MovieList movies={movieData.movies} />
             <Pagination
               total={movieData.totalPages}
+              size="sm"
               initialPage={1}
               className="mt-8"
               onChange={(p) => {
