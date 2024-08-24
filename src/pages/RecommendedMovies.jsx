@@ -1,26 +1,27 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import MovieList from "../components/movies/MovieList";
-import { Pagination } from "@nextui-org/react";
+import { useAppContext } from "../context/appContext";
 
 const RecommendedMovies = () => {
   const [movies, setMovies] = useState([]);
-  const [initialData, setInitialData] = useState({});
-  const [page, setPage] = useState(0);
+  const { fetchRecommendedMovies } = useAppContext();
+  useEffect(() => {
+    fetchRecommendedMovies().then((res) => {
+      setMovies(res.data);
+    });
+  }, []);
+
   return (
-    <div className="flex flex-col items-center w-full h-screen">
+    <div className="flex flex-col justify-center items-center w-full">
       <Header />
-      <div className="">
+      <div className="min-h-[calc(100vh-350px)] flex flex-col">
+        <p className={`font-bold text-xl text-textColor my-8 `}>
+          Recommended Movies
+        </p>
         <MovieList movies={movies} />
-        <Pagination
-          total={initialData.totalPages}
-          initialPage={1}
-          className="mt-8 self-center"
-          onChange={(p) => {
-            setPage(p - 1);
-          }}
-        />
       </div>
       <Footer />
     </div>

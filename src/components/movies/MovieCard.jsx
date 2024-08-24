@@ -17,7 +17,7 @@ function MovieCard({ movie }) {
         <Image
           removeWrapper
           alt="Card background"
-          className={"z-0 w-full brightness-75 h-full rounded-none"}
+          className={"z-0 w-full brightness-75 h-full rounded-none object-fill"}
           src={movie.pictureUrl}
         />
       </CardBody>

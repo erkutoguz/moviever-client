@@ -3,7 +3,7 @@
 import { Avatar, Button } from "@nextui-org/react";
 import { timeAgo } from "../../utils/dataFormatter";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "../../context/appContext";
 import DeleteReviewModal from "./DeleteReviewModal";
 import HeartIcon from "../../assets/icons/HeartIcon";

@@ -47,6 +47,7 @@ function MovieDetail() {
       const reviewsResponse = await fetchMovieReviews(movieId, reviewPage);
       setReviews(reviewsResponse.data.reviews);
       setInitialData(reviewsResponse.data);
+      console.log(reviewsResponse.data);
 
       const likedReviewsResponse = await fetchLikedReviews(movieId);
       setLikedMovies(likedReviewsResponse.data.reviewIds);
@@ -71,8 +72,9 @@ function MovieDetail() {
     //     });
     //   });
     fetchMovieData(movieId);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reviewPage]);
 
   const toogleLike = () => {
     if (isUserLiked) {

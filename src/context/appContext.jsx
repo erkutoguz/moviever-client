@@ -272,12 +272,15 @@ export const AppProvider = ({ children }) => {
       `/api/v1/movies/most-viewed-movies?page=${page}&size=${size}`
     );
   };
+  const fetchRecommendedMovies = async () => {
+    return await appClient.get("/api/v1/movies/recommended");
+  };
   const fetchMovieDetailsWithMovieId = async (movieId) => {
     return await appClient.get(`/api/v1/movies/${movieId}?with-details=true`);
   };
   const fetchMovieReviews = async (movieId, page) => {
     return await appClient.get(
-      `/api/v1/movies/${movieId}/reviews?page=${page}`
+      `/api/v1/movies/${movieId}/reviews?page=${page}&size=2`
     );
   };
 
@@ -495,6 +498,7 @@ export const AppProvider = ({ children }) => {
         appClient,
         fetchNewMovies,
         fetchPopularMovies,
+        fetchRecommendedMovies,
         fetchMostLikedMovies,
         fetchWatchlistDetails,
         fetchLikedReviews,
