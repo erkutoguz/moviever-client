@@ -11,6 +11,7 @@ import {
   REQUEST_ERROR,
   RESOURCE_NOT_FOUND_ERROR,
   TOGGLE_THEME,
+  UNAUTHORIZED_REQUEST,
 } from "./actions";
 
 export default (state, action) => {
@@ -40,6 +41,7 @@ export default (state, action) => {
   if (action.type === REGISTER_USER_BEGIN) {
     return { ...state, isLoading: true };
   }
+
   if (action.type === REGISTER_USER_SUCCESS) {
     return {
       ...state,
@@ -58,6 +60,9 @@ export default (state, action) => {
     return { ...state, errMessage: action.payload.errMessage };
   }
   if (action.type === REQUEST_ERROR) {
+    return { ...state, errMessage: action.payload.errMessage };
+  }
+  if (action.type === UNAUTHORIZED_REQUEST) {
     return { ...state, errMessage: action.payload.errMessage };
   }
   if (action.type === CLEAR_ERROR) {

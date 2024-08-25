@@ -21,6 +21,7 @@ import {
   REQUEST_ERROR,
   RESOURCE_NOT_FOUND_ERROR,
   TOGGLE_THEME,
+  UNAUTHORIZED_REQUEST,
 } from "./actions";
 import axios from "axios";
 const AppContext = createContext(null);
@@ -68,7 +69,18 @@ export const AppProvider = ({ children }) => {
       return response;
     },
     async (error) => {
-      if (error.response && error.response.status === 403) {
+      if (
+        error.response.status === 403 &&
+        error.response.data.type === "unauthorized"
+      ) {
+        dispatch({
+          type: UNAUTHORIZED_REQUEST,
+          payload: {
+            errMessage: error.response.data.errorMessage,
+          },
+        });
+        window.location = "/home";
+      } else if (error.response && error.response.status === 403) {
         const refreshToken = localStorage.getItem("refreshToken");
         appClient
           .post("/api/v1/auth/refresh-token", {
@@ -80,6 +92,9 @@ export const AppProvider = ({ children }) => {
             error.config.headers.Authorization = `Bearer ${response.data.accessToken}`;
             return appClient(error.config);
           })
+          .then((res) => {
+            window.location.reload();
+          })
           .catch((e) => {
             resetLocalStroage();
             logout();
@@ -87,6 +102,7 @@ export const AppProvider = ({ children }) => {
             window.location = "/sign-in";
           });
       }
+
       if (error.response.status === 400) {
         dispatch({
           type: REQUEST_ERROR,
@@ -415,13 +431,6 @@ export const AppProvider = ({ children }) => {
         link.remove();
       });
   };
-  const fetchAppHealth = async () => {
-    return await axios.get("http://localhost:9991/actuator/health", {
-      headers: {
-        Authorization: `Bearer ${state.accessToken}`,
-      },
-    });
-  };
   const fetchIpAddresses = async () => {
     return await appClient.get("/api/v1/admin/users/ip-addresses");
   };
@@ -475,7 +484,6 @@ export const AppProvider = ({ children }) => {
         fetchWatchlistCount,
         fetchMovieCountForEachCategory,
         fetchWatchlists,
-        fetchAppHealth,
         fetchIpAddresses,
         fetchReviews,
         fetchUsers,

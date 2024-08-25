@@ -16,21 +16,15 @@ const AdminPage = () => {
     fetchMovieCount,
     fetchReviewCount,
     fetchWatchlistCount,
-    fetchAppHealth,
     fetchPopularMovies,
   } = useAppContext();
   const [userCount, setUserCount] = useState(0);
   const [movieCount, setMovieCount] = useState(0);
   const [reviewCount, setReviewCount] = useState(0);
   const [watchlistCount, setWatchlistCount] = useState(0);
-  const [appHealth, setAppHealth] = useState({});
   const [popularMovies, setPopularMovies] = useState([]);
 
   useEffect(() => {
-    fetchAppHealth().then((res) => {
-      console.log(res.data);
-      setAppHealth(res.data);
-    });
     fetchUserCount().then((res) => {
       setUserCount(res.data.totalItems);
     });
@@ -56,28 +50,6 @@ const AdminPage = () => {
       </div>
 
       <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-6 lg:grid-rows-4">
-        {/* <div className="gap-4 col-span-2 row-span-1 flex flex-wrap justify-center items-center">
-          <StatsBox
-            count={userCount}
-            label={"USERS"}
-            icon={<UsersIcon className="w-8" />}
-          />
-          <StatsBox
-            count={movieCount}
-            label={"MOVIES"}
-            icon={<MovieIcon className="w-8" />}
-          />
-          <StatsBox
-            count={reviewCount}
-            label={"REVIEWS"}
-            icon={<ReviewIcon className="w-8" />}
-          />
-          <StatsBox
-            count={watchlistCount}
-            label={"WATCHLIST"}
-            icon={<WatchlistIcon className="w-8" />}
-          />
-        </div> */}
         <div className="p-4 lg:col-span-1 lg:row-span-1">
           <StatsBox
             count={userCount}
@@ -112,6 +84,7 @@ const AdminPage = () => {
             <AdminPopularMoviesList movies={popularMovies} />
           )}
         </div>
+
         <div className="p-4 lg:col-span-2 lg:row-span-2 lg:col-start-1 lg:row-start-3 ">
           <CategoryPieChart />
         </div>
