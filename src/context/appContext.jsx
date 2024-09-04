@@ -259,6 +259,15 @@ export const AppProvider = ({ children }) => {
   const updateProfile = async (data) => {
     return await appClient.put("/api/v1/users/me", data);
   };
+
+  const updateMovie = async (formdata, movieId) => {
+    return await appClient.patch(`/api/v1/admin/movies/${movieId}`, formdata, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  };
+
   const changeProfilePicture = async (image) => {
     return await appClient.post("/api/v1/users/profile/avatar", image, {
       headers: {
@@ -502,6 +511,7 @@ export const AppProvider = ({ children }) => {
         sendResetPassEmail,
         resetUserPassword,
         createMovie,
+        updateMovie,
         deleteMovieById,
         toggleTheme,
         login,

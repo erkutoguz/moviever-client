@@ -65,6 +65,7 @@ const UserProfile = () => {
   useEffect(() => {
     fetchProfile().then((res) => {
       const data = res.data;
+      console.log(res.data);
       setUserDetails(data);
       setFirstname(data.firstname);
       setLastname(data.lastname);

@@ -73,7 +73,7 @@ const CreateWatchlistModal = ({ updateWatchlists }) => {
                   }}
                   aria-label="open-modal-button"
                 >
-                  Craete Watchlist
+                  Create Watchlist
                 </Button>
               </ModalFooter>
             </>

@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { capitalizeText } from "../../utils/textFormatter";
+import UpdateMovieModal from "./UpdateMovieModal";
 
 const MovieList = ({ movies, updateMovies }) => {
   const columns = [
@@ -59,6 +60,7 @@ const MovieList = ({ movies, updateMovies }) => {
       case "actions":
         return (
           <div className="relative flex justify-center  items-center gap-2">
+            <UpdateMovieModal movieId={movie.id} />
             <DeleteMovieModal movieId={movie.id} updateMovies={updateMovies} />
           </div>
         );
