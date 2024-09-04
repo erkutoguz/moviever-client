@@ -35,27 +35,30 @@ function Home() {
   return (
     <div className="flex flex-col justify-center items-center">
       <Header />
-      <div className="new-movies mt-8 flex flex-col gap-2">
-        <LayoutLink to={"/new-movies"} text={"New Movies"} />
-        {newMovies && <MovieCarousel slides={newMovies} />}
-      </div>
 
-      <div className="categories">
-        <Categories />
-      </div>
-      <div className="recommended-movies mt-8 flex flex-col gap-2">
-        <LayoutLink to={"/recommended-movies"} text={"Recomended Movies"} />
-        <MovieCarousel slides={recommendedMovies} />
-      </div>
+      <div className="min-h-screen">
+        <div className="new-movies mt-8 flex flex-col gap-2 ">
+          <LayoutLink to={"/new-movies"} text={"New Movies"} />
+          {newMovies && <MovieCarousel slides={newMovies} />}
+        </div>
 
-      <div className="popular-movies mt-8 flex flex-col gap-2">
-        <LayoutLink to={"/popular-movies"} text={"Popular Movies"} />
-        <MovieCarousel slides={popularMovies} />
-      </div>
+        <div className="categories">
+          <Categories />
+        </div>
+        <div className="recommended-movies mt-8 flex flex-col gap-2">
+          <LayoutLink to={"/recommended-movies"} text={"Recomended Movies"} />
+          <MovieCarousel slides={recommendedMovies} />
+        </div>
 
-      <div className="popular-movies mt-8 flex flex-col gap-2">
-        <LayoutLink to={"/most-liked-movies"} text={"Most Liked Movies"} />
-        <MovieCarousel slides={mostLikedMovies} />
+        <div className="popular-movies mt-8 flex flex-col gap-2">
+          <LayoutLink to={"/popular-movies"} text={"Popular Movies"} />
+          <MovieCarousel slides={popularMovies} />
+        </div>
+
+        <div className="popular-movies mt-8 flex flex-col gap-2">
+          <LayoutLink to={"/most-liked-movies"} text={"Most Liked Movies"} />
+          <MovieCarousel slides={mostLikedMovies} />
+        </div>
       </div>
 
       <Footer />

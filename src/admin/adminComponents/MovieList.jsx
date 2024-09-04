@@ -22,7 +22,6 @@ const MovieList = ({ movies, updateMovies }) => {
   ];
   const renderCell = useCallback((movie, columnKey) => {
     const cellValue = movie[columnKey];
-    console.log(columnKey);
 
     switch (columnKey) {
       case "id":

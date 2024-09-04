@@ -5,7 +5,7 @@ import DropdownList from "./DrowpdownList";
 
 const MovieSearchBar = () => {
   const [query, setQuery] = useState("");
-  const { loading, movies } = useSearchMovie(query);
+  const { loading, movies } = useSearchMovie(query, "ALL");
   const [isOpen, setOpen] = useState(false);
 
   const handleSearch = useCallback((e) => {

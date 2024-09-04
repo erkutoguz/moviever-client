@@ -33,7 +33,7 @@ const AdminSidebar = () => {
 
   return (
     <div
-      className={`flex flex-col pb-10 min-h-[calc(100dvh-64px)] bg-sidebarBg text-textColor transition-width duration-300 ${
+      className={`flex flex-col pb-10 min-h-[calc(100dvh)] bg-sidebarBg text-textColor transition-width duration-300 ${
         isOpen ? "w-48" : "w-[79px]"
       }`}
     >

@@ -83,6 +83,9 @@ const AdminPage = () => {
           {popularMovies.length > 0 && (
             <AdminPopularMoviesList movies={popularMovies} />
           )}
+          {popularMovies.length === 0 && (
+            <p className="text-textColor">no movies yet</p>
+          )}
         </div>
 
         <div className="p-4 lg:col-span-2 lg:row-span-2 lg:col-start-1 lg:row-start-3 ">

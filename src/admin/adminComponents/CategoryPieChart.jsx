@@ -12,6 +12,8 @@ const CategoryPieChart = () => {
 
   useEffect(() => {
     fetchMovieCountForEachCategory().then((res) => {
+      console.log(res);
+
       setChartData({
         labels: res.data.map((d) => d.categoryName),
         datasets: [

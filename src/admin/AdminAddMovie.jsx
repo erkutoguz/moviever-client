@@ -9,6 +9,7 @@ const AdminAddMovie = () => {
   const [title, setTitle] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
   const [director, setDirector] = useState("");
+  const [description, setDescription] = useState("");
   const [rating, setRating] = useState("");
   const [trailerUrl, setTrailerUrl] = useState("");
   const [poster, setPoster] = useState(null);
@@ -22,6 +23,7 @@ const AdminAddMovie = () => {
     formData.append("title", title);
     formData.append("releaseYear", parseInt(releaseDate.substring(0, 4)));
     formData.append("director", director);
+    formData.append("description", description);
     formData.append("trailerUrl", trailerUrl);
     formData.append("rating", parseFloat(rating));
     formData.append("poster", poster);
@@ -40,6 +42,7 @@ const AdminAddMovie = () => {
         setReleaseDate("");
         setDirector("");
         setRating("");
+        setDescription("");
         setTrailerUrl("");
         setPoster(null);
         setSelectedCategories([]);
@@ -107,6 +110,20 @@ const AdminAddMovie = () => {
               name="director"
               value={director}
               onChange={(e) => setDirector(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium ">
+              Description
+            </label>
+            <input
+              type="text"
+              id="descriptin"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />

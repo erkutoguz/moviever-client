@@ -36,13 +36,16 @@ function Movies() {
     if (url.pathname === "/new-movies" || url.pathname === "/all-movies") {
       fetchNewMovies(page, 12).then((res) => {
         setInitialData(res.data);
+        console.log(res);
       });
     } else if (url.pathname === "/most-liked-movies") {
       fetchMostLikedMovies(page, 12).then((res) => {
         setInitialData(res.data);
+        console.log(res);
       });
     } else if (url.pathname === "/popular-movies") {
       fetchPopularMovies(page, 12).then((res) => {
+        console.log(res);
         setInitialData(res.data);
       });
     }

@@ -83,13 +83,15 @@ function MovieDetail() {
     <div className="flex flex-col justify-center items-center w-full text-textColor ">
       <Header />
       {errMessage && (
-        <p className="mt-16 text-center  text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
-          {errMessage}
-        </p>
+        <div className="h-[calc(100vh-350px)]">
+          <p className="mt-16 text-center  text-red-600 bg-red-100 p-4 border border-red-300 rounded-md shadow-sm">
+            {errMessage}
+          </p>
+        </div>
       )}
 
       {!errMessage && movieDetails && likedReviews && (
-        <section className="flex flex-col justify-center items-center lg:max-w-7xl">
+        <section className="flex flex-col justify-center items-center lg:w-1/2">
           <div className="w-3/4 flex flex-col justify-center items-center lg:flex-row lg:items-start lg:max-w-1/2">
             <div className="description flex lg:max-w-[330px] flex-col gap-6 justify-center items-center w-full mt-8">
               <div className="picture w-full flex justify-center">
@@ -140,10 +142,7 @@ function MovieDetail() {
             <div className="about w-full lg:mt-8 lg:px-4 mt-4">
               <p className="font-semibold  text-sm">Description</p>
               <p className="w-full text-gray-700 dark:text-gray-300 text-sm leading-relaxed mt-2 lg:mt-0">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Assumenda dignissimos corporis consequatur dolorem iusto ullam
-                rem sequi esse repudiandae? A in maiores corrupti dolorum quo
-                itaque saepe minima adipisci non!
+                {movieDetails.description}
               </p>
               <Divider className="my-4 " />
 

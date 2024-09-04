@@ -7,6 +7,7 @@ import {
   useReducer,
   useState,
 } from "react";
+
 import reducer from "./reducer";
 import {
   CLEAR_ERROR,
@@ -46,7 +47,7 @@ export const AppProvider = ({ children }) => {
   });
 
   const appClient = axios.create({
-    baseURL: "http://localhost:9991/",
+    baseURL: import.meta.env.VITE_BACKEND_URL,
     headers: {
       "Content-Type": "application/json",
     },
@@ -69,6 +70,8 @@ export const AppProvider = ({ children }) => {
       return response;
     },
     async (error) => {
+      console.log(error);
+
       if (
         error.response.status === 403 &&
         error.response.data.type === "unauthorized"
@@ -219,6 +222,8 @@ export const AppProvider = ({ children }) => {
         },
       });
     } catch (err) {
+      console.log(err);
+
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { errMessage: err.response.data.message },
@@ -299,7 +304,7 @@ export const AppProvider = ({ children }) => {
   };
   const fetchMovieReviews = async (movieId, page) => {
     return await appClient.get(
-      `/api/v1/movies/${movieId}/reviews?page=${page}&size=2`
+      `/api/v1/movies/${movieId}/reviews?page=${page}&size=12`
     );
   };
 

@@ -52,6 +52,9 @@ function Hero() {
         <div className="heroBtn absolute lg:top-60 xl:top-60 z-30 w-full lg:flex hidden justify-center">
           <Button
             as={Link}
+            onPress={() => {
+              navigate("/sign-in");
+            }}
             className="bg-btnColor w-36 md:w-48 font-normal text-white  rounded-none text-base top-0"
           >
             Get Started

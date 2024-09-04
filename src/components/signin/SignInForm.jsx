@@ -52,7 +52,9 @@ function SignInForm() {
     setPasswordErr(errors.password || "");
 
     if (Object.keys(errors).length === 0) {
-      login(username, password);
+      login(username, password).then((res) => {
+        console.log(res);
+      });
     }
   };
 

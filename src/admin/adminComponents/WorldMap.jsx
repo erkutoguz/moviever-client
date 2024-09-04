@@ -24,13 +24,7 @@ const WorldMap = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {ipAddresses.length > 0 &&
-        ipAddresses.map((ip, index) => (
-          <Marker key={index} position={[ip.loc[0], ip.loc[1]]}>
-            <Popup>
-              {ip.userCount + "#Users"} {ip.city}
-            </Popup>
-          </Marker>
-        ))}
+        ipAddresses.map((ip, index) => console.log(ip))}
     </MapContainer>
   );
 };

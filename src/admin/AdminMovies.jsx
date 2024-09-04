@@ -1,47 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import { useAppContext } from "../context/appContext";
+import { useState } from "react";
 import { Pagination } from "@nextui-org/react";
 import SelectCategory from "./adminComponents/SelectCategory";
 import MovieList from "./adminComponents/MovieList";
+import useSearchMovieWithCategory from "../hooks/useSearchMovieWithCategory";
 
 const AdminMovies = () => {
-  const [initialData, setInitialData] = useState([]);
   const [page, setPage] = useState(0);
   const [category, setCategory] = useState("ALL");
-  const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const { searchMovies, fetchAllMovies } = useAppContext();
+  const { loading, movies, totalPages } = useSearchMovieWithCategory(
+    query,
+    category,
+    page
+  );
 
   const updateMovies = () => {
-    fetchAllMovies(category, page, 7).then((res) => {
-      setMovies(res.data.movies);
-    });
+    window.location.reload();
   };
-
-  useEffect(() => {
-    const trimmedQuery = query.trim();
-
-    if (trimmedQuery.length !== 0) {
-      searchMovies(query, category, page).then((res) => {
-        console.log(res.data);
-
-        setInitialData(res.data);
-        setMovies((prev) => {
-          if (page === 0) {
-            return res.data.movies;
-          } else {
-            return [...prev, ...res.data.movies];
-          }
-        });
-      });
-    } else {
-      fetchAllMovies(category, page, 7).then((res) => {
-        setInitialData(res.data);
-        setMovies(res.data.movies);
-      });
-    }
-  }, [page, query, category]);
 
   return (
     <div className="px-2 flex flex-col mx-auto">
@@ -68,15 +44,17 @@ const AdminMovies = () => {
         )}
       </div>
 
-      <Pagination
-        total={initialData.totalPages}
-        initialPage={1}
-        size="sm"
-        className="mt-8"
-        onChange={(p) => {
-          setPage(p - 1);
-        }}
-      />
+      {!loading && (
+        <Pagination
+          total={totalPages}
+          initialPage={page + 1}
+          size="sm"
+          className="mt-8"
+          onChange={(p) => {
+            setPage(p - 1);
+          }}
+        />
+      )}
     </div>
   );
 };

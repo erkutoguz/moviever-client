@@ -157,7 +157,7 @@ function Footer() {
             </Table>
           </div>
           <div className="w-80 lg:w-60 xl:min-w-80 flex flex-col  gap-2 text-left my-4">
-            {popularMovies.length > 0 && (
+            {popularMovies.length > 7 && (
               <Table removeWrapper className="text-textColor">
                 <TableHeader>
                   <TableColumn>Popular Movies</TableColumn>

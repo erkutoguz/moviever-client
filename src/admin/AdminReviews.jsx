@@ -1,44 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Pagination } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReviewList from "./adminComponents/ReviewList";
-import { useAppContext } from "../context/appContext";
+import useSearchReview from "../hooks/useSearchReview";
 
 const AdminReviews = () => {
-  const { fetchReviews, searchReviews } = useAppContext();
   const [page, setPage] = useState(0);
-  const [reviewList, setReviewList] = useState([]);
-  const [initialData, setInitialData] = useState([]);
   const [query, setQuery] = useState("");
-
+  const { loading, reviews, totalPages } = useSearchReview(query, page);
   const updateReviews = () => {
-    fetchReviews(page).then((res) => {
-      setReviewList(res.data.reviews);
-      setPage(0);
-    });
+    window.location.reload();
   };
-
-  useEffect(() => {
-    const trimmedQuery = query.trim();
-
-    if (trimmedQuery.length !== 0) {
-      searchReviews(query, page).then((res) => {
-        setInitialData(res.data);
-        setReviewList((prev) => {
-          if (page === 0) {
-            return res.data.reviews;
-          } else {
-            return [...prev, ...res.data.reviews];
-          }
-        });
-      });
-    } else {
-      fetchReviews(page).then((res) => {
-        setInitialData(res.data);
-        setReviewList(res.data.reviews);
-      });
-    }
-  }, [page, query]);
 
   return (
     <div className="px-2 flex flex-col mx-auto">
@@ -56,22 +28,24 @@ const AdminReviews = () => {
       </div>
 
       <div className="relative min-h-[500px] w-[200px] sm:w-[400px] md:w-[400px] lg:max-w-[700px] lg:min-w-[600px] xl:min-w-[900px] overflow-x-scroll xl:overflow-x-hidden">
-        <ReviewList updateReviews={updateReviews} reviewList={reviewList} />
-        {reviewList.length === 0 && (
+        <ReviewList updateReviews={updateReviews} reviewList={reviews} />
+        {reviews.length === 0 && (
           <div className="flex justify-center items-center mt-40 text-textColor">
             <p>Review not found</p>
           </div>
         )}
       </div>
-      <Pagination
-        total={initialData.totalPages}
-        initialPage={1}
-        className="mt-8"
-        size="sm"
-        onChange={(p) => {
-          setPage(p - 1);
-        }}
-      />
+      {!loading && (
+        <Pagination
+          total={totalPages}
+          initialPage={page + 1}
+          className="mt-8"
+          size="sm"
+          onChange={(p) => {
+            setPage(p - 1);
+          }}
+        />
+      )}
     </div>
   );
 };

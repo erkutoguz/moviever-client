@@ -34,16 +34,23 @@ const AdminWatchlist = () => {
           watchlists={watchlist}
           updateWatchlists={updateWatchlists}
         />
+        {watchlist.length === 0 && (
+          <div className="flex justify-center items-center mt-40 text-textColor">
+            <p>Watchlist not found</p>
+          </div>
+        )}
       </div>
-      <Pagination
-        total={initialData.totalPages}
-        initialPage={1}
-        size="sm"
-        className="mt-8"
-        onChange={(p) => {
-          setPage(p - 1);
-        }}
-      />
+      {watchlist.length > 0 && (
+        <Pagination
+          total={initialData.totalPages}
+          initialPage={1}
+          size="sm"
+          className="mt-8"
+          onChange={(p) => {
+            setPage(p - 1);
+          }}
+        />
+      )}
     </div>
   );
 };
