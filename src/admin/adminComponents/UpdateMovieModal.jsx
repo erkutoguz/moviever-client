@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import {
@@ -34,7 +35,6 @@ const UpdateMovieModal = ({ movieId }) => {
   );
   const [rating, setRating] = useState();
   const [trailerUrl, setTrailerUrl] = useState();
-  const [poster, setPoster] = useState();
   const [releaseDate, setReleaseDate] = useState();
 
   useEffect(() => {
@@ -59,7 +59,6 @@ const UpdateMovieModal = ({ movieId }) => {
     formData.append("trailerUrl", trailerUrl || movieDetails.trailerUrl);
     formData.append("rating", parseFloat(rating) || movieDetails.rating);
 
-    formData.append("poster", poster);
     const cats = [];
     selectedCategories.forEach((c) => {
       cats.push(c);
@@ -95,7 +94,7 @@ const UpdateMovieModal = ({ movieId }) => {
                   <div className="flex justify-center">
                     <ChangeMoviePoster
                       pictureUrl={movieDetails.pictureUrl}
-                      setPoster={setPoster}
+                      movieId={movieDetails.id}
                     />
                   </div>
 
@@ -284,8 +283,6 @@ const UpdateMovieModal = ({ movieId }) => {
                     const formdata = createFormData();
                     updateMovie(formdata, movieId)
                       .then((res) => {
-                        console.log(res);
-
                         setShowPopup(true);
                         setTitle("");
                         setReleaseDate("");
@@ -293,7 +290,6 @@ const UpdateMovieModal = ({ movieId }) => {
                         setRating("");
                         setDescription("");
                         setTrailerUrl("");
-                        setPoster(null);
                         setSelectedCategories([]);
                         setErrorMessage("");
                         setTimeout(() => {

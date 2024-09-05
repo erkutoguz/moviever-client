@@ -30,7 +30,13 @@ const UserProfile = () => {
 
   const navigate = useNavigate();
   const updateUserProfile = () => {
-    const data = { firstname, lastname, password, about };
+    let data;
+    if (password !== "") {
+      data = { firstname, lastname, password, about };
+    } else {
+      data = { firstname, lastname, about };
+    }
+
     if (!firstname) {
       setFirstnameError("First name can not be empty");
       setSuccessMessage("");
@@ -39,17 +45,19 @@ const UserProfile = () => {
       setLastnameError("Last name can not be empty");
       setSuccessMessage("");
     }
-    if (!password) {
-      setPasswordError("Password can not be empty");
-      setSuccessMessage("");
-    }
-    if (password !== confirmPassword) {
-      setPasswordError("Passwords does not match");
+    if (password !== "" && password !== confirmPassword) {
+      setPasswordError("Password does not match");
       setSuccessMessage("");
     }
 
-    if (firstname && lastname && password && password === confirmPassword) {
-      updateProfile(data)
+    if (
+      firstname &&
+      lastname &&
+      password !== "" &&
+      password === confirmPassword
+    ) {
+      const type = "pass";
+      updateProfile(data, type)
         .then((res) => {
           setSuccessMessage(res.data);
           setErrorMessage("");
@@ -58,7 +66,40 @@ const UserProfile = () => {
           setPasswordError("");
         })
         .catch((err) => {
-          setErrorMessage(err.response.data.message);
+          const errorData = err.response.data;
+          let errorMessage = "";
+
+          if (errorData.password) {
+            errorMessage = errorData.password;
+          } else if (errorData.message) {
+            errorMessage = errorData.message;
+          } else {
+            errorMessage = "Something went wrong";
+          }
+          setErrorMessage(errorMessage);
+        });
+    } else if (firstname && lastname) {
+      const type = "nopass";
+      updateProfile(data, type)
+        .then((res) => {
+          setSuccessMessage(res.data);
+          setErrorMessage("");
+          setFirstnameError("");
+          setLastnameError("");
+          setPasswordError("");
+        })
+        .catch((err) => {
+          const errorData = err.response.data;
+          let errorMessage = "";
+
+          if (errorData.password) {
+            errorMessage = errorData.password;
+          } else if (errorData.message) {
+            errorMessage = errorData.message;
+          } else {
+            errorMessage = "Something went wrong";
+          }
+          setErrorMessage(errorMessage);
         });
     }
   };

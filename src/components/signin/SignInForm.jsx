@@ -52,9 +52,8 @@ function SignInForm() {
     setPasswordErr(errors.password || "");
 
     if (Object.keys(errors).length === 0) {
-      login(username, password).then((res) => {
-        console.log(res);
-      });
+      // eslint-disable-next-line no-unused-vars
+      login(username, password).then((res) => {});
     }
   };
 

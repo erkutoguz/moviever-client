@@ -18,7 +18,7 @@ const AdminUserLogs = () => {
   }, [page]);
 
   return (
-    <div className="px-2 flex flex-col mx-auto">
+    <div className="px-2 flex flex-col mx-auto min-h-full">
       <p className="lg:text-2xl text-xl mt-8 font-semibold py-4 text-textColor">
         User Logs
       </p>
@@ -35,7 +35,7 @@ const AdminUserLogs = () => {
         total={initialData.totalPages}
         initialPage={1}
         size="sm"
-        className="mt-8"
+        className="m-0"
         onChange={(p) => {
           setPage(p - 1);
         }}

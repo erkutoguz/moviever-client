@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Avatar,
@@ -11,10 +12,14 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import EditIcon from "../../assets/icons/EditIcon";
+import { useAppContext } from "../../context/appContext";
 
-const ChangeMoviePoster = ({ pictureUrl, setPoster }) => {
+const ChangeMoviePoster = ({ pictureUrl, movieId }) => {
   const [isHovered, setHovered] = useState(false);
+  const { updateMoviePoster } = useAppContext();
   const [image, setImage] = useState();
+  const [showPopup, setShowPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -83,8 +88,21 @@ const ChangeMoviePoster = ({ pictureUrl, setPoster }) => {
                 <Button
                   color="primary"
                   onClick={() => {
-                    setPoster(image);
-                    onClose();
+                    if (image !== null) {
+                      const formdata = new FormData();
+                      formdata.append("poster", image);
+                      updateMoviePoster(formdata, movieId)
+                        .then((res) => {
+                          setShowPopup(true);
+                          setTimeout(() => {
+                            setShowPopup(false);
+                          }, 2000);
+                          onClose();
+                        })
+                        .catch((e) => {
+                          setErrorMessage("Something went wrong");
+                        });
+                    }
                   }}
                   aria-label="open-modal-button"
                 >
@@ -95,6 +113,16 @@ const ChangeMoviePoster = ({ pictureUrl, setPoster }) => {
           )}
         </ModalContent>
       </Modal>
+      {showPopup && (
+        <div className="fixed top-24 z-50 right-0 sm:right-2 md:right-4 xl:right-8 bg-green-500 text-white p-4 rounded shadow-lg">
+          <p>Movie poster successfully updated!</p>
+        </div>
+      )}
+      {errorMessage && (
+        <div className="fixed top-24 z-50 right-0 sm:right-2 md:right-4 xl:right-8 bg-red-500 text-white p-4 rounded shadow-lg">
+          <p>{errorMessage}</p>
+        </div>
+      )}
     </div>
   );
 };

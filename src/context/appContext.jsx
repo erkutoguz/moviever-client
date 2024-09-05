@@ -110,7 +110,7 @@ export const AppProvider = ({ children }) => {
         dispatch({
           type: REQUEST_ERROR,
           payload: {
-            errMessage: error.response.data.message,
+            errMessage: "Bad request",
           },
         });
       }
@@ -222,11 +222,19 @@ export const AppProvider = ({ children }) => {
         },
       });
     } catch (err) {
-      console.log(err);
+      const errorData = err.response.data;
+      let errorMessage = "";
 
+      if (errorData.password) {
+        errorMessage = errorData.password;
+      } else if (errorData.message) {
+        errorMessage = errorData.message;
+      } else {
+        errorMessage = "Something went wrong";
+      }
       dispatch({
         type: LOGIN_USER_ERROR,
-        payload: { errMessage: err.response.data.message },
+        payload: { errMessage: errorMessage },
       });
     }
   };
@@ -256,8 +264,12 @@ export const AppProvider = ({ children }) => {
     return await appClient.get(`/api/v1/users/profile/${username}`);
   };
 
-  const updateProfile = async (data) => {
-    return await appClient.put("/api/v1/users/me", data);
+  const updateProfile = async (data, type) => {
+    if (type !== "pass") {
+      return await appClient.put("/api/v1/users/me", data);
+    } else {
+      return await appClient.put("/api/v1/users/me/wp", data);
+    }
   };
 
   const updateMovie = async (formdata, movieId) => {
@@ -266,6 +278,17 @@ export const AppProvider = ({ children }) => {
         "Content-Type": "multipart/form-data",
       },
     });
+  };
+  const updateMoviePoster = async (formdata, movieId) => {
+    return await appClient.patch(
+      `/api/v1/admin/movies/${movieId}/poster`,
+      formdata,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
   };
 
   const changeProfilePicture = async (image) => {
@@ -512,6 +535,7 @@ export const AppProvider = ({ children }) => {
         resetUserPassword,
         createMovie,
         updateMovie,
+        updateMoviePoster,
         deleteMovieById,
         toggleTheme,
         login,
